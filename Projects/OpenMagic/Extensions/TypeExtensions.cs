@@ -4,9 +4,9 @@ namespace OpenMagic.Extensions {
     public static class TypeExtensions {
 
         /// <summary>
-        /// Return true if the type is a string.
+        /// Determines whether the specified type is string.
         /// </summary>
-        /// <param name="value">The type to test for string.</param>
+        /// <param name="value">The value to test.</param>
         /// <remarks>
         /// Syntactic sugar.
         /// </remarks>
