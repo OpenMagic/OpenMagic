@@ -20,6 +20,7 @@ namespace OpenMagic.Tests.Extensions {
             public void ReturnsFalseWhenTypeIsNotIEnumerableOfString() {
                 typeof(int).IsEnumerableString().Should().BeFalse();
                 typeof(DateTime).IsEnumerableString().Should().BeFalse();
+                typeof(string).IsEnumerableString().Should().BeFalse();
             }
         }
 
