@@ -58,6 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Collections\Generic\EnumerableBaseTests.cs" />
     <Compile Include="Extensions\Collections\Generic\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsTests.cs" />
