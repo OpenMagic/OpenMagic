@@ -7,7 +7,7 @@ using OpenMagic.Extensions;
 namespace OpenMagic.Tests.Extensions
 {
     [TestClass]
-    public class TypeExtensions
+    public class TypeExtensionsTests
     {
 
         [TestClass]
