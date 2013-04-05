@@ -9,11 +9,9 @@ namespace OpenMagic.Tests.Extensions
     [TestClass]
     public class TypeExtensionsTests
     {
-
         [TestClass]
         public class IsEnumerableString
         {
-
             [TestMethod]
             public void ReturnsTrueWhenTypeIsIEnumerableOfString()
             {
@@ -32,7 +30,6 @@ namespace OpenMagic.Tests.Extensions
         [TestClass]
         public class IsString
         {
-
             [TestMethod]
             public void ReturnsTrueWhenTypeIsString()
             {
