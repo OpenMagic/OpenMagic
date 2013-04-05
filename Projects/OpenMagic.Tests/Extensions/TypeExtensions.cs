@@ -4,20 +4,25 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Extensions;
 
-namespace OpenMagic.Tests.Extensions {
+namespace OpenMagic.Tests.Extensions
+{
     [TestClass]
-    public class TypeExtensions {
+    public class TypeExtensions
+    {
 
         [TestClass]
-        public class IsEnumerableString {
+        public class IsEnumerableString
+        {
 
             [TestMethod]
-            public void ReturnsTrueWhenTypeIsIEnumerableOfString() {
+            public void ReturnsTrueWhenTypeIsIEnumerableOfString()
+            {
                 typeof(IEnumerable<string>).IsEnumerableString().Should().BeTrue();
             }
 
             [TestMethod]
-            public void ReturnsFalseWhenTypeIsNotIEnumerableOfString() {
+            public void ReturnsFalseWhenTypeIsNotIEnumerableOfString()
+            {
                 typeof(int).IsEnumerableString().Should().BeFalse();
                 typeof(DateTime).IsEnumerableString().Should().BeFalse();
                 typeof(string).IsEnumerableString().Should().BeFalse();
@@ -25,17 +30,20 @@ namespace OpenMagic.Tests.Extensions {
         }
 
         [TestClass]
-        public class IsString {
+        public class IsString
+        {
 
             [TestMethod]
-            public void ReturnsTrueWhenTypeIsString() {
+            public void ReturnsTrueWhenTypeIsString()
+            {
                 typeof(string).IsString().Should().BeTrue();
             }
 
             [TestMethod]
-            public void ReturnsFalseWhenTypeIsNotString() {
+            public void ReturnsFalseWhenTypeIsNotString()
+            {
                 typeof(int).IsString().Should().BeFalse();
-                typeof(DateTime).IsString().Should().BeFalse();                
+                typeof(DateTime).IsString().Should().BeFalse();
             }
         }
     }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OpenMagic.Extensions {
-    public static class TypeExtensions {
+namespace OpenMagic.Extensions
+{
+    public static class TypeExtensions
+    {
 
         /// <summary>
         /// Determines whether the specified type is IEnumerable<string>.
@@ -11,7 +13,8 @@ namespace OpenMagic.Extensions {
         /// <remarks>
         /// Syntactic sugar.
         /// </remarks>
-        public static bool IsEnumerableString(this Type value) {
+        public static bool IsEnumerableString(this Type value)
+        {
             return value == typeof(IEnumerable<string>);
         }
 
@@ -22,7 +25,8 @@ namespace OpenMagic.Extensions {
         /// <remarks>
         /// Syntactic sugar.
         /// </remarks>
-        public static bool IsString(this Type value) {
+        public static bool IsString(this Type value)
+        {
             return value == typeof(string);
         }
     }
