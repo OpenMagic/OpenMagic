@@ -46,7 +46,7 @@ namespace OpenMagic.Extensions
         /// </summary>
         /// <param name="value">The string to split into lines.</param>
         /// <param name="trimLines">If true the lines are trimmed.</param>
-        public static IEnumerable<string> ToLines(this string value, bool trimLines)
+        public static IEnumerable<string> ToLines([AllowNull] this string value, bool trimLines)
         {
             if (value == null)
             {
