@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,6 +11,114 @@ namespace OpenMagic.Tests.Extensions
     [TestClass]
     public class StringExtensionsTests
     {
+        [TestClass]
+        public class GetValuesBetween
+        {
+            [TestMethod]
+            public void Argument_delimiter_CannotBeNull()
+            {
+                ShouldThrow_ArgumentNullException_For_delimiter(null);
+            }
+
+            [TestMethod]
+            public void Argument_delimiter_CannotBeEmpty()
+            {
+                ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(string.Empty);
+            }
+
+            [TestMethod]
+            public void Argument_delimiter_CannotBeWhitespace()
+            {
+                ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(" ");
+            }
+
+            private void ShouldThrow_ArgumentNullException_For_delimiter(string delimiter)
+            {
+                "fake value".Invoking(x => x.GetValuesBetween(delimiter))
+                    .ShouldThrow<ArgumentNullException>()
+                    .WithMessage("Value cannot be null.\r\nParameter name: delimiter");
+            }
+
+            private void ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(string delimiter)
+            {
+                "fake value".Invoking(x => x.GetValuesBetween(delimiter))
+                    .ShouldThrow<ArgumentException>()
+                    .WithMessage("Value cannot be whitespace.\r\nParameter name: delimiter");
+            }
+
+            [TestMethod]
+            public void ReturnsValuesWhenStringStartsWithDelimiter()
+            {
+                // Given
+
+                // When
+
+                // Then
+                Assert.Inconclusive("todo");
+            }
+
+            [TestMethod]
+            public void ReturnsValuesWhenStringDoesNotStartsDelimiter()
+            {
+                // Given
+                string value = "the 'quick' brown 'fox'";
+                string delimiter = "'";
+
+                delimiter = string.Empty;
+
+                // When
+                IEnumerable<string> values = value.GetValuesBetween(delimiter);
+
+                // Then
+                values.Should().Equal(new string[] { "quick", "fox" });
+            }
+
+            [TestMethod]
+            public void ReturnsZeroValuesWhen_value_DoesNotHaveAnyValues()
+            {
+                // Given
+
+                // When
+
+                // Then
+                Assert.Inconclusive("todo");
+            }
+
+            [TestMethod]
+            public void ReturnsZeroValuesWhen_value_IsNull()
+            {
+                // Given
+
+                // When
+
+                // Then
+                Assert.Inconclusive("todo");
+            }
+
+            [TestMethod]
+            public void ReturnsZeroValuesWhen_value_CanBeEmpty()
+            {
+                // Given
+
+                // When
+
+                // Then
+                Assert.Inconclusive("todo");
+            }
+
+            [TestMethod]
+            public void ReturnsZeroValuesWhen_value_CanBeWhitespace()
+            {
+                // Given
+
+                // When
+
+                // Then
+                Assert.Inconclusive("todo");
+            }
+
+        }
+
         [TestClass]
         public class IsNullOrWhiteSpace
         {

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Anotar.NLog;
 using NullGuard;
 
 namespace OpenMagic.Extensions
@@ -15,9 +17,21 @@ namespace OpenMagic.Extensions
         /// <example>
         /// GetValuesBetween("a 'quick' brown 'fox'") => { "quick", "fox }.
         /// </example>
-        public static IEnumerable<string> GetValuesBetween(this string value, string delimiter)
+        public static IEnumerable<string> GetValuesBetween(this string value, [AllowNull] string delimiter)
         {
-            throw new System.NotImplementedException();
+            Log.Trace("GetValuesBetween(value: {0}, delimiter: {1})", value, delimiter);
+            
+            if (string.IsNullOrWhiteSpace(delimiter))
+            {
+                throw new ArgumentException("Value cannot be whitespace.", "delimiter");
+            }
+
+            var values = value.Split(Convert.ToChar(delimiter));
+
+            foreach (string delimitedValue in values)
+            {
+                yield return delimitedValue;
+            }
         }
 
         /// <summary>

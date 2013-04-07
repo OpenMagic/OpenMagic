@@ -34,6 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Anotar.NLog">
+      <HintPath>..\..\packages\Anotar.NLog.Fody.1.4.1.1\lib\portable-net4+sl4+wp7+win8\Anotar.NLog.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="NullGuard">
       <HintPath>..\..\packages\NullGuard.Fody.0.5.1.2\lib\portable-net4+sl4+wp7+win8\NullGuard.dll</HintPath>
       <Private>False</Private>
