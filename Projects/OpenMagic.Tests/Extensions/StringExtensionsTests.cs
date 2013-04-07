@@ -32,6 +32,14 @@ namespace OpenMagic.Tests.Extensions
                 ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(" ");
             }
 
+            [TestMethod]
+            public void Argument_delimiter_CannotLongerThanOneCharacter()
+            {
+                "fake value".Invoking(x => x.GetValuesBetween("12"))
+                    .ShouldThrow<ArgumentException>()
+                    .WithMessage("Value cannot be longer than 1 character.\r\nParameter name: delimiter");
+            }
+
             private void ShouldThrow_ArgumentNullException_For_delimiter(string delimiter)
             {
                 "fake value".Invoking(x => x.GetValuesBetween(delimiter))
@@ -50,73 +58,73 @@ namespace OpenMagic.Tests.Extensions
             public void ReturnsValuesWhenStringStartsWithDelimiter()
             {
                 // Given
+                string value = "'the' 'quick' brown 'fox' jumped 'over the' lazy dog";
+                string delimiter = "'";
 
                 // When
+                IEnumerable<string> values = value.GetValuesBetween(delimiter);
 
                 // Then
-                Assert.Inconclusive("todo");
+                values.Should().Equal(new string[] { "the", "quick", "fox", "over the" });
             }
 
             [TestMethod]
             public void ReturnsValuesWhenStringDoesNotStartsDelimiter()
             {
                 // Given
-                string value = "the 'quick' brown 'fox'";
+                string value = "the 'quick' brown 'fox' jumped 'over the' lazy dog";
                 string delimiter = "'";
-
-                delimiter = string.Empty;
 
                 // When
                 IEnumerable<string> values = value.GetValuesBetween(delimiter);
 
                 // Then
-                values.Should().Equal(new string[] { "quick", "fox" });
+                values.Should().Equal(new string[] { "quick", "fox", "over the" });
             }
 
             [TestMethod]
             public void ReturnsZeroValuesWhen_value_DoesNotHaveAnyValues()
             {
                 // Given
+                string value = "the quick brown fox";
+                string delimiter = "'";
 
                 // When
+                IEnumerable<string> values = value.GetValuesBetween(delimiter);
 
                 // Then
-                Assert.Inconclusive("todo");
+                values.Should().BeEmpty();
             }
 
             [TestMethod]
             public void ReturnsZeroValuesWhen_value_IsNull()
             {
-                // Given
-
-                // When
-
-                // Then
-                Assert.Inconclusive("todo");
+                ReturnsZeroValuesWhenValueIs(null);
             }
 
             [TestMethod]
-            public void ReturnsZeroValuesWhen_value_CanBeEmpty()
+            public void ReturnsZeroValuesWhen_value_IsEmpty()
             {
-                // Given
-
-                // When
-
-                // Then
-                Assert.Inconclusive("todo");
+                ReturnsZeroValuesWhenValueIs(string.Empty);
             }
 
             [TestMethod]
             public void ReturnsZeroValuesWhen_value_CanBeWhitespace()
             {
-                // Given
-
-                // When
-
-                // Then
-                Assert.Inconclusive("todo");
+                ReturnsZeroValuesWhenValueIs(" ");
             }
 
+            private void ReturnsZeroValuesWhenValueIs(string value)
+            {
+                // Given
+                string delimiter = "'";
+
+                // When
+                IEnumerable<string> values = value.GetValuesBetween(delimiter);
+
+                // Then
+                values.Should().BeEmpty();
+            }
         }
 
         [TestClass]

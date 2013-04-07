@@ -17,21 +17,28 @@ namespace OpenMagic.Extensions
         /// <example>
         /// GetValuesBetween("a 'quick' brown 'fox'") => { "quick", "fox }.
         /// </example>
-        public static IEnumerable<string> GetValuesBetween(this string value, [AllowNull] string delimiter)
+        public static IEnumerable<string> GetValuesBetween([AllowNull] this string value, string delimiter)
         {
             Log.Trace("GetValuesBetween(value: {0}, delimiter: {1})", value, delimiter);
+
+            if (value == null)
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            if (delimiter.IsNullOrWhiteSpace()) { throw new ArgumentException("Value cannot be whitespace.", "delimiter"); }
+            if (delimiter.Length > 1) { throw new ArgumentException("Value cannot be longer than 1 character.", "delimiter"); }
             
-            if (string.IsNullOrWhiteSpace(delimiter))
+            var split = value.Split(Convert.ToChar(delimiter));
+            var values = new List<string>();
+
+            for (int i = 1; i < split.Count(); i = i + 2)
             {
-                throw new ArgumentException("Value cannot be whitespace.", "delimiter");
+                // todo: yield return split[i] should work but it breaks String.IsNullOrWhiteSpace(delimiter) test.
+                values.Add(split[i]);
             }
 
-            var values = value.Split(Convert.ToChar(delimiter));
-
-            foreach (string delimitedValue in values)
-            {
-                yield return delimitedValue;
-            }
+            return values;
         }
 
         /// <summary>
