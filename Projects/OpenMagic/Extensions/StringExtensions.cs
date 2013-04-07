@@ -1,11 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using NullGuard;
 
 namespace OpenMagic.Extensions
 {
     public static class StringExtensions
     {
+        /// <summary>
+        /// Get the values in a string that are between a pair of delimiters.
+        /// </summary>
+        /// <param name="value">The string to search.</param>
+        /// <param name="delimiter">The value delimiter.</param>
+        /// <example>
+        /// GetValuesBetween("a 'quick' brown 'fox'") => { "quick", "fox }.
+        /// </example>
+        public static IEnumerable<string> GetValuesBetween(this string value, string delimiter)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// Indicates whether a specified string is null, empty, or consists only of white-space characters.
         /// </summary>
@@ -13,7 +27,7 @@ namespace OpenMagic.Extensions
         /// <remarks>
         /// Syntactic sugar.
         /// </remarks>
-        public static bool IsNullOrWhiteSpace(this string value)
+        public static bool IsNullOrWhiteSpace([AllowNull] this string value)
         {
             return string.IsNullOrWhiteSpace(value);
         }
@@ -22,7 +36,7 @@ namespace OpenMagic.Extensions
         /// Splits a string value into lines.
         /// </summary>
         /// <param name="value">The string to split into lines.</param>
-        public static IEnumerable<string> ToLines(this string value)
+        public static IEnumerable<string> ToLines([AllowNull] this string value)
         {
             return value.ToLines(false);
         }
