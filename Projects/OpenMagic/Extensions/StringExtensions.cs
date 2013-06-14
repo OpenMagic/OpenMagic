@@ -22,20 +22,16 @@ namespace OpenMagic.Extensions
         {
             log.Trace(m => m("GetValuesBetween(value: '{0}', delimiter: '{1}')", value, delimiter));
 
-            // todo: replace with Argument.ShouldNotBeNull() or similar.
-            if (delimiter == null)
-            {
-                throw new ArgumentNullException("delimiter");
-            }
-                        
+            // todo: replace with Argument.MustNotBeNull() or similar.
+            if (delimiter == null) { throw new ArgumentNullException("delimiter"); }
+            if (delimiter.IsNullOrWhiteSpace()) { throw new ArgumentException("Value cannot be whitespace.", "delimiter"); }
+            if (delimiter.Length > 1) { throw new ArgumentException("Value cannot be longer than 1 character.", "delimiter"); }
+
             if (value == null)
             {
                 return Enumerable.Empty<string>();
             }
 
-            if (delimiter.IsNullOrWhiteSpace()) { throw new ArgumentException("Value cannot be whitespace.", "delimiter"); }
-            if (delimiter.Length > 1) { throw new ArgumentException("Value cannot be longer than 1 character.", "delimiter"); }
-            
             var split = value.Split(Convert.ToChar(delimiter));
             var values = new List<string>();
 
