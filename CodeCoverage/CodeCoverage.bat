@@ -19,8 +19,7 @@ if errorlevel 1 goto Error
 msbuild OpenMagic.sln /property:Configuration=Release /verbosity:minimal /nologo
 if errorlevel 1 goto Error
 
-OpenCover.Console -register:user -mergebyhash -target:"C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\mstest.exe" -targetargs:"/TestContainer:.\Projects\%1.Tests\bin\Release\%1.Tests.dll" -output:.\CodeCoverage\%1\%1.xml -filter:"+[%1*]* -[%1.Tests*]* -[%1*]*.My.*"
-rem  /TestSettings:.\OpenMagic.testsettings
+OpenCover.Console -register:user -mergebyhash -target:"C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\mstest.exe" -targetargs:"/TestContainer:.\Projects\%1.Tests\bin\Release\%1.Tests.dll /TestSettings:.\OpenMagic.testsettings" -output:.\CodeCoverage\%1\%1.xml -filter:"+[%1*]* -[%1.Tests*]* -[%1*]*.My.*"
 
 if errorlevel 1 goto Error
 
