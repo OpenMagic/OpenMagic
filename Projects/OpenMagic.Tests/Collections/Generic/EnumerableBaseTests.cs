@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Collections.Generic;
-using FluentAssertions;
 
 namespace OpenMagic.Tests.Collections.Generic
 {
@@ -32,6 +29,29 @@ namespace OpenMagic.Tests.Collections.Generic
             {
                 // Given
                 var collection = new EnumerableBaseImplementation();
+
+                // When
+                var enumerator = collection.GetEnumerator();
+
+                // Then
+                var i = -1;
+                while (enumerator.MoveNext())
+                {
+                    enumerator.Current.Should().Be(++i, "because collection should be 0 ... 9");
+                }
+
+                i.Should().Be(9, "because the last item in collection should be 9");
+            }
+        }
+
+        [TestClass]
+        public class GetEnumerator_NonGeneric
+        {
+            [TestMethod]
+            public void CanEnumerateAllValues()
+            {
+                // Given
+                IEnumerable collection = new EnumerableBaseImplementation();
 
                 // When
                 var enumerator = collection.GetEnumerator();
