@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio Express 2012 for Windows Desktop
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic", "Projects\OpenMagic\OpenMagic.csproj", "{813600E6-945A-46FD-A27C-180E4131DA8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Tests", "Projects\OpenMagic.Tests\OpenMagic.Tests.csproj", "{CB398C4E-3EB3-4E33-A3AA-F637B50131B4}"
@@ -14,12 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeCoverage", "CodeCoverag
 	ProjectSection(SolutionItems) = preProject
 		CodeCoverage\CodeCoverage.bat = CodeCoverage\CodeCoverage.bat
 		CodeCoverage\OpenMagic.CodeCoverage.bat = CodeCoverage\OpenMagic.CodeCoverage.bat
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AC67D4D9-0447-4BE0-8063-C25D0A32DC3F}"
-	ProjectSection(SolutionItems) = preProject
-		OpenMagic.testsettings = OpenMagic.testsettings
-		OpenMagic.vsmdi = OpenMagic.vsmdi
 	EndProjectSection
 EndProject
 Global
