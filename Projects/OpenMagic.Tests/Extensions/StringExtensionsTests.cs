@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using FluentAssertions;
@@ -222,6 +223,70 @@ namespace OpenMagic.Tests.Extensions
 
                 // Then
                 lines.Count().Should().Be(0);
+            }
+        }
+
+        [TestClass]
+        public class WriteLines
+        {
+            [TestMethod]
+            public void WritesUntrimmedLinesTo_textWriter_When_trimLines_IsFalse()
+            {
+                // Given
+                var value = "line 1\r\n line 2 \r\nline 3";
+                var textWriter = new StringWriter();
+                var trimLines = false;
+
+                // When
+                value.WriteLines(textWriter, trimLines);
+
+                // Then
+                textWriter.ToString().Should().Be(value+"\r\n");
+            }
+
+            [TestMethod]
+            public void WritesTrimmedLinesTo_textWriter_When_trimLines_IsTrue()
+            {
+                // Given
+                var value = "line 1\r\n line 2 \r\nline 3";
+                var textWriter = new StringWriter();
+                var trimLines = true;
+
+                // When
+                value.WriteLines(textWriter, trimLines);
+
+                // Then
+                textWriter.ToString().Should().Be("line 1\r\nline 2\r\nline 3\r\n");
+            }
+
+            [TestMethod]
+            public void DoesNotThrowWhen_value_IsNull()
+            {
+                // Given
+                string value = null;
+                var textWriter = new StringWriter();
+                var trimLines = true;
+
+                // When
+                value.WriteLines(textWriter, trimLines);
+
+                // Then
+                textWriter.ToString().Should().Be("");
+            }
+
+            [TestMethod]
+            public void ThrowsArgumentNullExceptionWhen_textWriter_IsNull()
+            {
+                // Given
+                var value = "";
+                TextWriter textWriter = null;
+                var trimLines = true;
+
+                // When
+                Action action = ()=> value.WriteLines(textWriter, trimLines);
+
+                // Then
+                action.ShouldThrow<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: textWriter");
             }
         }
     }

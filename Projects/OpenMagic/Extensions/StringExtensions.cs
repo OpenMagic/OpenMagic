@@ -60,24 +60,14 @@ namespace OpenMagic.Extensions
         /// Splits a string value into lines.
         /// </summary>
         /// <param name="value">The string to split into lines.</param>
-        public static IEnumerable<string> ToLines(this string value)
-        {
-            return value.ToLines(false);
-        }
-
-        /// <summary>
-        /// Splits a string value into lines.
-        /// </summary>
-        /// <param name="value">The string to split into lines.</param>
         /// <param name="trimLines">If true the lines are trimmed.</param>
-        public static IEnumerable<string> ToLines(this string value, bool trimLines)
+        public static IEnumerable<string> ToLines(this string value, bool trimLines = false)
         {
             if (value == null)
             {
-                return Enumerable.Empty<string>();
+                yield break;
             }
 
-            var lines = new List<string>();
             var reader = new StringReader(value);
 
             while (true)
@@ -86,19 +76,39 @@ namespace OpenMagic.Extensions
 
                 if (line == null)
                 {
-                    break;
+                    yield break;
                 }
 
                 if (trimLines)
                 {
-                    lines.Add(line.Trim());
+                    yield return line.Trim();
                 }
                 else
                 {
-                    lines.Add(line);
+                    yield return line;
                 }
             }
-            return lines;
+        }
+
+        /// <summary>
+        /// Splits a string into lines and writes them to a <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="value">The string value to split into lines.</param>
+        /// <param name="textWriter">The <see cref="TextWriter"/> to write to.</param>
+        /// <param name="trimLines">When true the lines are trimmed before writing to <see cref="TextWriter"/>.</param>
+        public static void WriteLines(this string value, TextWriter textWriter, bool trimLines = false)
+        {
+            Argument.MustNotBeNull(textWriter, "textWriter");
+
+            if (value == null)
+            {
+                return;
+            }
+
+            foreach (var line in value.ToLines(trimLines: trimLines))
+            {
+                textWriter.WriteLine(line);
+            }
         }
     }
 }
