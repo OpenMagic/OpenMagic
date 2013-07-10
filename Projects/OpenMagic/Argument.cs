@@ -17,7 +17,7 @@ namespace OpenMagic
         /// <param name="param">The value to test for null.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param"/> when the value is not null.</returns>
-        public static T MustNotBeNull<T>(T param, string paramName)
+        public static T MustNotBeNull<T>(this T param, string paramName)
         {
             if (param == null)
             {
@@ -34,7 +34,7 @@ namespace OpenMagic
         /// <param name="param">The value to test for null or empty.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param"/> when the value is not null.</returns>
-        public static IEnumerable<T> MustNotBeNullOrEmpty<T>(IEnumerable<T> param, string paramName)
+        public static IEnumerable<T> MustNotBeNullOrEmpty<T>(this IEnumerable<T> param, string paramName)
         {
             Argument.MustNotBeNull(param, paramName);
 
@@ -53,7 +53,7 @@ namespace OpenMagic
         /// <param name="param">The value to test for null or whitespace.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param"/> when the value is not null or whitespace.</returns>
-        public static string MustNotBeNullOrWhiteSpace(string param, string paramName)
+        public static string MustNotBeNullOrWhiteSpace(this string param, string paramName)
         {
             Argument.MustNotBeNull(param, paramName);
 
