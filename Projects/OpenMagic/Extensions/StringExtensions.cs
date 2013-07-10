@@ -53,7 +53,7 @@ namespace OpenMagic.Extensions
         /// </remarks>
         public static bool IsNullOrWhiteSpace(this string value)
         {
-            return string.IsNullOrWhiteSpace(value);
+            return (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(value.Trim()));
         }
 
         /// <summary>

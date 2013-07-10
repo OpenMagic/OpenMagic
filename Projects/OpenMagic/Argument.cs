@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenMagic.Extensions;
 
 namespace OpenMagic
 {
@@ -56,7 +57,7 @@ namespace OpenMagic
         {
             Argument.MustNotBeNull(param, paramName);
 
-            if (string.IsNullOrWhiteSpace(param))
+            if (param.IsNullOrWhiteSpace())
             {
                 throw new ArgumentException("Value cannot be whitespace.", paramName);
             }
