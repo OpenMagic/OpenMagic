@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Common.Logging;
 
 namespace OpenMagic.Extensions
@@ -78,6 +79,144 @@ namespace OpenMagic.Extensions
         public static bool IsNullOrWhiteSpace(this string value)
         {
             return (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(value.Trim()));
+        }
+
+        /// <summary>
+        /// Returns the number of times <paramref name="find"/> occurs in <paramref name="value"/>.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"> when find is null or empty.</exception>
+        public static int Occurs(this string value, string find)
+        {
+            // todo: unit tests
+            find.MustNotBeNullOrEmpty("find");
+
+            if (value == null)
+            {
+                return 0;
+            }
+
+            return Regex.Matches(value, Regex.Escape(find)).Count;
+        }
+
+        /// <summary>
+        /// Get the text after <paramref name="value" />.
+        /// </summary>
+        /// <param name="value">The index position to retrieve text after.</param>
+        /// <returns>The text after <paramref name="value"/> If <paramref name="value"/> is -1 then Nothing is returned.</returns>
+        /// <remarks>This method is useful so you don't need to test the value of String.IndexOf() before calling substring string. eg
+        /// "abc".Substring("abc".IndexOf("d")) would raise an exception. "abc".TextAfter("abc".IndexOf("d")) will return Nothing. An alternative
+        /// for this example is "abc".TextAfter("d").
+        /// </remarks>
+        public static string TextAfter(this string text, int value)
+        {
+            // todo: unit tests
+            return text.TextAfter(value, null);
+        }
+
+        /// <summary>
+        /// Get the text after <paramref name="value" />.
+        /// </summary>
+        /// <param name="value">The index position to retrieve text after.</param>
+        /// <param name="defaultValue">Value to return if <paramref name="value" /> is -1.</param>
+        /// <returns>The text after <paramref name="value"/> If <paramref name="value"/> is -1 then <paramref name="defaultValue" /> is returned.</returns>
+        /// <remarks>This method is useful so you don't need to test the value of String.IndexOf() before calling substring string. eg
+        /// "abc".Substring("abc".IndexOf("d")) would raise an exception. "abc".TextAfter("abc".IndexOf("d")) will return Nothing. An alternative
+        /// for this example is "abc".TextAfter("d").
+        /// </remarks>
+        public static string TextAfter(this string text, int value, string defaultValue)
+        {
+            return text.TextAfter(value, defaultValue, 1);
+        }
+
+        /// <summary>
+        /// Get the text after <paramref name="value" />.
+        /// </summary>
+        /// <param name="value">The index position to retrieve text after.</param>
+        /// <param name="defaultValue">Value to return if <paramref name="value" /> is -1.</param>
+        /// <returns>The text after <paramref name="value"/> If <paramref name="value"/> is -1 then <paramref name="defaultValue" /> is returned.</returns>
+        /// <remarks>This method is useful so you don't need to test the value of String.IndexOf() before calling substring string. eg
+        /// "abc".Substring("abc".IndexOf("d")) would raise an exception. "abc".TextAfter("abc".IndexOf("d")) will return Nothing. An alternative
+        /// for this example is "abc".TextAfter("d").
+        /// </remarks>
+        public static string TextAfter(this string text, int value, string defaultValue, int offset)
+        {
+            // todo: unit tests
+            if (value == -1)
+            {
+                return defaultValue;
+            }
+            else
+            {
+                return text.Substring(value + offset);
+            }
+        }
+
+        /// <summary>
+        /// Get the text after <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
+        /// <returns>The text after <paramref name="value"/>. If <paramref name="value"/> does not exist then Nothing is returned.</returns>
+        public static string TextAfter(this string text, string value)
+        {
+            // todo: unit tests
+            return text.TextAfter(value, null);
+        }
+
+        /// <summary>
+        /// Get the text after <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
+        /// <returns>The text after <paramref name="value"/>. If <paramref name="value"/> does not exist then <paramref name="defaultValue" /> is returned.</returns>
+        public static string TextAfter(this string text, string value, string defaultValue)
+        {
+            // todo: unit tests
+            int index = 0;
+
+            value.MustNotBeNullOrWhiteSpace("value");
+
+            if (text.IsNullOrWhiteSpace())
+            {
+                return defaultValue;
+            }
+
+            index = text.IndexOf(value);
+
+            if (index > -1)
+            {
+                index += value.Length - 1;
+            }
+
+            return text.TextAfter(index, defaultValue);
+        }
+
+        /// <summary>
+        /// Get the text after last occurrence of <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
+        /// <returns>The text after last occurrence of <paramref name="value"/>. If <paramref name="value"/> does not exist then Nothing is returned.</returns>
+        public static string TextAfterLast(this string text, string value)
+        {
+            // todo: unit tests
+            return text.TextAfterLast(value, null);
+        }
+
+        /// <summary>
+        /// Get the text after last occurrence of <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
+        /// <param name="defaultValue">Value to return if <paramref name="value" /> does not exist in <paramref name="text" /></param>
+        /// <returns>The text after last occurrence of <paramref name="value"/>. If <paramref name="value"/> does not exist then <paramref name="text"/> is returned.</returns>
+        public static string TextAfterLast(this string text, string value, string defaultValue)
+        {
+            // todo: unit tests
+            value.MustNotBeNull("value");
+
+            if (text.IsNullOrWhiteSpace())
+            {
+                return defaultValue;
+            }
+
+            return text.TextAfter(text.LastIndexOf(value), defaultValue, value.Length);
         }
 
         /// <summary>
