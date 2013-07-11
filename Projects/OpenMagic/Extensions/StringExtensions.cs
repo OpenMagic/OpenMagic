@@ -11,6 +11,30 @@ namespace OpenMagic.Extensions
         private static readonly ILog log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
+        /// Determines whether <paramref name="value"/> contains <paramref name="find"/>.
+        /// </summary>
+        /// <param name="value">The value to search.</param>
+        /// <param name="find">The value to find.</param>
+        /// <param name="stringComparison"><see cref="StringComparison"/>.</param>
+        public static bool Contains(this string value, string find, StringComparison stringComparison)
+        {
+            // todo: unit tests
+            switch (stringComparison)
+            {
+
+                case System.StringComparison.CurrentCultureIgnoreCase:
+                case System.StringComparison.OrdinalIgnoreCase:
+
+                    return value.ToLower().Contains(find.ToLower());
+
+                case System.StringComparison.InvariantCultureIgnoreCase:
+
+                    return value.ToLowerInvariant().Contains(find.ToLowerInvariant());
+            }
+            throw new ArgumentOutOfRangeException("stringComparison", string.Format("Value cannot be {0}.", stringComparison));
+        }
+
+        /// <summary>
         /// Get the values in a string that are between a pair of delimiters.
         /// </summary>
         /// <param name="value">The string to search.</param>
@@ -54,6 +78,86 @@ namespace OpenMagic.Extensions
         public static bool IsNullOrWhiteSpace(this string value)
         {
             return (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(value.Trim()));
+        }
+
+        /// <summary>
+        /// Get the text before <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
+        /// <returns>The text before <paramref name="value"/>. If <paramref name="value"/> does not exist then Nothing is returned.</returns>
+        public static string TextBefore(this string text, string value)
+        {
+            // todo: unit tests
+            return text.TextBefore(value, null);
+        }
+
+        /// <summary>
+        /// Get the text before <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
+        /// <returns>The text before <paramref name="value"/>. If <paramref name="value"/> does not exist then <paramref name="defaultValue" /> is returned.</returns>
+        public static string TextBefore(this string text, string value, string defaultValue)
+        {
+            // todo: unit tests
+            value.MustNotBeNull("value");
+
+            if (text.IsNullOrWhiteSpace())
+            {
+                return defaultValue;
+            }
+
+            return text.TextBefore(text.IndexOf(value), defaultValue);
+        }
+
+        /// <summary>
+        /// Get the text before <paramref name="value" />.
+        /// </summary>
+        /// <param name="value">The index position to retrieve text before.</param>
+        /// <returns>The text before <paramref name="value"/> If <paramref name="value"/> is -1 then <paramref name="value" /> is returned.</returns>
+        /// <remarks>This method is useful so you don't need to test the value of String.IndexOf() before calling substring string. eg
+        /// "abc".Substring("abc".IndexOf("d")) would raise an exception. "abc".TextBefore("abc".IndexOf("d")) will return Nothing. An alternative
+        /// for this example is "abc".TextBefore("d").
+        /// </remarks>
+        public static string TextBefore(this string text, int value, string defaultValue)
+        {
+            // todo: unit tests
+            if (value == -1)
+            {
+                return defaultValue;
+            }
+            else
+            {
+                return text.Substring(0, value);
+            }
+        }
+
+        /// <summary>
+        /// Get the text before last occurrence of <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
+        /// <returns>The text before last occurrence of <paramref name="value"/>. If <paramref name="value"/> does not exist then Nothing is returned.</returns>
+        public static string TextBeforeLast(this string text, string value)
+        {
+            // todo: unit tests
+            return text.TextBeforeLast(value, null);
+        }
+
+        /// <summary>
+        /// Get the text before last occurrence of <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
+        /// <returns>The text before last occurrence of <paramref name="value"/>. If <paramref name="value"/> does not exist then <paramref name="defaultValue" /> is returned.</returns>
+        public static string TextBeforeLast(this string text, string value, string defaultValue)
+        {
+            // todo: unit tests
+            value.MustNotBeNull("value");
+
+            if (text.IsNullOrWhiteSpace())
+            {
+                return defaultValue;
+            }
+
+            return text.TextBefore(text.LastIndexOf(value), defaultValue);
         }
 
         /// <summary>
