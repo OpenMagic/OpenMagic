@@ -81,6 +81,7 @@
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomNumberTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
