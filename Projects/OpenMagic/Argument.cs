@@ -10,6 +10,18 @@ namespace OpenMagic
     /// </summary>
     public static class Argument
     {
+        public static T MustBeGreaterThan<T>(this T param, T greaterThan, string paramName) where T : IComparable<T>
+        {
+            // todo: unit tests
+
+            if (param.CompareTo(greaterThan) > 0)
+            {
+                return param;
+            }
+
+            throw new ArgumentOutOfRangeException(paramName, param, string.Format("Value must be greater than {0}.", greaterThan));
+        }
+
         /// <summary>
         /// Throws <see cref="ArgumentNullException"/> when <paramref name="param"/> is null.
         /// </summary>
