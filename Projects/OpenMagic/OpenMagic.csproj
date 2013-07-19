@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Argument.cs" />
     <Compile Include="Collections\Generic\EnumerableBase`1.cs" />
+    <Compile Include="Collections\Generic\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\Collections\Generic\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
