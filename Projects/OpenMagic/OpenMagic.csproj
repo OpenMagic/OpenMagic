@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OpenMagic</RootNamespace>
     <AssemblyName>OpenMagic</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <FodyPath>..\..\packages\Fody.1.13.8.0</FodyPath>
@@ -38,6 +39,7 @@
       <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net35\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +51,8 @@
     <Compile Include="CharacterSets.cs" />
     <Compile Include="Collections\Generic\EnumerableBase`1.cs" />
     <Compile Include="Collections\Generic\IEnumerableExtensions.cs" />
+    <Compile Include="DataAnnotations\UriAttribute.cs" />
+    <Compile Include="DataAnnotations\Validation.cs" />
     <Compile Include="Extensions\Collections\Generic\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
@@ -56,6 +60,9 @@
     <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="RandomNumber.cs" />
     <Compile Include="RandomString.cs" />
+    <Compile Include="Reflection\ObjectExtensions.cs" />
+    <Compile Include="Reflection\PropertyInfoExtensions.cs" />
+    <Compile Include="Reflection\Type.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
