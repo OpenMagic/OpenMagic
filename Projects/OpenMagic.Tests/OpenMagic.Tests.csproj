@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="ArgumentTests.cs" />
     <Compile Include="Collections\Generic\EnumerableBaseTests.cs" />
+    <Compile Include="Collections\Generic\IDictionaryExtensionsTests.cs" />
     <Compile Include="DataAnnotations\UriAttributeTests.cs" />
     <Compile Include="DataAnnotations\ValidationTests.cs" />
     <Compile Include="Extensions\Collections\Generic\IEnumerableExtensions.cs" />

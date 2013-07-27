@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Argument.cs" />
     <Compile Include="CharacterSets.cs" />
+    <Compile Include="Collections\Generic\IDictionaryExtensions.cs" />
     <Compile Include="Collections\Generic\EnumerableBase`1.cs" />
     <Compile Include="Collections\Generic\IEnumerableExtensions.cs" />
     <Compile Include="DataAnnotations\UriAttribute.cs" />
