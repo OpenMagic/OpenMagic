@@ -47,7 +47,7 @@ namespace OpenMagic.Tests.Collections.Generic
                 Action action = () => dictionary.FindValue(null);
 
                 // Then
-                action.ShouldThrow<ArgumentNullException>().WithMessage(string.Format("Value cannot be null.\r\nParameter name: {0}", "key"));
+                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("key");
             }
         }
     }
