@@ -6,6 +6,29 @@ namespace OpenMagic.Reflection
 {
     public static class ObjectExtensions
     {
+        public static MethodInfo Method<TObject>(this TObject obj, Expression<Action<TObject>> method)
+        {
+            obj.MustNotBeNull("obj");
+            method.MustNotBeNull("method");
+
+            // unit test for this argument test.
+            if (method.NodeType != ExpressionType.Lambda)
+            {
+                throw new ArgumentException(String.Format("method must be NodeType '{0}', not '{1}'.", ExpressionType.Lambda, method.NodeType), "method");
+            }
+
+            // unit test for this argument test.
+            if (method.Body.NodeType != ExpressionType.Call)
+            {
+                throw new ArgumentException(String.Format("method's Body.NodeType must be '{0}', not '{1}'.", ExpressionType.Call, method.Body.NodeType), "method");
+            }
+
+            var methodCall = (MethodCallExpression)method.Body;
+            var methodInfo = methodCall.Method;
+
+            return methodInfo;
+        }
+
         /// <summary>
         /// Get PropertyInfo a property via LINQ expression.
         /// </summary>
