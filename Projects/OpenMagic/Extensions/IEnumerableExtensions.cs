@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenMagic.Collections.Generic
+namespace OpenMagic.Extensions
 {
     public static class IEnumerableExtensions
     {

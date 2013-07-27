@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenMagic.Collections.Generic;
+using OpenMagic.Extensions;
 
-namespace OpenMagic.Tests.Collections.Generic
+namespace OpenMagic.Tests.Extensions
 {
     public class IDictionaryExtensionsTests
     {

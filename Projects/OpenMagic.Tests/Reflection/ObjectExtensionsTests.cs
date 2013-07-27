@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Reflection;
 using OpenMagic.DataAnnotations;
 
-namespace OpenMagic.Tests.Reflection
+namespace OpenMagic.Tests.Extensions
 {
     public class ObjectExtensionsTests
     {
