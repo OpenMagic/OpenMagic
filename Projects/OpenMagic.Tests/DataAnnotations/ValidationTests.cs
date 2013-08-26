@@ -1,8 +1,9 @@
-﻿using OpenMagic.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.ComponentModel.DataAnnotations;
+using OpenMagic.DataAnnotations;
 
 namespace OpenMagic.Tests.DataAnnotations
 {
@@ -19,7 +20,7 @@ namespace OpenMagic.Tests.DataAnnotations
 
                 // Then
                 action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Message.EndsWith("Parameter name: value");
+                    .Subject.Single().Message.EndsWith("Parameter name: value");
             }
 
             [TestMethod]

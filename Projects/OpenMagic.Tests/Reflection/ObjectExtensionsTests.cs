@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenMagic.Reflection;
 using OpenMagic.DataAnnotations;
+using OpenMagic.Reflection;
 
 namespace OpenMagic.Tests.Extensions
 {
@@ -90,7 +91,7 @@ namespace OpenMagic.Tests.Extensions
 
                 // Then
                 action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Message.EndsWith("Parameter name: obj");
+                    .Subject.Single().Message.EndsWith("Parameter name: obj");
             }
 
             [TestMethod]
@@ -104,7 +105,7 @@ namespace OpenMagic.Tests.Extensions
 
                 // Then
                 action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Message.EndsWith("Parameter name: property");
+                    .Subject.Single().Message.EndsWith("Parameter name: property");
             }
         }
     }

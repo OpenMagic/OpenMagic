@@ -1,7 +1,8 @@
-﻿using OpenMagic.Reflection;
+﻿using System;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using OpenMagic.Reflection;
 
 namespace OpenMagic.Tests.Reflection
 {
@@ -28,7 +29,7 @@ namespace OpenMagic.Tests.Reflection
 
                 // Then
                 action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Message.EndsWith("Parameter name: value");
+                    .Subject.Single().Message.EndsWith("Parameter name: value");
             }
         }
     }

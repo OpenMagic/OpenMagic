@@ -2,11 +2,46 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TestMagic;
 
 namespace OpenMagic.Tests
 {
     public class ArgumentsTests
     {
+        [TestClass]
+        public class Must
+        {
+            [TestMethod]
+            public void ShouldThrowNotArgumentExceptionWhenAssertionResultIsTrue()
+            {
+                // Given
+                var argument = 1;
+                var exceptionMessage = "Value must be 1.";
+                var paramName = "argument";
+                                
+                // When
+                Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
+
+                // Then
+                action.ShouldNotThrow<ArgumentException>();
+            }
+
+            [TestMethod]
+            public void ShouldThrowArgumentExceptionWhenAssertionResultIsFalse()
+            {
+                // Given
+                var argument = 0;
+                var exceptionMessage = "Value must be 1.";
+                var paramName = "argument";
+
+                // When
+                Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
+
+                // Then
+                action.ShouldThrow<ArgumentException>().WithMessage("Value must be 1.\r\nParameter name: argument");
+            }
+        }
+
         [TestClass]
         public class MustNotBeNull
         {

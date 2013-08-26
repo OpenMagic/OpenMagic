@@ -10,6 +10,25 @@ namespace OpenMagic
     /// </summary>
     public static class Argument
     {
+        /// <summary>
+        /// Throws <see cref="ArgumentException"/> when assertion on <paramref name="param"/> has failed.
+        /// </summary>
+        /// <typeparam name="T">The <paramref name="param"/> type.</typeparam>
+        /// <param name="param">The value that was tested.</param>
+        /// <param name="assertionResult">The result of the assertion on <paramref name="param"/>.</param>
+        /// <param name="message">The exception message to use when <paramref name="assertionResult"/> is false.</param>
+        /// <param name="paramName">The name of the parameter being tested.</param>
+        /// <returns>Returns <paramref name="param"/> when the value is not null.</returns>
+        public static T Must<T>(this T param, bool assertionResult, string message, string paramName)
+        {
+            if (!assertionResult)
+            {
+                throw new ArgumentException(message, paramName);
+            }
+
+            return param;
+        }
+
         public static T MustBeGreaterThan<T>(this T param, T greaterThan, string paramName) where T : IComparable<T>
         {
             // todo: unit tests
