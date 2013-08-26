@@ -10,6 +10,36 @@ namespace OpenMagic.Tests.Reflection
     public class PropertyInfoExtensionsTests
     {
         [TestClass]
+        public class GetCustomAttribute
+        {
+            [TestMethod]
+            public void ShouldReturnNullWhenPropertyIsNotDecoratedWithAttribute()
+            {
+                // Given
+                var propertyInfo = Type<TestClass>.Property(x => x.HasNoAttributes);
+
+                // When
+                var attribute = propertyInfo.GetCustomAttribute<RequiredAttribute>();
+
+                // Then
+                attribute.Should().BeNull();
+            }
+
+            [TestMethod]
+            public void ShouldReturnAttributeWhenPropertyIsDecoratedWithAttribute()
+            {
+                // Given
+                var propertyInfo = Type<TestClass>.Property(x => x.HasRequiredAttribute);
+
+                // When
+                var attribute = propertyInfo.GetCustomAttribute<RequiredAttribute>();
+
+                // Then
+                attribute.Should().NotBeNull().And.BeOfType<RequiredAttribute>();
+            }
+        }
+
+        [TestClass]
         public class IsDecoratedWith
         {
             [TestMethod]
