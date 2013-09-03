@@ -8,9 +8,6 @@ namespace OpenMagic.Reflection
     {
         public static MethodInfo Method<TObject>(this TObject obj, Expression<Action<TObject>> method)
         {
-            obj.MustNotBeNull("obj");
-            method.MustNotBeNull("method");
-
             // unit test for this argument test.
             if (method.NodeType != ExpressionType.Lambda)
             {
@@ -34,9 +31,6 @@ namespace OpenMagic.Reflection
         /// </summary>
         public static PropertyInfo Property<TObject, TProperty>(this TObject obj, Expression<Func<TObject, TProperty>> property)
         {
-            obj.MustNotBeNull("obj");
-            property.MustNotBeNull("property");
-
             if (property.NodeType != ExpressionType.Lambda)
             {
                 throw new ArgumentException(String.Format("Property must be NodeType '{0}', not '{1}'.", ExpressionType.Lambda, property.NodeType), "property");

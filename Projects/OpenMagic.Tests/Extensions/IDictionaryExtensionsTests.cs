@@ -37,18 +37,6 @@ namespace OpenMagic.Tests.Extensions
                 dictionary.FindValue(2).Should().BeNull();
             }
 
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_key_IsNull()
-            {
-                // Given
-                var dictionary = new Dictionary<string, string>();
-
-                // When
-                Action action = () => dictionary.FindValue(null);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("key");
-            }
         }
     }
 }

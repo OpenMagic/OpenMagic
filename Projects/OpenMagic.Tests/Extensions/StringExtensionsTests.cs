@@ -16,12 +16,6 @@ namespace OpenMagic.Tests.Extensions
         public class GetValuesBetween
         {
             [TestMethod]
-            public void Argument_delimiter_CannotBeNull()
-            {
-                ShouldThrow_ArgumentNullException_For_delimiter(null);
-            }
-
-            [TestMethod]
             public void Argument_delimiter_CannotBeEmpty()
             {
                 ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(string.Empty);
@@ -272,21 +266,6 @@ namespace OpenMagic.Tests.Extensions
 
                 // Then
                 textWriter.ToString().Should().Be("");
-            }
-
-            [TestMethod]
-            public void ThrowsArgumentNullExceptionWhen_textWriter_IsNull()
-            {
-                // Given
-                var value = "";
-                TextWriter textWriter = null;
-                var trimLines = true;
-
-                // When
-                Action action = ()=> value.WriteLines(textWriter, trimLines);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: textWriter");
             }
         }
     }

@@ -37,31 +37,6 @@ namespace OpenMagic.Tests.Extensions
                 // Then
                 methodInfo.Name.Should().Be("IsValid");
             }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_obj_IsNull()
-            {
-                // Given
-
-                // When
-                Action action = () => ObjectExtensions.Method<object>(obj: null, method: null);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("obj");
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_method_IsNull()
-            {
-                // Given
-                var obj = new Exception();
-
-                // When
-                Action action = () => obj.Method<Exception>(method: null);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("method");
-            }
         }
 
         [TestClass]
@@ -78,34 +53,6 @@ namespace OpenMagic.Tests.Extensions
 
                 // Then
                 propertyInfo.Name.Should().Be("Message");
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhenObjIsNull()
-            {
-                // Given
-                Exception obj = null;
-
-                // When
-                Action action = () => obj.Property<Exception, object>(null);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Single().Message.EndsWith("Parameter name: obj");
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhenPropertyIsNull()
-            {
-                // Given
-                var obj = new Exception();
-
-                // When
-                Action action = () => obj.Property<Exception, object>(null);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Single().Message.EndsWith("Parameter name: property");
             }
         }
     }

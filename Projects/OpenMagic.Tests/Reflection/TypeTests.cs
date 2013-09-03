@@ -20,17 +20,6 @@ namespace OpenMagic.Tests.Reflection
                 // Then
                 propertyInfo.Name.Should().Be("Message");
             }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhenValueIsNull()
-            {
-                // When
-                Action action = () => Type<Exception>.Property<object>(null);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Single().Message.EndsWith("Parameter name: value");
-            }
         }
     }
 }

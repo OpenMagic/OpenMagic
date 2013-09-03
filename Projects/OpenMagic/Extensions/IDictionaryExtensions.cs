@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NullGuard;
 
 namespace OpenMagic.Extensions
 {
@@ -14,10 +15,9 @@ namespace OpenMagic.Extensions
         /// <param name="dictionary">The dictionary to search.</param>
         /// <param name="key">The key of the value to find.</param>
         /// <returns>The value associated with the specified key, if the key is found; otherwise, the default value for the type of the value parameter.</returns>
+        [return: AllowNull] 
         public static TValue FindValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
-            key.MustNotBeNull("key");
-
             TValue value;
 
             dictionary.TryGetValue(key, out value);

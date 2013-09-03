@@ -57,21 +57,6 @@ namespace OpenMagic.Tests
                 // Then
                 value.Should().Be(param);
             }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_param_IsNull()
-            {
-                // Given
-                Exception param = null;
-
-                // When
-                Action action = () => Argument.MustNotBeNull(param, "fakeParamName");
-
-                // Then
-                action
-                    .ShouldThrow<ArgumentNullException>()
-                    .WithMessage("Value cannot be null.\r\nParameter name: fakeParamName");
-            }
         }
 
         [TestClass]
@@ -88,21 +73,6 @@ namespace OpenMagic.Tests
 
                 // Then
                 value.Should().Be(param);
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_param_IsNull()
-            {
-                // Given
-                Exception param = null;
-
-                // When
-                Action action = () => param.MustNotBeNull("fakeParamName");
-
-                // Then
-                action
-                    .ShouldThrow<ArgumentNullException>()
-                    .WithMessage("Value cannot be null.\r\nParameter name: fakeParamName");
             }
         }
 
@@ -123,22 +93,7 @@ namespace OpenMagic.Tests
             }
 
             [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_param_IsNull()
-            {
-                // Given
-                List<int> param = null;
-
-                // When
-                Action action = () => Argument.MustNotBeNullOrEmpty<int>(param, "fakeParamName");
-
-                // Then
-                action
-                    .ShouldThrow<ArgumentNullException>()
-                    .WithMessage("Value cannot be null.\r\nParameter name: fakeParamName");
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_param_IsEmpty()
+            public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
             {
                 // Given
                 List<int> param = new List<int>();
@@ -170,22 +125,7 @@ namespace OpenMagic.Tests
             }
 
             [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_param_IsNull()
-            {
-                // Given
-                List<int> param = null;
-
-                // When
-                Action action = () => param.MustNotBeNullOrEmpty<int>("fakeParamName");
-
-                // Then
-                action
-                    .ShouldThrow<ArgumentNullException>()
-                    .WithMessage("Value cannot be null.\r\nParameter name: fakeParamName");
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_param_IsEmpty()
+            public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
             {
                 // Given
                 List<int> param = new List<int>();
@@ -214,21 +154,6 @@ namespace OpenMagic.Tests
 
                 // Then
                 value.Should().Be(param);
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_param_IsNull()
-            {
-                // Given
-                string param = null;
-
-                // When
-                Action action = () => Argument.MustNotBeNullOrWhiteSpace(param, "fakeParamName");
-
-                // Then
-                action
-                    .ShouldThrow<ArgumentNullException>()
-                    .WithMessage("Value cannot be null.\r\nParameter name: fakeParamName");
             }
 
             [TestMethod]
@@ -261,21 +186,6 @@ namespace OpenMagic.Tests
 
                 // Then
                 value.Should().Be(param);
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhen_param_IsNull()
-            {
-                // Given
-                string param = null;
-
-                // When
-                Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
-
-                // Then
-                action
-                    .ShouldThrow<ArgumentNullException>()
-                    .WithMessage("Value cannot be null.\r\nParameter name: fakeParamName");
             }
 
             [TestMethod]

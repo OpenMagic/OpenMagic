@@ -67,8 +67,6 @@ namespace OpenMagic
         /// <returns>Returns <paramref name="param"/> when the value is not null.</returns>
         public static IEnumerable<T> MustNotBeNullOrEmpty<T>(this IEnumerable<T> param, string paramName)
         {
-            Argument.MustNotBeNull(param, paramName);
-
             if (!param.Any())
             {
                 throw new ArgumentException("Value cannot be empty.", paramName);
@@ -86,8 +84,6 @@ namespace OpenMagic
         /// <returns>Returns <paramref name="param"/> when the value is not null or whitespace.</returns>
         public static string MustNotBeNullOrWhiteSpace(this string param, string paramName)
         {
-            Argument.MustNotBeNull(param, paramName);
-
             if (param.IsNullOrWhiteSpace())
             {
                 throw new ArgumentException("Value cannot be whitespace.", paramName);

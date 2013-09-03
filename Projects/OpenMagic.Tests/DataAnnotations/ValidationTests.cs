@@ -13,17 +13,6 @@ namespace OpenMagic.Tests.DataAnnotations
         public class Validate
         {
             [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhenValueIsNull()
-            {
-                // When
-                Action action = () => Validation.Validate<object>(null);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Single().Message.EndsWith("Parameter name: value");
-            }
-
-            [TestMethod]
             public void ShouldThrowValidationExceptionWhenValueIsNotValid()
             {
                 // Given

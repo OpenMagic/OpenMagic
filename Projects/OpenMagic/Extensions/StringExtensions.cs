@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Common.Logging;
+using NullGuard;
 
 namespace OpenMagic.Extensions
 {
@@ -43,12 +44,11 @@ namespace OpenMagic.Extensions
         /// <example>
         /// GetValuesBetween("a 'quick' brown 'fox'") => { "quick", "fox }.
         /// </example>
-        public static IEnumerable<string> GetValuesBetween(this string value, string delimiter)
+        public static IEnumerable<string> GetValuesBetween([AllowNull] this string value, string delimiter)
         {
             log.Trace(m => m("GetValuesBetween(value: '{0}', delimiter: '{1}')", value, delimiter));
 
             // todo: replace with Argument.MustNotBeNull() or similar.
-            if (delimiter == null) { throw new ArgumentNullException("delimiter"); }
             if (delimiter.IsNullOrWhiteSpace()) { throw new ArgumentException("Value cannot be whitespace.", "delimiter"); }
             if (delimiter.Length > 1) { throw new ArgumentException("Value cannot be longer than 1 character.", "delimiter"); }
 
@@ -76,7 +76,7 @@ namespace OpenMagic.Extensions
         /// <remarks>
         /// Syntactic sugar.
         /// </remarks>
-        public static bool IsNullOrWhiteSpace(this string value)
+        public static bool IsNullOrWhiteSpace([AllowNull] this string value)
         {
             return (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(value.Trim()));
         }
@@ -209,8 +209,6 @@ namespace OpenMagic.Extensions
         public static string TextAfterLast(this string text, string value, string defaultValue)
         {
             // todo: unit tests
-            value.MustNotBeNull("value");
-
             if (text.IsNullOrWhiteSpace())
             {
                 return defaultValue;
@@ -238,8 +236,6 @@ namespace OpenMagic.Extensions
         public static string TextBefore(this string text, string value, string defaultValue)
         {
             // todo: unit tests
-            value.MustNotBeNull("value");
-
             if (text.IsNullOrWhiteSpace())
             {
                 return defaultValue;
@@ -289,8 +285,6 @@ namespace OpenMagic.Extensions
         public static string TextBeforeLast(this string text, string value, string defaultValue)
         {
             // todo: unit tests
-            value.MustNotBeNull("value");
-
             if (text.IsNullOrWhiteSpace())
             {
                 return defaultValue;
@@ -304,7 +298,7 @@ namespace OpenMagic.Extensions
         /// </summary>
         /// <param name="value">The string to split into lines.</param>
         /// <param name="trimLines">If true the lines are trimmed.</param>
-        public static IEnumerable<string> ToLines(this string value, bool trimLines = false)
+        public static IEnumerable<string> ToLines([AllowNull] this string value, bool trimLines = false)
         {
             if (value == null)
             {
@@ -339,10 +333,8 @@ namespace OpenMagic.Extensions
         /// <param name="value">The string value to split into lines.</param>
         /// <param name="textWriter">The <see cref="TextWriter"/> to write to.</param>
         /// <param name="trimLines">When true the lines are trimmed before writing to <see cref="TextWriter"/>.</param>
-        public static void WriteLines(this string value, TextWriter textWriter, bool trimLines = false)
+        public static void WriteLines([AllowNull] this string value, TextWriter textWriter, bool trimLines = false)
         {
-            Argument.MustNotBeNull(textWriter, "textWriter");
-
             if (value == null)
             {
                 return;

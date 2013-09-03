@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using NullGuard;
 
 namespace OpenMagic.DataAnnotations
 {
@@ -8,7 +9,7 @@ namespace OpenMagic.DataAnnotations
     /// </summary>
     public class UriAttribute : ValidationAttribute
     {
-        public override bool IsValid(object value)
+        public override bool IsValid([AllowNull] object value)
         {
             if ((value == null) || (value is string && string.IsNullOrWhiteSpace(value.ToString())))
             {

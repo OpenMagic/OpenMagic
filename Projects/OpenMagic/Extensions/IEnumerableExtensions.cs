@@ -35,9 +35,6 @@ namespace OpenMagic.Extensions
         public static T RandomItem<T>(this IEnumerable<T> list, T doesNotEqual)
         {
             // todo: unit tests
-
-            list.MustNotBeNull("list");
-
             T thisItem = RandomItem(list);
 
             while (thisItem.Equals(doesNotEqual))

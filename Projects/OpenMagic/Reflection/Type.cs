@@ -11,8 +11,6 @@ namespace OpenMagic.Reflection
         /// </summary>
         public static PropertyInfo Property<TValue>(Expression<Func<T, TValue>> value)
         {
-            value.MustNotBeNull("value");
-
             if (value.NodeType != ExpressionType.Lambda)
             {
                 throw new ArgumentException(String.Format("Value must be NodeType '{0}', not '{1}'.", ExpressionType.Lambda, value.NodeType), "value");

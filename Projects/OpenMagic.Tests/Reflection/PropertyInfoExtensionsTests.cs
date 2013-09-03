@@ -67,17 +67,6 @@ namespace OpenMagic.Tests.Reflection
                 // Then
                 result.Should().BeFalse();
             }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhenValueIsNull()
-            {
-                // When
-                Action action = () => PropertyInfoExtensions.IsDecoratedWith<RequiredAttribute>(null);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Single().Message.EndsWith("Parameter name: value");                    
-            }
         }
 
         [TestClass]
@@ -107,17 +96,6 @@ namespace OpenMagic.Tests.Reflection
 
                 // Then
                 result.Should().BeFalse();
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWhenValueIsNull()
-            {
-                // When
-                Action action = () => PropertyInfoExtensions.IsRequired(null);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>()
-                    .Subject.Single().Message.EndsWith("Parameter name: value");
             }
         }
 
