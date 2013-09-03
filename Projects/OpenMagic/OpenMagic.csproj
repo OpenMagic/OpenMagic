@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Argument.cs" />
     <Compile Include="CharacterSets.cs" />
+    <Compile Include="Collections\Generic\Cache`1.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Collections\Generic\EnumerableBase`1.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />

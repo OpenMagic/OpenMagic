@@ -80,6 +80,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ArgumentTests.cs" />
+    <Compile Include="Collections\Generic\CacheTests.cs" />
     <Compile Include="Collections\Generic\EnumerableBaseTests.cs" />
     <Compile Include="Extensions\IDictionaryExtensionsTests.cs" />
     <Compile Include="DataAnnotations\UriAttributeTests.cs" />
