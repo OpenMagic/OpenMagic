@@ -25,6 +25,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,10 +35,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net35\Common.Logging.dll</HintPath>
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="NullGuard">
       <HintPath>..\..\packages\NullGuard.Fody.0.7.1\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\NullGuard.dll</HintPath>
@@ -55,6 +59,11 @@
     <Compile Include="CharacterSets.cs" />
     <Compile Include="Collections\Generic\Cache`1.cs" />
     <Compile Include="Collections\Generic\TypeCache`1.cs" />
+    <Compile Include="DataAnnotations\ClassMetadata`1.cs" />
+    <Compile Include="DataAnnotations\IClassMetadata.cs" />
+    <Compile Include="DataAnnotations\IPropertyMetadata.cs" />
+    <Compile Include="DataAnnotations\ClassMetadata.cs" />
+    <Compile Include="DataAnnotations\PropertyMetadata.cs" />
     <Compile Include="Extensions\IDictionaryExtensions.cs" />
     <Compile Include="Collections\Generic\EnumerableBase`1.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />

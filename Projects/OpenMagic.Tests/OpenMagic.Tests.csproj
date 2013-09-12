@@ -83,6 +83,8 @@
     <Compile Include="Collections\Generic\CacheTests.cs" />
     <Compile Include="Collections\Generic\TypeCacheTests.cs" />
     <Compile Include="Collections\Generic\EnumerableBaseTests.cs" />
+    <Compile Include="DataAnnotations\PropertyMetadataTests.cs" />
+    <Compile Include="DataAnnotations\ClassMetadataTests.cs" />
     <Compile Include="Extensions\IDictionaryExtensionsTests.cs" />
     <Compile Include="DataAnnotations\UriAttributeTests.cs" />
     <Compile Include="DataAnnotations\ValidationTests.cs" />
