@@ -11,19 +11,9 @@ namespace OpenMagic.DataAnnotations
             this.IsPublic = isPublic;
         }
 
-        public string Label
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
         public string Name
         {
             get { return this.PropertyInfo.Name; }
-        }
-
-        public string Placeholder
-        {
-            get { throw new System.NotImplementedException(); }
         }
 
         public PropertyInfo PropertyInfo { get; private set; }
