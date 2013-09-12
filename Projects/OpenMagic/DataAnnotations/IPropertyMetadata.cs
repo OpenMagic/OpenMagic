@@ -7,7 +7,6 @@ namespace OpenMagic.DataAnnotations
     {
         bool IsPublic { get; }
         bool IsNotPublic { get; }
-        string Name { get; }
         PropertyInfo PropertyInfo { get;  }
     }
 }

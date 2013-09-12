@@ -85,24 +85,5 @@ namespace OpenMagic.Tests.DataAnnotations
                 isPublic.Should().BeFalse();
             }
         }
-
-        [TestClass]
-        public class Name : PropertyMetadataTests
-        {
-            [TestMethod]
-            public void ShouldReturnPropertyName()
-            {
-                // Given
-                var propertyName = "Message";
-                var property = typeof(Exception).GetProperty(propertyName);
-                var metadata = new PropertyMetadata(property, isPublic: true);
-
-                // When
-                var name = metadata.Name;
-
-                // Then
-                name.Should().Be(propertyName);
-            }
-        }
     }
 }

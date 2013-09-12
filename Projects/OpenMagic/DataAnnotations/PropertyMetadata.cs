@@ -11,11 +11,6 @@ namespace OpenMagic.DataAnnotations
             this.IsPublic = isPublic;
         }
 
-        public string Name
-        {
-            get { return this.PropertyInfo.Name; }
-        }
-
         public PropertyInfo PropertyInfo { get; private set; }
 
         public bool IsPublic { get; private set; }

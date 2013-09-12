@@ -50,7 +50,7 @@ namespace OpenMagic.DataAnnotations
         {
             propertyName.MustNotBeNullOrWhiteSpace("propertyName");
 
-            var property = this.Properties.Value.SingleOrDefault(p => p.Name == propertyName);
+            var property = this.Properties.Value.SingleOrDefault(p => p.PropertyInfo.Name == propertyName);
 
             if (property != null)
             {
