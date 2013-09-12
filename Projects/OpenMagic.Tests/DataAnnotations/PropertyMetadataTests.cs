@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
@@ -19,6 +20,36 @@ namespace OpenMagic.Tests.DataAnnotations
                 GWT.Given("testing constructor")
                     .When(x => new PropertyMetadata(property: null, isPublic: true))
                     .Then<ArgumentNullException>().ShouldBeThrown().ForParameter("property");
+            }
+        }
+
+        [TestClass]
+        public class Display : PropertyMetadataTests
+        {
+            [TestMethod]
+            public void ShouldReturnTheDisplayAttributeAssociatedToAProperty()
+            {
+                // Given
+                var metadata = ClassMetadata.GetProperty<TestClassWithDisplayAttribute, int>(x => x.HasDisplayAttribute);
+
+                // When
+                var display = metadata.Display;
+
+                // Then
+                display.Should().NotBeNull();
+            }
+
+            [TestMethod]
+            public void ShouldReturnADefaultDisplayAttributeForAPropertyThatDoesNotHaveADisplayAttribute()
+            {
+                // Given
+                var metadata = ClassMetadata.GetProperty<TestClassWithDisplayAttribute, int>(x => x.DoesNotHaveDisplayAttribute);
+
+                // When
+                var display = metadata.Display;
+
+                // Then
+                display.Should().NotBeNull();
             }
         }
 
@@ -84,6 +115,14 @@ namespace OpenMagic.Tests.DataAnnotations
                 // Then
                 isPublic.Should().BeFalse();
             }
+        }
+
+        private class TestClassWithDisplayAttribute
+        {
+            [Display]
+            public int HasDisplayAttribute { get; set; }
+
+            public int DoesNotHaveDisplayAttribute { get; set; }
         }
     }
 }
