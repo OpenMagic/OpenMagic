@@ -1,4 +1,5 @@
 $ErrorActionPreference = "Stop"
+$project = "OpenMagic"
 
 function GetWebHook()
 {
@@ -11,7 +12,7 @@ function GetWebHook()
     }
 
     $config = get-content -Path $configFile | ConvertFrom-StringData
-    $url = $config.get_item("OpenMagic.BuildServices.WebHook")
+    $url = $config.get_item("$project.BuildServices.WebHook")
     
     return $url
 }
