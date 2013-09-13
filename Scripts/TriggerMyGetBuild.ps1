@@ -8,12 +8,21 @@ function GetWebHook()
 
     if (!(Test-Path $configFile))
     {
-        throw "Cannot find $configFile config file. It is simple hash table for values that should not be stored in source code repository."
+        throw "Cannot find config file $configFile. It is simple hash table for values that should not be stored in source code repository."
     }
 
-    $config = get-content -Path $configFile | ConvertFrom-StringData
-    $url = $config.get_item("$project.BuildServices.WebHook")
+    # Strongly typing $config ensures an exception will be thrown if the format of config file is incorrect.
+    [System.Collections.Hashtable]$config = (Get-Content $configFile) -join "`n" | ConvertFrom-StringData
+
+    $configKey = "$project.BuildServices.WebHook"
+
+    if (!$config.ContainsKey($configKey))
+    {
+        throw "Cannot find $configKey in config file $configFile."
+    }
     
+    $url = $config.Item($configKey)
+
     return $url
 }
 
