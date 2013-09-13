@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace OpenMagic.Tests
@@ -14,6 +12,25 @@ namespace OpenMagic.Tests
         public static void AssemblyInit(TestContext context)
         {
             NLogHack.Execute();
+        }
+
+        public static DirectoryInfo GetPackagesFolder(string packageName)
+        {
+            var packagesFolder = Assembly.GetPackagesRootFolder();
+            var folders = packagesFolder.GetDirectories(packageName + "*");
+
+            if (folders.Count() == 1)
+            {
+                return folders.First();
+            }
+            else if (folders.Count() == 0)
+            {
+                throw new DirectoryNotFoundException(string.Format("Cannot find {1} package folder in {0}.", packagesFolder.FullName, packageName));
+            }
+            else
+            {
+                throw new IOException(string.Format("Cannot handle more than one {1} package folder in {0}.", packagesFolder.FullName, packageName));
+            }
         }
 
         public static DirectoryInfo GetPackagesRootFolder()

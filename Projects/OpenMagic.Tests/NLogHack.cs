@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace OpenMagic.Tests
 {
+    /// <summary>
+    /// 13 Sep 2013
+    /// 
+    /// For some reason NLog related DLLs are not copied when using the build script. Maybe Visual Studio 2013 bug.
+    /// </summary>
     public static class NLogHack
     {
         public static void Execute()
@@ -25,19 +27,17 @@ namespace OpenMagic.Tests
 
         private static FileInfo GetCommonNLogFileInfo()
         {
-            var fileInfo = new FileInfo(Path.Combine(GetCommonNLogPackagesFolder().FullName, @"lib\net40\Common.Logging.NLog20.dll"));
-
-            if (fileInfo.Exists)
-            {
-                return fileInfo;
-            }
-
-            throw new FileNotFoundException(string.Format("Cannot find {0}.", fileInfo.FullName), fileInfo.FullName);
+            return GetFileInfo(Path.Combine(GetCommonNLogPackagesFolder().FullName, @"lib\net40\Common.Logging.NLog20.dll"));
         }
 
         private static FileInfo GetNLogFileInfo()
         {
-            var fileInfo = new FileInfo(Path.Combine(GetNLogPackagesFolder().FullName, @"lib\net40\NLog.dll"));
+            return GetFileInfo(Path.Combine(GetNLogPackagesFolder().FullName, @"lib\net40\NLog.dll"));
+        }
+
+        private static FileInfo GetFileInfo(string fileName)
+        {
+            var fileInfo = new FileInfo(fileName);
 
             if (fileInfo.Exists)
             {
@@ -49,42 +49,12 @@ namespace OpenMagic.Tests
 
         private static DirectoryInfo GetCommonNLogPackagesFolder()
         {
-            var packagesFolder = Assembly.GetPackagesRootFolder();
-            var folders = packagesFolder.GetDirectories("Common.Logging.NLog20*");
-
-            if (folders.Count() == 1)
-            {
-                return folders.First();
-            }
-            else if (folders.Count() == 0)
-            {
-                throw new DirectoryNotFoundException(string.Format("Cannot find Common.Logging.NLog20 packages folder in {0}.", packagesFolder.FullName));
-            }
-            else
-            {
-                throw new IOException(string.Format("Cannot handle more than one Common.Logging.NLog20 packages folder in {0}.", packagesFolder.FullName));
-            }
+            return Assembly.GetPackagesFolder("Common.Logging.NLog20");
         }
 
         private static DirectoryInfo GetNLogPackagesFolder()
         {
-            var packagesFolder = Assembly.GetPackagesRootFolder();
-            var folders = packagesFolder.GetDirectories("NLog*");
-
-            if (folders.Count() == 1)
-            {
-                return folders.First();
-            }
-            else if (folders.Count() == 0)
-            {
-                throw new DirectoryNotFoundException(string.Format("Cannot find NLog packages folder in {0}.", packagesFolder.FullName));
-            }
-            else
-            {
-                throw new IOException(string.Format("Cannot handle more than one NLog packages folder in {0}.", packagesFolder.FullName));
-            }
+            return Assembly.GetPackagesFolder("NLog*");
         }
-
-
     }
 }
