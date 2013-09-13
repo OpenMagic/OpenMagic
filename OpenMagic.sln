@@ -12,22 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7218F2
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeCoverage", "CodeCoverage", "{EBBA054A-8D47-4993-AE53-E30DD973384C}"
-	ProjectSection(SolutionItems) = preProject
-		CodeCoverage\CodeCoverage.bat = CodeCoverage\CodeCoverage.bat
-		CodeCoverage\OpenMagic.CodeCoverage.bat = CodeCoverage\OpenMagic.CodeCoverage.bat
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E55564A-C382-4A6B-A1EE-9CCDEACB51A3}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
 		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{6A35F326-A702-4226-88DA-E12CE70BA839}"
-	ProjectSection(SolutionItems) = preProject
-		Build\BuildTasks.ps1 = Build\BuildTasks.ps1
-		Build\README.md = Build\README.md
 	EndProjectSection
 EndProject
 Global
