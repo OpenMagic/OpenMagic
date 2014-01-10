@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+        <id>OpenMagic</id>
+        <version>$version$</version>
+        <title>OpenMagic</title>
+        <authors>Tim Murphy</authors>
+        <owners>Tim Murphy</owners>
+        <licenseUrl>https://github.com/OpenMagic/OpenMagic/blob/master/LICENSE.txt</licenseUrl>
+        <projectUrl>https://github.com/OpenMagic/OpenMagic</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Collection of utility classes by Tim Murphy.</description>
+        <copyright>Copyright (c) 2013-2014 Tim Murphy</copyright>
+    </metadata>
+    <files>
+        <file src="..\Projects\OpenMagic\bin\Release\OpenMagic.*" target="lib/net40"/>
+    </files>
+</package>
