@@ -46,16 +46,29 @@ namespace OpenMagic.Tests
         public class MustNotBeNull
         {
             [TestMethod]
-            public void ShouldReturn_param_When_param_IsNotNull()
+            public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
             {
                 // Given
-                var param = 1;
+                var parameterValue = 1;
 
                 // When
-                var value = Argument.MustNotBeNull(param, "param");
+                var value = Argument.MustNotBeNull(parameterValue, "parameterValue");
 
                 // Then
-                value.Should().Be(param);
+                value.Should().Be(parameterValue);
+            }
+
+            [TestMethod]
+            public void ShouldThrowArgumentNullExceptionWithParameterNameWhenParameterValueIsNull()
+            {
+                // Given
+                const string parameterName = "fakeParameterName";
+
+                // When
+                Action action = () => Argument.MustNotBeNull<Exception>(param: null, paramName: parameterName);
+
+                // Then
+                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be(parameterName);
             }
         }
 
@@ -63,16 +76,16 @@ namespace OpenMagic.Tests
         public class MustNotBeNull_AsExtensionMethod
         {
             [TestMethod]
-            public void ShouldReturn_param_When_param_IsNotNull()
+            public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
             {
                 // Given
-                var param = 1;
+                var parameterValue = 1;
 
                 // When
-                var value = param.MustNotBeNull("param");
+                var value = parameterValue.MustNotBeNull("parameterValue");
 
                 // Then
-                value.Should().Be(param);
+                value.Should().Be(parameterValue);
             }
         }
 
@@ -80,26 +93,26 @@ namespace OpenMagic.Tests
         public class MustNotBeNullOrEmpty
         {
             [TestMethod]
-            public void ShouldReturn_param_When_param_IsNotNull()
+            public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
             {
                 // Given
-                List<int> param = new List<int>(new int[] { 1, 2 });
+                List<int> parameterValue = new List<int>(new int[] { 1, 2 });
 
                 // When
-                var value = Argument.MustNotBeNullOrEmpty(param, "fakeParamName");
+                var value = Argument.MustNotBeNullOrEmpty(parameterValue, "fakeParamName");
 
                 // Then
-                value.Should().BeEquivalentTo(param);
+                value.Should().BeEquivalentTo(parameterValue);
             }
 
             [TestMethod]
             public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
             {
                 // Given
-                List<int> param = new List<int>();
+                List<int> parameterValue = new List<int>();
 
                 // When
-                Action action = () => Argument.MustNotBeNullOrEmpty<int>(param, "fakeParamName");
+                Action action = () => Argument.MustNotBeNullOrEmpty<int>(parameterValue, "fakeParamName");
 
                 // Then
                 action

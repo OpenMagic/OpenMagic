@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NullGuard;
 using OpenMagic.Extensions;
 
 namespace OpenMagic
@@ -48,7 +49,7 @@ namespace OpenMagic
         /// <param name="param">The value to test for null.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param"/> when the value is not null.</returns>
-        public static T MustNotBeNull<T>(this T param, string paramName)
+        public static T MustNotBeNull<T>([AllowNull] this T param, string paramName)
         {
             if (param == null)
             {
@@ -65,8 +66,10 @@ namespace OpenMagic
         /// <param name="param">The value to test for null or empty.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param"/> when the value is not null.</returns>
-        public static IEnumerable<T> MustNotBeNullOrEmpty<T>(this IEnumerable<T> param, string paramName)
+        public static IEnumerable<T> MustNotBeNullOrEmpty<T>([AllowNull] this IEnumerable<T> param, string paramName)
         {
+            param.MustNotBeNull(paramName);
+
             if (!param.Any())
             {
                 throw new ArgumentException("Value cannot be empty.", paramName);
@@ -82,8 +85,10 @@ namespace OpenMagic
         /// <param name="param">The value to test for null or whitespace.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param"/> when the value is not null or whitespace.</returns>
-        public static string MustNotBeNullOrWhiteSpace(this string param, string paramName)
+        public static string MustNotBeNullOrWhiteSpace([AllowNull] this string param, string paramName)
         {
+            param.MustNotBeNull(paramName);
+
             if (param.IsNullOrWhiteSpace())
             {
                 throw new ArgumentException("Value cannot be whitespace.", paramName);
