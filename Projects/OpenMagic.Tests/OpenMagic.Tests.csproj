@@ -58,9 +58,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TestMagic, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TestMagic, Version=0.1.14.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\TestMagic.0.1.13\lib\net40\TestMagic.dll</HintPath>
+      <HintPath>..\..\packages\TestMagic.0.1.14\lib\net40\TestMagic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
