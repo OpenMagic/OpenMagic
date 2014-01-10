@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Common.Logging;
 using NullGuard;
 
 namespace OpenMagic.Extensions
 {
     public static class StringExtensions
     {
-        private static readonly ILog log = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// Determines whether <paramref name="value"/> contains <paramref name="find"/>.
         /// </summary>
@@ -46,8 +43,6 @@ namespace OpenMagic.Extensions
         /// </example>
         public static IEnumerable<string> GetValuesBetween([AllowNull] this string value, string delimiter)
         {
-            log.Trace(m => m("GetValuesBetween(value: '{0}', delimiter: '{1}')", value, delimiter));
-
             // todo: replace with Argument.MustNotBeNull() or similar.
             if (delimiter.IsNullOrWhiteSpace()) { throw new ArgumentException("Value cannot be whitespace.", "delimiter"); }
             if (delimiter.Length > 1) { throw new ArgumentException("Value cannot be longer than 1 character.", "delimiter"); }
