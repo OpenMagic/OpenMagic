@@ -46,19 +46,21 @@
     <Reference Include="Common.Logging.NLog20">
       <HintPath>..\..\packages\Common.Logging.NLog20.2.1.2\lib\net40\Common.Logging.NLog20.dll</HintPath>
     </Reference>
-    <Reference Include="FluentAssertions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+    <Reference Include="FluentAssertions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.2.1.0.0\lib\net40\FluentAssertions.dll</HintPath>
+      <HintPath>..\..\packages\FluentAssertions.2.2.0.0\lib\net40\FluentAssertions.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\..\packages\NLog.2.0.1.2\lib\net40\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NLog.2.1.0\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TestMagic">
-      <HintPath>..\..\packages\TestMagic.0.1.5\lib\TestMagic.dll</HintPath>
+    <Reference Include="TestMagic, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\TestMagic.0.1.13\lib\net40\TestMagic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>

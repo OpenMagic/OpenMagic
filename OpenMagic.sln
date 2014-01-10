@@ -1,16 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.20827.3
+VisualStudioVersion = 12.0.21126.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic", "Projects\OpenMagic\OpenMagic.csproj", "{813600E6-945A-46FD-A27C-180E4131DA8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Tests", "Projects\OpenMagic.Tests\OpenMagic.Tests.csproj", "{CB398C4E-3EB3-4E33-A3AA-F637B50131B4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7218F286-E0E2-427F-B7F5-40F53BB241DD}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E55564A-C382-4A6B-A1EE-9CCDEACB51A3}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,6 +16,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{646E6C24-EB36-4073-93A2-CF33E81B01A6}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet\OpenMagic.nuspec = NuGet\OpenMagic.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E4C02D11-2B6D-40A3-9289-F699EBFDAB97}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
 Global
@@ -40,6 +40,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{646E6C24-EB36-4073-93A2-CF33E81B01A6} = {8E55564A-C382-4A6B-A1EE-9CCDEACB51A3}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = OpenMagic.vsmdi
