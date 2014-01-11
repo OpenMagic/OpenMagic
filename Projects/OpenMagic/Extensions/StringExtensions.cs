@@ -102,6 +102,7 @@ namespace OpenMagic.Extensions
         /// "abc".Substring("abc".IndexOf("d")) would raise an exception. "abc".TextAfter("abc".IndexOf("d")) will return Nothing. An alternative
         /// for this example is "abc".TextAfter("d").
         /// </remarks>
+        [return: AllowNull]
         public static string TextAfter(this string text, int value)
         {
             // todo: unit tests
@@ -118,7 +119,8 @@ namespace OpenMagic.Extensions
         /// "abc".Substring("abc".IndexOf("d")) would raise an exception. "abc".TextAfter("abc".IndexOf("d")) will return Nothing. An alternative
         /// for this example is "abc".TextAfter("d").
         /// </remarks>
-        public static string TextAfter(this string text, int value, string defaultValue)
+        [return: AllowNull]
+        public static string TextAfter(this string text, int value, [AllowNull] string defaultValue)
         {
             return text.TextAfter(value, defaultValue, 1);
         }
@@ -133,7 +135,8 @@ namespace OpenMagic.Extensions
         /// "abc".Substring("abc".IndexOf("d")) would raise an exception. "abc".TextAfter("abc".IndexOf("d")) will return Nothing. An alternative
         /// for this example is "abc".TextAfter("d").
         /// </remarks>
-        public static string TextAfter(this string text, int value, string defaultValue, int offset)
+        [return: AllowNull]
+        public static string TextAfter(this string text, int value, [AllowNull] string defaultValue, int offset)
         {
             // todo: unit tests
             if (value == -1)
@@ -151,6 +154,7 @@ namespace OpenMagic.Extensions
         /// </summary>
         /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
         /// <returns>The text after <paramref name="value"/>. If <paramref name="value"/> does not exist then Nothing is returned.</returns>
+        [return: AllowNull]
         public static string TextAfter(this string text, string value)
         {
             // todo: unit tests
@@ -162,7 +166,8 @@ namespace OpenMagic.Extensions
         /// </summary>
         /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
         /// <returns>The text after <paramref name="value"/>. If <paramref name="value"/> does not exist then <paramref name="defaultValue" /> is returned.</returns>
-        public static string TextAfter(this string text, string value, string defaultValue)
+        [return: AllowNull]
+        public static string TextAfter(this string text, string value, [AllowNull] string defaultValue)
         {
             // todo: unit tests
             int index = 0;
@@ -189,6 +194,7 @@ namespace OpenMagic.Extensions
         /// </summary>
         /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
         /// <returns>The text after last occurrence of <paramref name="value"/>. If <paramref name="value"/> does not exist then Nothing is returned.</returns>
+        [return: AllowNull]
         public static string TextAfterLast(this string text, string value)
         {
             // todo: unit tests
@@ -201,7 +207,8 @@ namespace OpenMagic.Extensions
         /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
         /// <param name="defaultValue">Value to return if <paramref name="value" /> does not exist in <paramref name="text" /></param>
         /// <returns>The text after last occurrence of <paramref name="value"/>. If <paramref name="value"/> does not exist then <paramref name="text"/> is returned.</returns>
-        public static string TextAfterLast(this string text, string value, string defaultValue)
+        [return: AllowNull]
+        public static string TextAfterLast(this string text, string value, [AllowNull] string defaultValue)
         {
             // todo: unit tests
             if (text.IsNullOrWhiteSpace())
@@ -217,6 +224,7 @@ namespace OpenMagic.Extensions
         /// </summary>
         /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
         /// <returns>The text before <paramref name="value"/>. If <paramref name="value"/> does not exist then Nothing is returned.</returns>
+        [return: AllowNull]
         public static string TextBefore(this string text, string value)
         {
             // todo: unit tests
@@ -228,7 +236,8 @@ namespace OpenMagic.Extensions
         /// </summary>
         /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
         /// <returns>The text before <paramref name="value"/>. If <paramref name="value"/> does not exist then <paramref name="defaultValue" /> is returned.</returns>
-        public static string TextBefore(this string text, string value, string defaultValue)
+        [return: AllowNull]
+        public static string TextBefore(this string text, string value, [AllowNull] string defaultValue)
         {
             // todo: unit tests
             if (text.IsNullOrWhiteSpace())
@@ -248,7 +257,8 @@ namespace OpenMagic.Extensions
         /// "abc".Substring("abc".IndexOf("d")) would raise an exception. "abc".TextBefore("abc".IndexOf("d")) will return Nothing. An alternative
         /// for this example is "abc".TextBefore("d").
         /// </remarks>
-        public static string TextBefore(this string text, int value, string defaultValue)
+        [return: AllowNull]
+        public static string TextBefore(this string text, int value, [AllowNull] string defaultValue)
         {
             // todo: unit tests
             if (value == -1)
@@ -266,6 +276,7 @@ namespace OpenMagic.Extensions
         /// </summary>
         /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
         /// <returns>The text before last occurrence of <paramref name="value"/>. If <paramref name="value"/> does not exist then Nothing is returned.</returns>
+        [return: AllowNull]
         public static string TextBeforeLast(this string text, string value)
         {
             // todo: unit tests
@@ -277,7 +288,8 @@ namespace OpenMagic.Extensions
         /// </summary>
         /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
         /// <returns>The text before last occurrence of <paramref name="value"/>. If <paramref name="value"/> does not exist then <paramref name="defaultValue" /> is returned.</returns>
-        public static string TextBeforeLast(this string text, string value, string defaultValue)
+        [return: AllowNull]
+        public static string TextBeforeLast(this string text, string value, [AllowNull] string defaultValue)
         {
             // todo: unit tests
             if (text.IsNullOrWhiteSpace())
