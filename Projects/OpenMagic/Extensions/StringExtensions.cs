@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using NullGuard;
+using OpenMagic.Extensions.Collections.Generic;
 
 namespace OpenMagic.Extensions
 {
@@ -99,6 +101,7 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text after <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The index position to retrieve text after.</param>
         /// <returns>The text after <paramref name="value" /> If <paramref name="value" /> is -1 then Nothing is returned.</returns>
         /// <remarks>
@@ -116,6 +119,7 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text after <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The index position to retrieve text after.</param>
         /// <param name="defaultValue">Value to return if <paramref name="value" /> is -1.</param>
         /// <returns>
@@ -137,8 +141,10 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text after <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The index position to retrieve text after.</param>
         /// <param name="defaultValue">Value to return if <paramref name="value" /> is -1.</param>
+        /// <param name="offset">Index to start search from.</param>
         /// <returns>
         ///     The text after <paramref name="value" /> If <paramref name="value" /> is -1 then
         ///     <paramref name="defaultValue" /> is returned.
@@ -162,6 +168,7 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text after <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
         /// <returns>
         ///     The text after <paramref name="value" />. If <paramref name="value" /> does not exist then Nothing is
@@ -177,7 +184,9 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text after <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
+        /// <param name="defaultValue">The value to return if text is null or white space.</param>
         /// <returns>
         ///     The text after <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     <paramref name="defaultValue" /> is returned.
@@ -205,6 +214,7 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text after last occurrence of <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
         /// <returns>
         ///     The text after last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
@@ -220,6 +230,7 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text after last occurrence of <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
         /// <param name="defaultValue">
         ///     Value to return if <paramref name="value" /> does not exist in <paramref name="text" />
@@ -242,6 +253,7 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text before <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
         /// <returns>
         ///     The text before <paramref name="value" />. If <paramref name="value" /> does not exist then Nothing is
@@ -257,7 +269,11 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text before <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The string to find. ArgumentNullException thrown is null or empty.</param>
+        /// <param name="defaultValue">
+        ///     Value to return if <paramref name="value" /> does not exist in <paramref name="text" />
+        /// </param>
         /// <returns>
         ///     The text before <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     <paramref name="defaultValue" /> is returned.
@@ -276,7 +292,11 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text before <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The index position to retrieve text before.</param>
+        /// <param name="defaultValue">
+        ///     Value to return if <paramref name="value" /> does not exist in <paramref name="text" />
+        /// </param>
         /// <returns>
         ///     The text before <paramref name="value" /> If <paramref name="value" /> is -1 then <paramref name="value" /> is
         ///     returned.
@@ -301,6 +321,7 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text before last occurrence of <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
         /// <returns>
         ///     The text before last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
@@ -315,7 +336,11 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Get the text before last occurrence of <paramref name="value" />.
         /// </summary>
+        /// <param name="text">The text to search.</param>
         /// <param name="value">The string to find. ArgumentNullException thrown if null or empty.</param>
+        /// <param name="defaultValue">
+        ///     Value to return if <paramref name="value" /> does not exist in <paramref name="text" />
+        /// </param>
         /// <returns>
         ///     The text before last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     <paramref name="defaultValue" /> is returned.
