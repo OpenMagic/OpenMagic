@@ -211,5 +211,54 @@ namespace OpenMagic.Tests
                 value.Should().Be(parameterValue);
             }
         }
+
+        public class MustBeGreaterThan
+        {
+            [Fact]
+            public void ShouldReturn_param_When_param_IsGreaterThan_greaterThan()
+            {
+                // Given
+                const int param = 1;
+                const int greaterThan = 0;
+
+                // When
+                var result = param.MustBeGreaterThan(greaterThan, "fakeParamName");
+
+                // Then
+                result.Should().Be(param);
+            }
+
+            [Fact]
+            public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsEqualTo_greaterThan()
+            {
+                // Given
+                const int param = 1;
+                const int greaterThan = 1;
+
+                // When
+                Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
+
+                // Then
+                action
+                    .ShouldThrow<ArgumentOutOfRangeException>()
+                    .WithMessage("Value must be greater than 1.\r\nParameter name: fakeParamName\r\nActual value was 1.");
+            }
+
+            [Fact]
+            public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsLessThan_greaterThan()
+            {
+                // Given
+                const int param = 0;
+                const int greaterThan = 1;
+
+                // When
+                Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
+
+                // Then
+                action
+                    .ShouldThrow<ArgumentOutOfRangeException>()
+                    .WithMessage("Value must be greater than 1.\r\nParameter name: fakeParamName\r\nActual value was 0.");
+            }
+        }
     }
 }

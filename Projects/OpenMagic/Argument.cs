@@ -32,8 +32,6 @@ namespace OpenMagic
 
         public static T MustBeGreaterThan<T>(this T param, T greaterThan, string paramName) where T : IComparable<T>
         {
-            // todo: unit tests
-
             if (param.CompareTo(greaterThan) > 0)
             {
                 return param;
@@ -70,11 +68,6 @@ namespace OpenMagic
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         public static IEnumerable<T> MustNotBeNullOrEmpty<T>([AllowNull] this IEnumerable<T> param, string paramName)
         {
-            if (param == null)
-            {
-                throw new ArgumentNullException("param");
-            }
-
             // ReSharper disable once PossibleMultipleEnumeration
             if (!param.Any())
             {
