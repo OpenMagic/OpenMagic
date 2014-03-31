@@ -4,12 +4,12 @@ using System.Text;
 namespace OpenMagic
 {
     /// <summary>
-    /// Collection of methods to get a random string value.
+    ///     Collection of methods to get a random string value.
     /// </summary>
     public class RandomString
     {
         /// <summary>
-        /// Get a random string between 1 and 25 characters long.
+        ///     Get a random string between 1 and 25 characters long.
         /// </summary>
         public static string Next()
         {
@@ -19,7 +19,8 @@ namespace OpenMagic
         }
 
         /// <summary>
-        /// Get a random string between 1 and 25 characters long using <paramref name="characterSet"/> as the list of possible characters.
+        ///     Get a random string between 1 and 25 characters long using <paramref name="characterSet" /> as the list of possible
+        ///     characters.
         /// </summary>
         public static string Next(string characterSet)
         {
@@ -29,7 +30,7 @@ namespace OpenMagic
         }
 
         /// <summary>
-        /// Get a random string between <paramref name="minLength"/> and <paramref name="maxLength"/> characters long.
+        ///     Get a random string between <paramref name="minLength" /> and <paramref name="maxLength" /> characters long.
         /// </summary>
         public static string Next(int minLength, int maxLength)
         {
@@ -39,7 +40,7 @@ namespace OpenMagic
         }
 
         /// <summary>
-        /// Get a random string between <paramref name="minLength"/> and <paramref name="maxLength"/> characters long.
+        ///     Get a random string between <paramref name="minLength" /> and <paramref name="maxLength" /> characters long.
         /// </summary>
         public static string Next(int minLength, int maxLength, string characterSet)
         {
@@ -59,11 +60,10 @@ namespace OpenMagic
             }
 
             return value.ToString();
-
         }
 
         /// <summary>
-        /// Get a random string between 1 and 25 characters long with <paramref name="arguments"/> format items.
+        ///     Get a random string between 1 and 25 characters long with <paramref name="arguments" /> format items.
         /// </summary>
         /// <param name="formatItems">The number of format items to include at the end of the return string.</param>
         public static string NextFormat(int formatItems)
@@ -75,11 +75,11 @@ namespace OpenMagic
                 throw new ArgumentOutOfRangeException("formatItems", formatItems, "Number of format items must be 1 or more.");
             }
 
-            var format = new StringBuilder(RandomString.Next(CharacterSets.AtoZ));
+            var format = new StringBuilder(Next(CharacterSets.AtoZ));
 
             for (var argument = 1; argument <= formatItems; argument++)
             {
-                format.Append(" {" + (argument - 1).ToString() + "}");
+                format.Append(" {" + (argument - 1) + "}");
             }
 
             return format.ToString();

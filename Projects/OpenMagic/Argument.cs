@@ -7,19 +7,19 @@ using OpenMagic.Extensions;
 namespace OpenMagic
 {
     /// <summary>
-    /// Collection of argument testing methods.
+    ///     Collection of argument testing methods.
     /// </summary>
     public static class Argument
     {
         /// <summary>
-        /// Throws <see cref="ArgumentException"/> when assertion on <paramref name="param"/> has failed.
+        ///     Throws <see cref="ArgumentException" /> when assertion on <paramref name="param" /> has failed.
         /// </summary>
-        /// <typeparam name="T">The <paramref name="param"/> type.</typeparam>
+        /// <typeparam name="T">The <paramref name="param" /> type.</typeparam>
         /// <param name="param">The value that was tested.</param>
-        /// <param name="assertionResult">The result of the assertion on <paramref name="param"/>.</param>
-        /// <param name="message">The exception message to use when <paramref name="assertionResult"/> is false.</param>
+        /// <param name="assertionResult">The result of the assertion on <paramref name="param" />.</param>
+        /// <param name="message">The exception message to use when <paramref name="assertionResult" /> is false.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
-        /// <returns>Returns <paramref name="param"/> when the value is not null.</returns>
+        /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         public static T Must<T>(this T param, bool assertionResult, string message, string paramName)
         {
             if (!assertionResult)
@@ -43,14 +43,15 @@ namespace OpenMagic
         }
 
         /// <summary>
-        /// Throws <see cref="ArgumentNullException"/> when <paramref name="param"/> is null.
+        ///     Throws <see cref="ArgumentNullException" /> when <paramref name="param" /> is null.
         /// </summary>
-        /// <typeparam name="T">The <paramref name="param"/> type.</typeparam>
+        /// <typeparam name="T">The <paramref name="param" /> type.</typeparam>
         /// <param name="param">The value to test for null.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
-        /// <returns>Returns <paramref name="param"/> when the value is not null.</returns>
+        /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         public static T MustNotBeNull<T>([AllowNull] this T param, string paramName)
         {
+            // ReSharper disable once CompareNonConstrainedGenericWithNull
             if (param == null)
             {
                 throw new ArgumentNullException(paramName);
@@ -60,31 +61,38 @@ namespace OpenMagic
         }
 
         /// <summary>
-        /// Throws <see cref="ArgumentNullException"/> when <paramref name="param"/> is null or <see cref="ArgumentException"/> when <paramref name="param"/> is empty.
+        ///     Throws <see cref="ArgumentNullException" /> when <paramref name="param" /> is null or
+        ///     <see cref="ArgumentException" /> when <paramref name="param" /> is empty.
         /// </summary>
-        /// <typeparam name="T">The <paramref name="param"/> type.</typeparam>
+        /// <typeparam name="T">The <paramref name="param" /> type.</typeparam>
         /// <param name="param">The value to test for null or empty.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
-        /// <returns>Returns <paramref name="param"/> when the value is not null.</returns>
+        /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         public static IEnumerable<T> MustNotBeNullOrEmpty<T>([AllowNull] this IEnumerable<T> param, string paramName)
         {
-            param.MustNotBeNull(paramName);
+            if (param == null)
+            {
+                throw new ArgumentNullException("param");
+            }
 
+            // ReSharper disable once PossibleMultipleEnumeration
             if (!param.Any())
             {
                 throw new ArgumentException("Value cannot be empty.", paramName);
             }
 
+            // ReSharper disable once PossibleMultipleEnumeration
             return param;
         }
 
         /// <summary>
-        /// Throws <see cref="ArgumentNullException"/> when <paramref name="param"/> is null or <see cref="ArgumentException"/> when <paramref name="param"/> is whitespace.
+        ///     Throws <see cref="ArgumentNullException" /> when <paramref name="param" /> is null or
+        ///     <see cref="ArgumentException" /> when <paramref name="param" /> is whitespace.
         /// </summary>
-        /// <typeparam name="T">The <paramref name="param"/> type.</typeparam>
+        /// <typeparam name="T">The <paramref name="param" /> type.</typeparam>
         /// <param name="param">The value to test for null or whitespace.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
-        /// <returns>Returns <paramref name="param"/> when the value is not null or whitespace.</returns>
+        /// <returns>Returns <paramref name="param" /> when the value is not null or whitespace.</returns>
         public static string MustNotBeNullOrWhiteSpace([AllowNull] this string param, string paramName)
         {
             param.MustNotBeNull(paramName);

@@ -7,18 +7,18 @@ namespace OpenMagic.DataAnnotations
 {
     public class PropertyMetadata : IPropertyMetadata
     {
-        private Lazy<DisplayAttribute> DisplayFactory;
+        private readonly Lazy<DisplayAttribute> DisplayFactory;
 
         public PropertyMetadata(PropertyInfo property, bool isPublic)
         {
-            this.PropertyInfo = property;
-            this.IsPublic = isPublic;
-            this.DisplayFactory = new Lazy<DisplayAttribute>(() => this.GetCustomAttribute<DisplayAttribute>(() => new DisplayAttribute()));
+            PropertyInfo = property;
+            IsPublic = isPublic;
+            DisplayFactory = new Lazy<DisplayAttribute>(() => GetCustomAttribute(() => new DisplayAttribute()));
         }
 
         public DisplayAttribute Display
         {
-            get { return this.DisplayFactory.Value; }
+            get { return DisplayFactory.Value; }
         }
 
         public PropertyInfo PropertyInfo { get; private set; }
@@ -27,16 +27,17 @@ namespace OpenMagic.DataAnnotations
 
         public bool IsNotPublic
         {
-            get { return !this.IsPublic; }
+            get { return !IsPublic; }
         }
 
         private T GetCustomAttribute<T>(Func<T> defaultValueFactory)
         {
-            var attribute = this.PropertyInfo.GetCustomAttribute<T>();
+            var attribute = PropertyInfo.GetCustomAttribute<T>();
 
+            // ReSharper disable once CompareNonConstrainedGenericWithNull
             if (attribute != null)
             {
-                return attribute;    
+                return attribute;
             }
 
             return defaultValueFactory();

@@ -43,7 +43,7 @@ namespace OpenMagic.Tests.DataAnnotations
                 return null;
             }
 
-            return (TypeCache<IClassMetadata>) cacheValue;
+            return (TypeCache<IClassMetadata>)cacheValue;
         }
 
         public class Constructor : ClassMetadataTests
@@ -120,7 +120,7 @@ namespace OpenMagic.Tests.DataAnnotations
             public void ShouldReturnMetadataForRequestedProperty()
             {
                 // Given
-                var propertyName = "Message";
+                const string propertyName = "Message";
                 var classMetadata = ClassMetadata.Get<Exception>();
 
                 // When
@@ -132,6 +132,7 @@ namespace OpenMagic.Tests.DataAnnotations
             }
         }
 
+        // ReSharper disable once InconsistentNaming
         public class GetProperty_StaticMethod : ClassMetadataTests
         {
             [Fact]

@@ -20,14 +20,14 @@ namespace OpenMagic.Reflection
                 throw new ArgumentException(String.Format("method's Body.NodeType must be '{0}', not '{1}'.", ExpressionType.Call, method.Body.NodeType), "method");
             }
 
-            var methodCall = (MethodCallExpression)method.Body;
+            var methodCall = (MethodCallExpression) method.Body;
             var methodInfo = methodCall.Method;
 
             return methodInfo;
         }
 
         /// <summary>
-        /// Get PropertyInfo a property via LINQ expression.
+        ///     Get PropertyInfo a property via LINQ expression.
         /// </summary>
         public static PropertyInfo Property<TObject, TProperty>(this TObject obj, Expression<Func<TObject, TProperty>> property)
         {
@@ -41,7 +41,7 @@ namespace OpenMagic.Reflection
                 throw new ArgumentException(String.Format("Property's Body.NodeType must be '{0}', not '{1}'.", ExpressionType.MemberAccess, property.Body.NodeType), "property");
             }
 
-            return (PropertyInfo)((MemberExpression)property.Body).Member;
+            return (PropertyInfo) ((MemberExpression) property.Body).Member;
         }
     }
 }

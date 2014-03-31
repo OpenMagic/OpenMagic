@@ -17,6 +17,7 @@ namespace OpenMagic.Tests.Reflection
                 var obj = new Exception();
 
                 // When
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
                 var methodInfo = obj.Method(x => x.ToString());
 
                 // Then

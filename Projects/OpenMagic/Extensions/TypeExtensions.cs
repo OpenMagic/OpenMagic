@@ -5,13 +5,12 @@ namespace OpenMagic.Extensions
 {
     public static class TypeExtensions
     {
-
         /// <summary>
-        /// Determines whether the specified type is IEnumerable<string>.
+        ///     Determines whether the specified type is IEnumerable<string>.
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <remarks>
-        /// Syntactic sugar.
+        ///     Syntactic sugar.
         /// </remarks>
         public static bool IsEnumerableString(this Type value)
         {
@@ -19,11 +18,11 @@ namespace OpenMagic.Extensions
         }
 
         /// <summary>
-        /// Determines whether the specified type is string.
+        ///     Determines whether the specified type is string.
         /// </summary>
         /// <param name="value">The value to test.</param>
         /// <remarks>
-        /// Syntactic sugar.
+        ///     Syntactic sugar.
         /// </remarks>
         public static bool IsString(this Type value)
         {

@@ -113,7 +113,7 @@ namespace OpenMagic.Tests.DataAnnotations
             }
         }
 
-        private class TestClassWithDisplayAttribute
+        public class TestClassWithDisplayAttribute
         {
             [Display]
             public int HasDisplayAttribute { get; set; }

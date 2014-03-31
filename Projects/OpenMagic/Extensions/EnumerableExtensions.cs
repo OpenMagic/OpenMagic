@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace OpenMagic.Extensions
 {
-    public static class IEnumerableExtensions
+    public static class EnumerableExtensions
     {
         /// <summary>
-        /// Gets a random item from the list.
+        ///     Gets a random item from the list.
         /// </summary>
         /// <remarks>
-        /// If <paramref name="list"/> is null then null is returned.
+        ///     If <paramref name="list" /> is null then null is returned.
         /// </remarks>
         public static T RandomItem<T>(this IEnumerable<T> list)
         {
@@ -21,25 +20,27 @@ namespace OpenMagic.Extensions
                 return default(T);
             }
 
-            var randomIndex = RandomNumber.NextInt(0, list.Count());
+            var items = list.ToArray();
+            var randomIndex = RandomNumber.NextInt(0, items.Length);
 
-            return list.ElementAt(randomIndex);
+            return items[randomIndex];
         }
 
         /// <summary>
-        /// Gets a random item from the list that does not equal <paramref name="doesNotEqual"/>
+        ///     Gets a random item from the list that does not equal <paramref name="doesNotEqual" />
         /// </summary>
         /// <remarks>
-        /// If <paramref name="list"/> is null then null is returned.
+        ///     If <paramref name="list" /> is null then null is returned.
         /// </remarks>
         public static T RandomItem<T>(this IEnumerable<T> list, T doesNotEqual)
         {
             // todo: unit tests
-            T thisItem = RandomItem(list);
+            var items = list.ToArray();
+            var thisItem = RandomItem(items);
 
             while (thisItem.Equals(doesNotEqual))
             {
-                thisItem = RandomItem(list);
+                thisItem = RandomItem(items);
             }
 
             return thisItem;
