@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace OpenMagic.Extensions
 {
@@ -27,6 +29,23 @@ namespace OpenMagic.Extensions
         public static bool IsString(this Type value)
         {
             return value == typeof(string);
+        }
+
+        public static FieldInfo FindPrivateField(this Type type, string privateFieldName)
+        {
+            return type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic).SingleOrDefault(f => f.Name == privateFieldName);
+        }
+
+        public static FieldInfo GetPrivateField(this Type type, string privateFieldName)
+        {
+            var privateField = type.FindPrivateField(privateFieldName);
+
+            if (privateField == null)
+            {
+                throw new ArgumentOutOfRangeException("privateFieldName", privateFieldName, string.Format("Cannot find {1} in {0}.", type, privateFieldName));
+            }
+
+            return privateField;
         }
     }
 }

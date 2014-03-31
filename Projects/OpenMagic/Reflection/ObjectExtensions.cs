@@ -1,6 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Xml;
+using System.Xml.Serialization;
+using OpenMagic.Extensions;
 
 namespace OpenMagic.Reflection
 {
@@ -43,5 +47,52 @@ namespace OpenMagic.Reflection
 
             return (PropertyInfo) ((MemberExpression) property.Body).Member;
         }
+
+        public static T FromXml<T>(this string xml) where T : class
+        {
+            return (T)xml.FromXml(typeof(T));
+        }
+
+        public static object FromXml(this string xml, Type type)
+        {
+            var serializer = new XmlSerializer(type);
+
+            using (var stringReader = new StringReader(xml))
+            {
+                var reader = XmlReader.Create(stringReader);
+                var obj = serializer.Deserialize(reader);
+
+                return obj;
+            }
+        }
+
+        public static void SetPrivateField(this object obj, string privateFieldName, object value)
+        {
+            var field = obj.GetType().GetPrivateField(privateFieldName);
+
+            field.SetValue(obj, value);
+        }
+
+        public static string ToXml(this object obj)
+        {
+            var serializer = new XmlSerializer(obj.GetType());
+
+            using (var stringWriter = new StringWriter())
+            {
+                var writer = XmlWriter.Create(stringWriter);
+                serializer.Serialize(writer, obj);
+
+                return stringWriter.ToString();
+            }
+        }
+
+        public static T XmlClone<T>(this T obj) where T : class
+        {
+            var xml = obj.ToXml();
+            var value = xml.FromXml(obj.GetType());
+
+            return (T)value;
+        }
+
     }
 }
