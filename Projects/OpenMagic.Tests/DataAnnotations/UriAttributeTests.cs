@@ -1,35 +1,33 @@
-﻿using OpenMagic.DataAnnotations;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using OpenMagic.DataAnnotations;
+using Xunit;
 
 namespace OpenMagic.Tests.DataAnnotations
 {
-    [TestClass]
     public class UriAttributeTests
     {
-        [TestClass]
         public class IsValid
         {
-            [TestMethod]
+            [Fact]
             public void ShouldBeTrueWhenValueIsValidUri()
             {
                 IsValid_For("http://example.com").Should().BeTrue();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldBeFalseWhenValueIsNotValidUri()
             {
                 IsValid_For("an invalid url").Should().BeFalse();
                 IsValid_For(2).Should().BeFalse();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldBeTrueWhenValueIsNull()
             {
                 IsValid_For(null).Should().BeTrue();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldBeTrueWhenValueIsWhitespace()
             {
                 IsValid_For("").Should().BeTrue();

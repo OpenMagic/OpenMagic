@@ -1,35 +1,39 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.DataAnnotations;
+using Xunit;
 
 namespace OpenMagic.Tests.DataAnnotations
 {
     public class ValidationTests
     {
-        [TestClass]
+        public class TestClass
+        {
+            [Required]
+            public string Required { get; set; }
+        }
+
         public class Validate
         {
-            [TestMethod]
+            [Fact]
             public void ShouldThrowValidationExceptionWhenValueIsNotValid()
             {
                 // Given
                 var invalidObject = new TestClass();
 
                 // When
-                Action action = () => Validation.Validate(invalidObject);
+                Action action = () => invalidObject.Validate();
 
                 // Then
                 action.ShouldThrow<ValidationException>();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldBeSameAsValueWhenValueIsValid()
             {
                 // Given
-                var validObject = new TestClass() { Required = "required property" };
+                var validObject = new TestClass {Required = "required property"};
 
                 // When
                 var result = validObject.Validate();
@@ -37,12 +41,6 @@ namespace OpenMagic.Tests.DataAnnotations
                 // Then
                 result.Should().BeSameAs(validObject);
             }
-        }
-
-        public class TestClass
-        {
-            [Required]
-            public string Required { get; set; }
         }
     }
 }

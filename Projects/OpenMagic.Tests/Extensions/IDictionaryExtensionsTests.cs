@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Extensions;
+using Xunit;
 
 namespace OpenMagic.Tests.Extensions
 {
     public class IDictionaryExtensionsTests
     {
-        [TestClass]
         public class FindValue
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturnValueIfKeyIsInDictionary()
             {
                 // Given
@@ -25,7 +23,7 @@ namespace OpenMagic.Tests.Extensions
                 dictionary.FindValue(2).Should().Be("b");
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldReturnNullIfKeyIsNotDictionary()
             {
                 // Given
@@ -36,7 +34,6 @@ namespace OpenMagic.Tests.Extensions
                 // When / Then
                 dictionary.FindValue(2).Should().BeNull();
             }
-
         }
     }
 }

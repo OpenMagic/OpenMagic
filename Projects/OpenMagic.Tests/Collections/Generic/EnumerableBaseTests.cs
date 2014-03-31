@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Collections.Generic;
+using Xunit;
 
 namespace OpenMagic.Tests.Collections.Generic
 {
     public class EnumerableBaseTests
     {
-        [TestClass]
         public class Constructor
         {
-            [TestMethod]
+            [Fact]
             public void CanConstruct()
             {
                 // When
@@ -21,10 +20,20 @@ namespace OpenMagic.Tests.Collections.Generic
             }
         }
 
-        [TestClass]
+        public class EnumerableBaseImplementation : EnumerableBase<int>
+        {
+            public EnumerableBaseImplementation()
+            {
+                for (var i = 0; i < 10; i++)
+                {
+                    Items.Add(i);
+                }
+            }
+        }
+
         public class GetEnumerator
         {
-            [TestMethod]
+            [Fact]
             public void CanEnumerateAllValues()
             {
                 // Given
@@ -44,10 +53,9 @@ namespace OpenMagic.Tests.Collections.Generic
             }
         }
 
-        [TestClass]
         public class GetEnumerator_NonGeneric
         {
-            [TestMethod]
+            [Fact]
             public void CanEnumerateAllValues()
             {
                 // Given
@@ -64,18 +72,6 @@ namespace OpenMagic.Tests.Collections.Generic
                 }
 
                 i.Should().Be(9, "because the last item in collection should be 9");
-            }
-        }
-
-        public class EnumerableBaseImplementation : EnumerableBase<int>
-        {
-            public EnumerableBaseImplementation()
-                : base()
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    this.Items.Add(i);
-                }
             }
         }
     }

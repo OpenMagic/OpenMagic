@@ -1,44 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Extensions.Collections.Generic;
+using Xunit;
 
-namespace OpenMagic.Tests.Extensions.Collections.Generic {
-    [TestClass]
-    public class IEnumerableExtensions {
-
-        [TestClass]
-        public class IsNullOrEmpty {
-
-            [TestMethod]
-            public void ReturnsTrueWhenValueIsNull() {
-
+namespace OpenMagic.Tests.Extensions.Collections.Generic
+{
+    public class IEnumerableExtensions
+    {
+        public class IsNullOrEmpty
+        {
+            [Fact]
+            public void ReturnsTrueWhenValueIsNull()
+            {
                 IEnumerable<string> nullString = null;
                 IEnumerable<int> nullInt = null;
 
-                OpenMagic.Extensions.Collections.Generic.IEnumerableExtensions.IsNullOrEmpty(nullString).Should().BeTrue();
-                OpenMagic.Extensions.Collections.Generic.IEnumerableExtensions.IsNullOrEmpty(nullInt).Should().BeTrue();
+                nullString.IsNullOrEmpty().Should().BeTrue();
+                nullInt.IsNullOrEmpty().Should().BeTrue();
             }
 
-            [TestMethod]
-            public void ReturnsTrueWhenValueIsHasZeroElements() {
-
+            [Fact]
+            public void ReturnsTrueWhenValueIsHasZeroElements()
+            {
                 var emptyString = new List<string>();
                 var emptyInt = new List<int>();
 
-                OpenMagic.Extensions.Collections.Generic.IEnumerableExtensions.IsNullOrEmpty(emptyString).Should().BeTrue();
-                OpenMagic.Extensions.Collections.Generic.IEnumerableExtensions.IsNullOrEmpty(emptyInt).Should().BeTrue();
+                emptyString.IsNullOrEmpty().Should().BeTrue();
+                emptyInt.IsNullOrEmpty().Should().BeTrue();
             }
 
-            [TestMethod]
-            public void ReturnsFalseWhenValueHasElements() {
+            [Fact]
+            public void ReturnsFalseWhenValueHasElements()
+            {
+                var enumerableString = new List<string> {"a", "b"};
+                var enumerableInt = new List<int> {1, 2};
 
-                var enumerableString = new List<string>() {"a", "b"};
-                var enumerableInt = new List<int>() {1,2};
-
-                OpenMagic.Extensions.Collections.Generic.IEnumerableExtensions.IsNullOrEmpty(enumerableString).Should().BeFalse();
-                OpenMagic.Extensions.Collections.Generic.IEnumerableExtensions.IsNullOrEmpty(enumerableInt).Should().BeFalse();
+                enumerableString.IsNullOrEmpty().Should().BeFalse();
+                enumerableInt.IsNullOrEmpty().Should().BeFalse();
             }
         }
     }

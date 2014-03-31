@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestMagic;
+using Xunit;
 
 namespace OpenMagic.Tests
 {
     public class ArgumentsTests
     {
-        [TestClass]
         public class Must
         {
-            [TestMethod]
+            [Fact]
             public void ShouldThrowNotArgumentExceptionWhenAssertionResultIsTrue()
             {
                 // Given
                 var argument = 1;
                 var exceptionMessage = "Value must be 1.";
                 var paramName = "argument";
-                                
+
                 // When
                 Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
 
@@ -26,7 +24,7 @@ namespace OpenMagic.Tests
                 action.ShouldNotThrow<ArgumentException>();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldThrowArgumentExceptionWhenAssertionResultIsFalse()
             {
                 // Given
@@ -42,40 +40,9 @@ namespace OpenMagic.Tests
             }
         }
 
-        [TestClass]
         public class MustNotBeNull
         {
-            [TestMethod]
-            public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
-            {
-                // Given
-                var parameterValue = 1;
-
-                // When
-                var value = Argument.MustNotBeNull(parameterValue, "parameterValue");
-
-                // Then
-                value.Should().Be(parameterValue);
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentNullExceptionWithParameterNameWhenParameterValueIsNull()
-            {
-                // Given
-                const string parameterName = "fakeParameterName";
-
-                // When
-                Action action = () => Argument.MustNotBeNull<Exception>(param: null, paramName: parameterName);
-
-                // Then
-                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be(parameterName);
-            }
-        }
-
-        [TestClass]
-        public class MustNotBeNull_AsExtensionMethod
-        {
-            [TestMethod]
+            [Fact]
             public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
             {
                 // Given
@@ -87,32 +54,44 @@ namespace OpenMagic.Tests
                 // Then
                 value.Should().Be(parameterValue);
             }
+
+            [Fact]
+            public void ShouldThrowArgumentNullExceptionWithParameterNameWhenParameterValueIsNull()
+            {
+                // Given
+                const string parameterName = "fakeParameterName";
+
+                // When
+                Action action = () => Argument.MustNotBeNull<Exception>(null, parameterName);
+
+                // Then
+                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be(parameterName);
+            }
         }
 
-        [TestClass]
         public class MustNotBeNullOrEmpty
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
             {
                 // Given
-                List<int> parameterValue = new List<int>(new int[] { 1, 2 });
+                var parameterValue = new List<int>(new[] {1, 2});
 
                 // When
-                var value = Argument.MustNotBeNullOrEmpty(parameterValue, "fakeParamName");
+                var value = parameterValue.MustNotBeNullOrEmpty("fakeParamName");
 
                 // Then
                 value.Should().BeEquivalentTo(parameterValue);
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
             {
                 // Given
-                List<int> parameterValue = new List<int>();
+                var parameterValue = new List<int>();
 
                 // When
-                Action action = () => Argument.MustNotBeNullOrEmpty<int>(parameterValue, "fakeParamName");
+                Action action = () => parameterValue.MustNotBeNullOrEmpty("fakeParamName");
 
                 // Then
                 action
@@ -121,14 +100,13 @@ namespace OpenMagic.Tests
             }
         }
 
-        [TestClass]
         public class MustNotBeNullOrEmpty_AsExtensionMethod
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturn_param_When_param_IsNotNull()
             {
                 // Given
-                List<int> param = new List<int>(new int[] { 1, 2 });
+                var param = new List<int>(new[] {1, 2});
 
                 // When
                 var value = param.MustNotBeNullOrEmpty("fakeParamName");
@@ -137,14 +115,14 @@ namespace OpenMagic.Tests
                 value.Should().BeEquivalentTo(param);
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
             {
                 // Given
-                List<int> param = new List<int>();
+                var param = new List<int>();
 
                 // When
-                Action action = () => param.MustNotBeNullOrEmpty<int>("fakeParamName");
+                Action action = () => param.MustNotBeNullOrEmpty("fakeParamName");
 
                 // Then
                 action
@@ -153,42 +131,9 @@ namespace OpenMagic.Tests
             }
         }
 
-        [TestClass]
         public class MustNotBeNullOrWhiteSpace
         {
-            [TestMethod]
-            public void ShouldReturn_param_When_param_IsNotWhitespace()
-            {
-                // Given
-                var param = "any string";
-
-                // When
-                var value = Argument.MustNotBeNullOrWhiteSpace(param, "param");
-
-                // Then
-                value.Should().Be(param);
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
-            {
-                // Given
-                string param = "";
-
-                // When
-                Action action = () => Argument.MustNotBeNullOrWhiteSpace(param, "fakeParamName");
-
-                // Then
-                action
-                    .ShouldThrow<ArgumentException>()
-                    .WithMessage("Value cannot be whitespace.\r\nParameter name: fakeParamName");
-            }
-        }
-
-        [TestClass]
-        public class MustNotBeNullOrWhiteSpace_AsExtensionMethod
-        {
-            [TestMethod]
+            [Fact]
             public void ShouldReturn_param_When_param_IsNotWhitespace()
             {
                 // Given
@@ -201,11 +146,11 @@ namespace OpenMagic.Tests
                 value.Should().Be(param);
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
             {
                 // Given
-                string param = "";
+                var param = "";
 
                 // When
                 Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
@@ -214,6 +159,53 @@ namespace OpenMagic.Tests
                 action
                     .ShouldThrow<ArgumentException>()
                     .WithMessage("Value cannot be whitespace.\r\nParameter name: fakeParamName");
+            }
+        }
+
+        public class MustNotBeNullOrWhiteSpace_AsExtensionMethod
+        {
+            [Fact]
+            public void ShouldReturn_param_When_param_IsNotWhitespace()
+            {
+                // Given
+                var param = "any string";
+
+                // When
+                var value = param.MustNotBeNullOrWhiteSpace("param");
+
+                // Then
+                value.Should().Be(param);
+            }
+
+            [Fact]
+            public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
+            {
+                // Given
+                var param = "";
+
+                // When
+                Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
+
+                // Then
+                action
+                    .ShouldThrow<ArgumentException>()
+                    .WithMessage("Value cannot be whitespace.\r\nParameter name: fakeParamName");
+            }
+        }
+
+        public class MustNotBeNull_AsExtensionMethod
+        {
+            [Fact]
+            public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
+            {
+                // Given
+                var parameterValue = 1;
+
+                // When
+                var value = parameterValue.MustNotBeNull("parameterValue");
+
+                // Then
+                value.Should().Be(parameterValue);
             }
         }
     }

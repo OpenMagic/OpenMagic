@@ -1,33 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Extensions;
+using Xunit;
 
 namespace OpenMagic.Tests.Extensions
 {
-    [TestClass]
     public class StringExtensionsTests
     {
-        [TestClass]
         public class GetValuesBetween
         {
-            [TestMethod]
+            [Fact]
             public void Argument_delimiter_CannotBeEmpty()
             {
                 ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(string.Empty);
             }
 
-            [TestMethod]
+            [Fact]
             public void Argument_delimiter_CannotBeWhitespace()
             {
                 ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(" ");
             }
 
-            [TestMethod]
+            [Fact]
             public void Argument_delimiter_CannotLongerThanOneCharacter()
             {
                 "fake value".Invoking(x => x.GetValuesBetween("12"))
@@ -49,61 +46,61 @@ namespace OpenMagic.Tests.Extensions
                     .WithMessage("Value cannot be whitespace.\r\nParameter name: delimiter");
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsValuesWhenStringStartsWithDelimiter()
             {
                 // Given
-                string value = "'the' 'quick' brown 'fox' jumped 'over the' lazy dog";
-                string delimiter = "'";
+                var value = "'the' 'quick' brown 'fox' jumped 'over the' lazy dog";
+                var delimiter = "'";
 
                 // When
-                IEnumerable<string> values = value.GetValuesBetween(delimiter);
+                var values = value.GetValuesBetween(delimiter);
 
                 // Then
-                values.Should().Equal(new string[] { "the", "quick", "fox", "over the" });
+                values.Should().Equal(new[] {"the", "quick", "fox", "over the"});
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsValuesWhenStringDoesNotStartsDelimiter()
             {
                 // Given
-                string value = "the 'quick' brown 'fox' jumped 'over the' lazy dog";
-                string delimiter = "'";
+                var value = "the 'quick' brown 'fox' jumped 'over the' lazy dog";
+                var delimiter = "'";
 
                 // When
-                IEnumerable<string> values = value.GetValuesBetween(delimiter);
+                var values = value.GetValuesBetween(delimiter);
 
                 // Then
-                values.Should().Equal(new string[] { "quick", "fox", "over the" });
+                values.Should().Equal(new[] {"quick", "fox", "over the"});
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsZeroValuesWhen_value_DoesNotHaveAnyValues()
             {
                 // Given
-                string value = "the quick brown fox";
-                string delimiter = "'";
+                var value = "the quick brown fox";
+                var delimiter = "'";
 
                 // When
-                IEnumerable<string> values = value.GetValuesBetween(delimiter);
+                var values = value.GetValuesBetween(delimiter);
 
                 // Then
                 values.Should().BeEmpty();
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsZeroValuesWhen_value_IsNull()
             {
                 ReturnsZeroValuesWhenValueIs(null);
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsZeroValuesWhen_value_IsEmpty()
             {
                 ReturnsZeroValuesWhenValueIs(string.Empty);
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsZeroValuesWhen_value_CanBeWhitespace()
             {
                 ReturnsZeroValuesWhenValueIs(" ");
@@ -112,40 +109,38 @@ namespace OpenMagic.Tests.Extensions
             private void ReturnsZeroValuesWhenValueIs(string value)
             {
                 // Given
-                string delimiter = "'";
+                var delimiter = "'";
 
                 // When
-                IEnumerable<string> values = value.GetValuesBetween(delimiter);
+                var values = value.GetValuesBetween(delimiter);
 
                 // Then
                 values.Should().BeEmpty();
             }
         }
 
-        [TestClass]
         public class IsNullOrWhiteSpace
         {
-            [TestMethod]
+            [Fact]
             public void ReturnsTrueWhenValueIsNullOrWhiteSpace()
             {
                 StringExtensions.IsNullOrWhiteSpace(null).Should().BeTrue();
-                StringExtensions.IsNullOrWhiteSpace("").Should().BeTrue();
-                StringExtensions.IsNullOrWhiteSpace(" ").Should().BeTrue();
+                "".IsNullOrWhiteSpace().Should().BeTrue();
+                " ".IsNullOrWhiteSpace().Should().BeTrue();
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsFalseWhenValueIsNotNullOrWhiteSpace()
             {
-                StringExtensions.IsNullOrWhiteSpace("a").Should().BeFalse();
-                StringExtensions.IsNullOrWhiteSpace(" a").Should().BeFalse();
-                StringExtensions.IsNullOrWhiteSpace("a ").Should().BeFalse();
+                "a".IsNullOrWhiteSpace().Should().BeFalse();
+                " a".IsNullOrWhiteSpace().Should().BeFalse();
+                "a ".IsNullOrWhiteSpace().Should().BeFalse();
             }
         }
 
-        [TestClass]
         public class ToLines
         {
-            [TestMethod]
+            [Fact]
             public void ReturnsLinesWhenValueHasLines()
             {
                 // Given
@@ -169,7 +164,7 @@ namespace OpenMagic.Tests.Extensions
                 lines.ElementAt(4).Should().Be("");
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsTrimmedLinesWhenValueHasLinesAndTrimLinesIsTrue()
             {
                 // Given
@@ -193,11 +188,11 @@ namespace OpenMagic.Tests.Extensions
                 lines.ElementAt(4).Should().Be("");
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsZeroLinesWhenValueIsEmptyString()
             {
                 // Given
-                string value = "";
+                var value = "";
 
                 // When
                 var lines = value.ToLines();
@@ -206,7 +201,7 @@ namespace OpenMagic.Tests.Extensions
                 lines.Count().Should().Be(0);
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsZeroLinesWhenValueIsNull()
             {
                 // Given
@@ -220,10 +215,9 @@ namespace OpenMagic.Tests.Extensions
             }
         }
 
-        [TestClass]
         public class WriteLines
         {
-            [TestMethod]
+            [Fact]
             public void WritesUntrimmedLinesTo_textWriter_When_trimLines_IsFalse()
             {
                 // Given
@@ -235,10 +229,10 @@ namespace OpenMagic.Tests.Extensions
                 value.WriteLines(textWriter, trimLines);
 
                 // Then
-                textWriter.ToString().Should().Be(value+"\r\n");
+                textWriter.ToString().Should().Be(value + "\r\n");
             }
 
-            [TestMethod]
+            [Fact]
             public void WritesTrimmedLinesTo_textWriter_When_trimLines_IsTrue()
             {
                 // Given
@@ -253,7 +247,7 @@ namespace OpenMagic.Tests.Extensions
                 textWriter.ToString().Should().Be("line 1\r\nline 2\r\nline 3\r\n");
             }
 
-            [TestMethod]
+            [Fact]
             public void DoesNotThrowWhen_value_IsNull()
             {
                 // Given

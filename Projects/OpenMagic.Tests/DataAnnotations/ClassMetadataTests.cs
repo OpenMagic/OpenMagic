@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Collections.Generic;
 using OpenMagic.DataAnnotations;
 using TestMagic;
+using Xunit;
 
 namespace OpenMagic.Tests.DataAnnotations
 {
@@ -43,13 +43,12 @@ namespace OpenMagic.Tests.DataAnnotations
                 return null;
             }
 
-            return (TypeCache<IClassMetadata>)cacheValue;
+            return (TypeCache<IClassMetadata>) cacheValue;
         }
 
-        [TestClass]
         public class Constructor : ClassMetadataTests
         {
-            [TestMethod]
+            [Fact]
             public void ShouldThrowArgumentNullExceptionWhenTypeIsNull()
             {
                 GWT.Given("testing constructor")
@@ -57,7 +56,7 @@ namespace OpenMagic.Tests.DataAnnotations
                     .Then<ArgumentException>().ShouldBeThrown().ForParameter("type");
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldSetTypePropertyToPropertyArgument()
             {
                 // Given
@@ -71,10 +70,9 @@ namespace OpenMagic.Tests.DataAnnotations
             }
         }
 
-        [TestClass]
         public class Get : ClassMetadataTests
         {
-            [TestMethod]
+            [Fact]
             public void ShouldCreateAndReturnMetadataForClassThatHasNotBeGot()
             {
                 // Given
@@ -86,7 +84,7 @@ namespace OpenMagic.Tests.DataAnnotations
                 metaData.Should().NotBeNull();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldReturnMetadataFromCacheForClassThatHasBeenGot()
             {
                 // Given
@@ -100,10 +98,43 @@ namespace OpenMagic.Tests.DataAnnotations
             }
         }
 
-        [TestClass]
+        public class GetProperty : ClassMetadataTests
+        {
+            [Fact]
+            public void ShouldThrowArgumentExceptionWhenPropertyNameIsWhitespace()
+            {
+                GWT.Given(ClassMetadata.Get<Exception>())
+                    .When(m => m.GetProperty(""))
+                    .Then<ArgumentException>().ShouldBeThrown().ForParameter("propertyName");
+            }
+
+            [Fact]
+            public void ShouldThrowArgumentExceptionWhenPropertyNameDoesNotExist()
+            {
+                GWT.Given(ClassMetadata.Get<Exception>())
+                    .When(m => m.GetProperty("MissingPropertyName"))
+                    .Then<ArgumentException>().ShouldBeThrown().ForParameter("propertyName");
+            }
+
+            [Fact]
+            public void ShouldReturnMetadataForRequestedProperty()
+            {
+                // Given
+                var propertyName = "Message";
+                var classMetadata = ClassMetadata.Get<Exception>();
+
+                // When
+                var propertyMetadata = classMetadata.GetProperty(propertyName);
+
+                // Then
+                propertyMetadata.Should().NotBeNull();
+                propertyMetadata.PropertyInfo.Name.Should().Be(propertyName);
+            }
+        }
+
         public class GetProperty_StaticMethod : ClassMetadataTests
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturnMetadataForRequestedProperty()
             {
                 // Given
@@ -117,10 +148,9 @@ namespace OpenMagic.Tests.DataAnnotations
             }
         }
 
-        [TestClass]
         public class Properties : ClassMetadataTests
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturnLazyCollectionOfIPropertyMetadata()
             {
                 // Given
@@ -134,7 +164,7 @@ namespace OpenMagic.Tests.DataAnnotations
                 properties.Value.Any().Should().BeTrue("because System.Exception has public properties and probably has private properties");
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldReturnLazyCollectionThatContainsPublicAndNotPublicProperties()
             {
                 // Given
@@ -146,41 +176,6 @@ namespace OpenMagic.Tests.DataAnnotations
                 // Then
                 properties.Value.Any(p => p.IsPublic).Should().BeTrue();
                 properties.Value.Any(p => p.IsNotPublic).Should().BeTrue();
-            }
-        }
-
-        [TestClass]
-        public class GetProperty : ClassMetadataTests
-        {
-            [TestMethod]
-            public void ShouldThrowArgumentExceptionWhenPropertyNameIsWhitespace()
-            {
-                GWT.Given(ClassMetadata.Get<Exception>())
-                    .When(m => m.GetProperty(""))
-                    .Then<ArgumentException>().ShouldBeThrown().ForParameter("propertyName");
-            }
-
-            [TestMethod]
-            public void ShouldThrowArgumentExceptionWhenPropertyNameDoesNotExist()
-            {
-                GWT.Given(ClassMetadata.Get<Exception>())
-                    .When(m => m.GetProperty("MissingPropertyName"))
-                    .Then<ArgumentException>().ShouldBeThrown().ForParameter("propertyName");
-            }
-
-            [TestMethod]
-            public void ShouldReturnMetadataForRequestedProperty()
-            {
-                // Given
-                var propertyName = "Message";
-                var classMetadata = ClassMetadata.Get<Exception>();
-
-                // When
-                var propertyMetadata = classMetadata.GetProperty(propertyName);
-
-                // Then
-                propertyMetadata.Should().NotBeNull();
-                propertyMetadata.PropertyInfo.Name.Should().Be(propertyName);
             }
         }
     }

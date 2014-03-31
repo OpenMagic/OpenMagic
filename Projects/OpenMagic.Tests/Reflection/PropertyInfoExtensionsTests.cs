@@ -1,18 +1,15 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Reflection;
+using Xunit;
 
 namespace OpenMagic.Tests.Reflection
 {
     public class PropertyInfoExtensionsTests
     {
-        [TestClass]
         public class GetCustomAttribute
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturnNullWhenPropertyIsNotDecoratedWithAttribute()
             {
                 // Given
@@ -25,7 +22,7 @@ namespace OpenMagic.Tests.Reflection
                 attribute.Should().BeNull();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldReturnAttributeWhenPropertyIsDecoratedWithAttribute()
             {
                 // Given
@@ -39,10 +36,9 @@ namespace OpenMagic.Tests.Reflection
             }
         }
 
-        [TestClass]
         public class IsDecoratedWith
         {
-            [TestMethod]
+            [Fact]
             public void Should_BeTrue_When_PropertyIsDecoratedWithNomitatedAttribute()
             {
                 // Given
@@ -55,7 +51,7 @@ namespace OpenMagic.Tests.Reflection
                 result.Should().BeTrue();
             }
 
-            [TestMethod]
+            [Fact]
             public void Should_BeFalse_When_PropertyIsNotDecoratedWithNomitedAttribute()
             {
                 // Given
@@ -69,10 +65,9 @@ namespace OpenMagic.Tests.Reflection
             }
         }
 
-        [TestClass]
         public class IsRequired
         {
-            [TestMethod]
+            [Fact]
             public void Should_BeTrue_When_PropertyIsDecoratedWith_RequiredAttribute()
             {
                 // Given
@@ -85,7 +80,7 @@ namespace OpenMagic.Tests.Reflection
                 result.Should().BeTrue();
             }
 
-            [TestMethod]
+            [Fact]
             public void Should_BeFalse_When_PropertyIsNotDecoratedWith_RequiredAttribute()
             {
                 // Given

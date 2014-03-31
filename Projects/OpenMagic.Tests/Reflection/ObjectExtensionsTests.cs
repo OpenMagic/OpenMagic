@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Linq;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.DataAnnotations;
 using OpenMagic.Reflection;
+using Xunit;
 
-namespace OpenMagic.Tests.Extensions
+namespace OpenMagic.Tests.Reflection
 {
     public class ObjectExtensionsTests
     {
-        [TestClass]
         public class Method
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturnMethodInfoForRequestedMethod()
             {
                 // Given
@@ -25,7 +23,7 @@ namespace OpenMagic.Tests.Extensions
                 methodInfo.Name.Should().Be("ToString");
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldReturnMethodInfoForRequestedMethodThatTakesAnArgument()
             {
                 // Given
@@ -39,10 +37,9 @@ namespace OpenMagic.Tests.Extensions
             }
         }
 
-        [TestClass]
         public class Property
         {
-            [TestMethod]
+            [Fact]
             public void Should_Be_PropertyInfo_ForRequestedProperty()
             {
                 // Given

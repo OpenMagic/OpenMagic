@@ -3,30 +3,28 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.DataAnnotations;
 using TestMagic;
+using Xunit;
 
 namespace OpenMagic.Tests.DataAnnotations
 {
     public class PropertyMetadataTests
     {
-        [TestClass]
         public class Constructor : PropertyMetadataTests
         {
-            [TestMethod]
+            [Fact]
             public void ShouldThrowArgumentNullExceptionWhenPropertyInfoIsNull()
             {
                 GWT.Given("testing constructor")
-                    .When(x => new PropertyMetadata(property: null, isPublic: true))
+                    .When(x => new PropertyMetadata(null, true))
                     .Then<ArgumentNullException>().ShouldBeThrown().ForParameter("property");
             }
         }
 
-        [TestClass]
         public class Display : PropertyMetadataTests
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturnTheDisplayAttributeAssociatedToAProperty()
             {
                 // Given
@@ -39,7 +37,7 @@ namespace OpenMagic.Tests.DataAnnotations
                 display.Should().NotBeNull();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldReturnADefaultDisplayAttributeForAPropertyThatDoesNotHaveADisplayAttribute()
             {
                 // Given
@@ -53,15 +51,14 @@ namespace OpenMagic.Tests.DataAnnotations
             }
         }
 
-        [TestClass]
         public class IsNotPublic : PropertyMetadataTests
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturnTrueWhenPropertyIsNotPublic()
             {
                 // Given
                 var privateProperty = typeof(Exception).GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).First();
-                var metadata = new PropertyMetadata(privateProperty, isPublic: false);
+                var metadata = new PropertyMetadata(privateProperty, false);
 
                 // When
                 var isNotPublic = metadata.IsNotPublic;
@@ -70,12 +67,12 @@ namespace OpenMagic.Tests.DataAnnotations
                 isNotPublic.Should().BeTrue();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldReturnFalseWhenPropertyIsNotPublic()
             {
                 // Given
                 var publicProperty = typeof(Exception).GetProperties(BindingFlags.Public | BindingFlags.Instance).First();
-                var metadata = new PropertyMetadata(publicProperty, isPublic: true);
+                var metadata = new PropertyMetadata(publicProperty, true);
 
                 // When
                 var isNotPublic = metadata.IsNotPublic;
@@ -85,15 +82,14 @@ namespace OpenMagic.Tests.DataAnnotations
             }
         }
 
-        [TestClass]
         public class IsPublic : PropertyMetadataTests
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturnTrueWhenPropertyIsPublic()
             {
                 // Given
                 var publicProperty = typeof(Exception).GetProperties(BindingFlags.Public | BindingFlags.Instance).First();
-                var metadata = new PropertyMetadata(publicProperty, isPublic: true);
+                var metadata = new PropertyMetadata(publicProperty, true);
 
                 // When
                 var isPublic = metadata.IsPublic;
@@ -102,12 +98,12 @@ namespace OpenMagic.Tests.DataAnnotations
                 isPublic.Should().BeTrue();
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldReturnFalseWhenPropertyIsNotPublic()
             {
                 // Given
                 var privateProperty = typeof(Exception).GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).First();
-                var metadata = new PropertyMetadata(privateProperty, isPublic: false);
+                var metadata = new PropertyMetadata(privateProperty, false);
 
                 // When
                 var isPublic = metadata.IsPublic;

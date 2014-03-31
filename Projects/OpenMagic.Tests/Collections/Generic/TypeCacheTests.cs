@@ -1,16 +1,15 @@
 ﻿using System;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Collections.Generic;
+using Xunit;
 
 namespace OpenMagic.Tests.Collections.Generic
 {
     public class TypeCacheTests
     {
-        [TestClass]
         public class Get
         {
-            [TestMethod]
+            [Fact]
             public void ShouldReturnResultOfValueFactoryWhenTypeIsNotInCache()
             {
                 // Given
@@ -23,13 +22,13 @@ namespace OpenMagic.Tests.Collections.Generic
                 value.Should().Be("value");
             }
 
-            [TestMethod]
+            [Fact]
             public void ShouldReturnResultValueFromDictionaryWhenTypeIsInCache()
             {
                 // Given
                 var cache = new TypeCache<Exception>();
                 var initialValue = cache.Get<ArgumentNullException>(() => new ArgumentNullException());
-                                
+
                 // When
                 var value = cache.Get<ArgumentNullException>(() => new ArgumentNullException());
 

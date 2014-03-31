@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMagic.Extensions;
+using Xunit;
 
 namespace OpenMagic.Tests.Extensions
 {
-    [TestClass]
     public class TypeExtensionsTests
     {
-        [TestClass]
         public class IsEnumerableString
         {
-            [TestMethod]
+            [Fact]
             public void ReturnsTrueWhenTypeIsIEnumerableOfString()
             {
                 typeof(IEnumerable<string>).IsEnumerableString().Should().BeTrue();
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsFalseWhenTypeIsNotIEnumerableOfString()
             {
                 typeof(int).IsEnumerableString().Should().BeFalse();
@@ -27,16 +25,15 @@ namespace OpenMagic.Tests.Extensions
             }
         }
 
-        [TestClass]
         public class IsString
         {
-            [TestMethod]
+            [Fact]
             public void ReturnsTrueWhenTypeIsString()
             {
                 typeof(string).IsString().Should().BeTrue();
             }
 
-            [TestMethod]
+            [Fact]
             public void ReturnsFalseWhenTypeIsNotString()
             {
                 typeof(int).IsString().Should().BeFalse();
