@@ -209,6 +209,23 @@ namespace OpenMagic.Tests.Extensions
             }
         }
 
+        public class ToNameValueCollection
+        {
+            [Fact]
+            public void ReturnsCollectionOfNameAndValueItems()
+            {
+                // Given
+                const string convert = "a=1;b=2";
+                
+                // When
+                var result = convert.ToNameValueCollection();
+
+                // Then
+                result.Count.Should().Be(2);
+                result["a"].Should().Be("1");
+                result["b"].Should().Be("2");
+            }
+        }
         public class WriteLines
         {
             [Fact]

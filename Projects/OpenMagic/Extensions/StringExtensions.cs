@@ -391,6 +391,20 @@ namespace OpenMagic.Extensions
         }
 
         /// <summary>
+        ///     Naive implementation of converting a string to a NameValueCollection.
+        /// </summary>
+        /// <param name="value">The value to convert. Example: a=1;b=2.</param>
+        public static NameValueCollection ToNameValueCollection(this string value)
+        {
+            var collection = new NameValueCollection();
+            var keyValuePairs = value.Split(';').Select(keyValue => keyValue.Split('='));
+
+            keyValuePairs.ForEach(keyValuePair => collection.Add(keyValuePair[0], keyValuePair[1]));
+
+            return collection;
+        }
+
+        /// <summary>
         ///     Splits a string into lines and writes them to a <see cref="TextWriter" />.
         /// </summary>
         /// <param name="value">The string value to split into lines.</param>
