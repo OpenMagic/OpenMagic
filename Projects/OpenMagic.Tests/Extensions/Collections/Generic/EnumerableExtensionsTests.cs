@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using OpenMagic.Extensions.Collections.Generic;
 using Xunit;
@@ -7,6 +8,22 @@ namespace OpenMagic.Tests.Extensions.Collections.Generic
 {
     public class EnumerableExtensionsTests
     {
+        public class ForEach
+        {
+            [Fact]
+            public void ShouldInvoke_action_OnEachItemIn_collection()
+            {
+                // Given
+                var list = Enumerable.Range(1, 3).ToArray();
+                var result = new List<int>();
+
+                // When
+                list.ForEach(result.Add);
+
+                // Then
+                result.Should().Equal(list);
+            }
+        }
         public class IsNullOrEmpty
         {
             [Fact]
