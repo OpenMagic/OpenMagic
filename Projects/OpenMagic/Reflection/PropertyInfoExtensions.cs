@@ -19,6 +19,11 @@ namespace OpenMagic.Reflection
             return value.GetCustomAttributes(typeof(T), true).Cast<T>();
         }
 
+        public static bool HasPrivateSetter(this PropertyInfo property)
+        {
+            return property.GetSetMethod(true) != null;
+        }
+
         public static bool IsDecoratedWith<T>(this PropertyInfo value)
         {
             return value.GetCustomAttributes<T>().Any();
