@@ -5,7 +5,7 @@ using NullGuard;
 namespace OpenMagic.DataAnnotations
 {
     /// <summary>
-    /// Validates a string value is a Uri value.
+    ///     Validates a string value is a Uri value.
     /// </summary>
     public class UriAttribute : ValidationAttribute
     {

@@ -14,8 +14,30 @@ namespace OpenMagic.DataAnnotations
 
         public ClassMetadata(Type type)
         {
-            this.Type = type;
-            this.Properties = new Lazy<IEnumerable<IPropertyMetadata>>(() => this.GetProperties());
+            Type = type;
+            Properties = new Lazy<IEnumerable<IPropertyMetadata>>(() => GetProperties());
+        }
+
+        public Lazy<IEnumerable<IPropertyMetadata>> Properties { get; private set; }
+        public Type Type { get; private set; }
+
+        public IPropertyMetadata GetProperty(string propertyName)
+        {
+            propertyName.MustNotBeNullOrWhiteSpace("propertyName");
+
+            var property = Properties.Value.SingleOrDefault(p => p.PropertyInfo.Name == propertyName);
+
+            if (property != null)
+            {
+                return property;
+            }
+
+            throw new ArgumentException(string.Format("Cannot find {0} property for {1}.", propertyName, Type), "propertyName");
+        }
+
+        public IPropertyMetadata GetProperty(PropertyInfo property)
+        {
+            return GetProperty(property.Name);
         }
 
         public static IClassMetadata Get<TModel>()
@@ -25,44 +47,22 @@ namespace OpenMagic.DataAnnotations
 
         public static IPropertyMetadata GetProperty<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
         {
-            var modelMetadata = ClassMetadata.Get<TModel>();
+            var modelMetadata = Get<TModel>();
             var propertyInfo = Type<TModel>.Property(property);
             var propertyMetadata = modelMetadata.GetProperty(propertyInfo);
 
             return propertyMetadata;
         }
 
-        public Lazy<IEnumerable<IPropertyMetadata>> Properties { get; private set; }
-        public Type Type { get; private set; }
-
         private IEnumerable<IPropertyMetadata> GetProperties()
         {
-            var publicProperties = from p in this.Type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                   select new PropertyMetadata(p, true);
+            var publicProperties = from p in Type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                select new PropertyMetadata(p, true);
 
-            var privateProperties = from p in this.Type.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
-                                    select new PropertyMetadata(p, false);
+            var privateProperties = from p in Type.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
+                select new PropertyMetadata(p, false);
 
             return publicProperties.Concat(privateProperties);
-        }
-
-        public IPropertyMetadata GetProperty(string propertyName)
-        {
-            propertyName.MustNotBeNullOrWhiteSpace("propertyName");
-
-            var property = this.Properties.Value.SingleOrDefault(p => p.PropertyInfo.Name == propertyName);
-
-            if (property != null)
-            {
-                return property;    
-            }
-
-            throw new ArgumentException(string.Format("Cannot find {0} property for {1}.", propertyName, this.Type), "propertyName");
-        }
-
-        public IPropertyMetadata GetProperty(PropertyInfo property)
-        {
-            return this.GetProperty(property.Name);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace OpenMagic.Reflection
     public static class Type<T>
     {
         /// <summary>
-        /// Get PropertyInfo a property via LINQ expression.
+        ///     Get PropertyInfo a property via LINQ expression.
         /// </summary>
         public static PropertyInfo Property<TValue>(Expression<Func<T, TValue>> value)
         {
@@ -21,7 +21,7 @@ namespace OpenMagic.Reflection
                 throw new ArgumentException(String.Format("Value's Body.NodeType must be '{0}', not '{1}'.", ExpressionType.MemberAccess, value.Body.NodeType), "value");
             }
 
-            return (PropertyInfo)((MemberExpression)value.Body).Member;
+            return (PropertyInfo) ((MemberExpression) value.Body).Member;
         }
     }
 }

@@ -4,15 +4,15 @@ using System.Collections.Generic;
 namespace OpenMagic.Collections.Generic
 {
     /// <summary>
-    /// Provides a base class for classes that need to implement <see cref="IEnumerable<T>"/>.
+    ///     Provides a base class for classes that need to implement <see cref="IEnumerable<T>"/>.
     /// </summary>
     /// <typeparam name="T">
-    /// The type of elements in the collection.
+    ///     The type of elements in the collection.
     /// </typeparam>
     public abstract class EnumerableBase<T> : IEnumerable<T>
     {
         /// <summary>
-        /// Initializes a new instance of the Collection<T> class that is empty.
+        ///     Initializes a new instance of the Collection<T> class that is empty.
         /// </summary>
         public EnumerableBase()
         {
@@ -20,12 +20,12 @@ namespace OpenMagic.Collections.Generic
         }
 
         /// <summary>
-        /// Gets the items this class can enumerate
+        ///     Gets the items this class can enumerate
         /// </summary>
         protected IList<T> Items { get; set; }
 
         /// <summary>
-        /// Returns an enumerator that iterates through the collection. 
+        ///     Returns an enumerator that iterates through the collection.
         /// </summary>
         public IEnumerator<T> GetEnumerator()
         {
@@ -33,7 +33,7 @@ namespace OpenMagic.Collections.Generic
         }
 
         /// <summary>
-        /// Returns a non-generic enumerator that iterates through the collection.
+        ///     Returns a non-generic enumerator that iterates through the collection.
         /// </summary>
         IEnumerator IEnumerable.GetEnumerator()
         {

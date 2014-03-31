@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace OpenMagic.Extensions
@@ -7,10 +6,10 @@ namespace OpenMagic.Extensions
     public static class IEnumerableExtensions
     {
         /// <summary>
-        /// Gets a random item from the list.
+        ///     Gets a random item from the list.
         /// </summary>
         /// <remarks>
-        /// If <paramref name="list"/> is null then null is returned.
+        ///     If <paramref name="list" /> is null then null is returned.
         /// </remarks>
         public static T RandomItem<T>(this IEnumerable<T> list)
         {
@@ -27,15 +26,15 @@ namespace OpenMagic.Extensions
         }
 
         /// <summary>
-        /// Gets a random item from the list that does not equal <paramref name="doesNotEqual"/>
+        ///     Gets a random item from the list that does not equal <paramref name="doesNotEqual" />
         /// </summary>
         /// <remarks>
-        /// If <paramref name="list"/> is null then null is returned.
+        ///     If <paramref name="list" /> is null then null is returned.
         /// </remarks>
         public static T RandomItem<T>(this IEnumerable<T> list, T doesNotEqual)
         {
             // todo: unit tests
-            T thisItem = RandomItem(list);
+            var thisItem = RandomItem(list);
 
             while (thisItem.Equals(doesNotEqual))
             {

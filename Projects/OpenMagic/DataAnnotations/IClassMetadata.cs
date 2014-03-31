@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace OpenMagic.DataAnnotations
 {
-    public interface IClassMetadata    
+    public interface IClassMetadata
     {
         Lazy<IEnumerable<IPropertyMetadata>> Properties { get; }
         Type Type { get; }
