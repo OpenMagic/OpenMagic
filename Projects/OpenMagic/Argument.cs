@@ -89,7 +89,6 @@ namespace OpenMagic
         ///     Throws <see cref="ArgumentNullException" /> when <paramref name="param" /> is null or
         ///     <see cref="ArgumentException" /> when <paramref name="param" /> is whitespace.
         /// </summary>
-        /// <typeparam name="T">The <paramref name="param" /> type.</typeparam>
         /// <param name="param">The value to test for null or whitespace.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null or whitespace.</returns>
