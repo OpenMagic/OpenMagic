@@ -10,8 +10,10 @@ namespace OpenMagic.Collections.Generic
     /// <typeparam name="TValue">The type of the values in the cache.</typeparam>
     /// <remarks>
     ///     <see cref="Cache
+    ///     
     ///     <TKey, TValue>
     ///         "/> extends <see cref="Dictionary
+    ///         
     ///         <TKey, TValue>"/> with the <see cref="Cache<TKey, TValue>.Get(Func<TValue> valueFactory)"/> method.
     /// </remarks>
     public class Cache<TKey, TValue> : Dictionary<TKey, TValue>
