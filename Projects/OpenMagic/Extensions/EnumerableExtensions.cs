@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NullGuard;
 
 namespace OpenMagic.Extensions
 {
@@ -11,10 +12,8 @@ namespace OpenMagic.Extensions
         /// <remarks>
         ///     If <paramref name="list" /> is null then null is returned.
         /// </remarks>
-        public static T RandomItem<T>(this IEnumerable<T> list)
+        public static T RandomItem<T>([AllowNull] this IEnumerable<T> list)
         {
-            // todo: unit tests
-
             if (list == null)
             {
                 return default(T);
@@ -34,7 +33,6 @@ namespace OpenMagic.Extensions
         /// </remarks>
         public static T RandomItem<T>(this IEnumerable<T> list, T doesNotEqual)
         {
-            // todo: unit tests
             var items = list.ToArray();
             var thisItem = RandomItem(items);
 

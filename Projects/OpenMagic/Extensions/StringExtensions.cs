@@ -17,7 +17,6 @@ namespace OpenMagic.Extensions
         /// <param name="stringComparison"><see cref="StringComparison" />.</param>
         public static bool Contains(this string value, string find, StringComparison stringComparison)
         {
-            // todo: unit tests
             switch (stringComparison)
             {
                 case StringComparison.CurrentCultureIgnoreCase:
@@ -87,7 +86,6 @@ namespace OpenMagic.Extensions
         /// <exception cref="ArgumentNullException"> when find is null or empty.</exception>
         public static int Occurs(this string value, string find)
         {
-            // todo: unit tests
             find.MustNotBeNullOrEmpty("find");
 
             if (value == null)
@@ -112,7 +110,6 @@ namespace OpenMagic.Extensions
         [return: AllowNull]
         public static string TextAfter(this string text, int value)
         {
-            // todo: unit tests
             return text.TextAfter(value, null);
         }
 
@@ -155,7 +152,6 @@ namespace OpenMagic.Extensions
         [return: AllowNull]
         public static string TextAfter(this string text, int value, [AllowNull] string defaultValue, int offset)
         {
-            // todo: unit tests
             if (value == -1)
             {
                 return defaultValue;
@@ -189,8 +185,6 @@ namespace OpenMagic.Extensions
         [return: AllowNull]
         public static string TextAfter(this string text, string value, [AllowNull] string defaultValue)
         {
-            // todo: unit tests
-
             value.MustNotBeNullOrWhiteSpace("value");
 
             if (text.IsNullOrWhiteSpace())
@@ -237,7 +231,6 @@ namespace OpenMagic.Extensions
         [return: AllowNull]
         public static string TextAfterLast(this string text, string value, [AllowNull] string defaultValue)
         {
-            // todo: unit tests
             if (text.IsNullOrWhiteSpace())
             {
                 return defaultValue;
@@ -272,7 +265,6 @@ namespace OpenMagic.Extensions
         [return: AllowNull]
         public static string TextBefore(this string text, string value, [AllowNull] string defaultValue)
         {
-            // todo: unit tests
             if (text.IsNullOrWhiteSpace())
             {
                 return defaultValue;
@@ -317,7 +309,6 @@ namespace OpenMagic.Extensions
         [return: AllowNull]
         public static string TextBeforeLast(this string text, string value)
         {
-            // todo: unit tests
             return text.TextBeforeLast(value, null);
         }
 
@@ -332,7 +323,6 @@ namespace OpenMagic.Extensions
         [return: AllowNull]
         public static string TextBeforeLast(this string text, string value, [AllowNull] string defaultValue)
         {
-            // todo: unit tests
             if (text.IsNullOrWhiteSpace())
             {
                 return defaultValue;

@@ -13,8 +13,6 @@ namespace OpenMagic
         /// </summary>
         public static string Next()
         {
-            // todo: unit tests.
-
             return Next(CharacterSets.Keyboard);
         }
 
@@ -24,8 +22,6 @@ namespace OpenMagic
         /// </summary>
         public static string Next(string characterSet)
         {
-            // todo: unit tests.
-
             return Next(1, 25, characterSet);
         }
 
@@ -34,8 +30,6 @@ namespace OpenMagic
         /// </summary>
         public static string Next(int minLength, int maxLength)
         {
-            // todo: unit tests.
-
             return Next(minLength, maxLength, CharacterSets.Keyboard);
         }
 
@@ -44,8 +38,6 @@ namespace OpenMagic
         /// </summary>
         public static string Next(int minLength, int maxLength, string characterSet)
         {
-            // todo: unit tests.
-
             minLength.MustBeGreaterThan(0, "minLength");
             maxLength.MustBeGreaterThan(minLength, "maxLength");
             characterSet.MustNotBeNullOrWhiteSpace("characterSet");
@@ -68,8 +60,6 @@ namespace OpenMagic
         /// <param name="formatItems">The number of format items to include at the end of the return string.</param>
         public static string NextFormat(int formatItems)
         {
-            // todo: unit tests.
-
             if (formatItems < 1)
             {
                 throw new ArgumentOutOfRangeException("formatItems", formatItems, "Number of format items must be 1 or more.");
