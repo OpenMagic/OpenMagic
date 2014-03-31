@@ -21,7 +21,7 @@ if not "%errorlevel%" == "0" exit %errorlevel%
 echo.
 echo Merging develop into master...
 echo.
-git merge test
+git merge develop
 if not "%errorlevel%" == "0" exit %errorlevel%
 
 echo.
