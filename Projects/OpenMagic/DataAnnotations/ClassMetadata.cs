@@ -15,7 +15,7 @@ namespace OpenMagic.DataAnnotations
         public ClassMetadata(Type type)
         {
             Type = type;
-            Properties = new Lazy<IEnumerable<IPropertyMetadata>>(() => GetProperties());
+            Properties = new Lazy<IEnumerable<IPropertyMetadata>>(GetProperties);
         }
 
         public Lazy<IEnumerable<IPropertyMetadata>> Properties { get; private set; }

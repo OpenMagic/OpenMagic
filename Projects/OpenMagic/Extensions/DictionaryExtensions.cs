@@ -3,7 +3,7 @@ using NullGuard;
 
 namespace OpenMagic.Extensions
 {
-    public static class IDictionaryExtensions
+    public static class DictionaryExtensions
     {
         /// <summary>
         ///     Finds the value associated with the specified key.

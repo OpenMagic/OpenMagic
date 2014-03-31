@@ -34,6 +34,7 @@ namespace OpenMagic.DataAnnotations
         {
             var attribute = PropertyInfo.GetCustomAttribute<T>();
 
+            // ReSharper disable once CompareNonConstrainedGenericWithNull
             if (attribute != null)
             {
                 return attribute;

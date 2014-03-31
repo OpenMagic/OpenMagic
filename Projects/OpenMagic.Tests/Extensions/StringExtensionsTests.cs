@@ -32,13 +32,6 @@ namespace OpenMagic.Tests.Extensions
                     .WithMessage("Value cannot be longer than 1 character.\r\nParameter name: delimiter");
             }
 
-            private void ShouldThrow_ArgumentNullException_For_delimiter(string delimiter)
-            {
-                "fake value".Invoking(x => x.GetValuesBetween(delimiter))
-                    .ShouldThrow<ArgumentNullException>()
-                    .WithMessage("Value cannot be null.\r\nParameter name: delimiter");
-            }
-
             private void ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(string delimiter)
             {
                 "fake value".Invoking(x => x.GetValuesBetween(delimiter))
@@ -50,36 +43,36 @@ namespace OpenMagic.Tests.Extensions
             public void ReturnsValuesWhenStringStartsWithDelimiter()
             {
                 // Given
-                var value = "'the' 'quick' brown 'fox' jumped 'over the' lazy dog";
-                var delimiter = "'";
+                const string value = "'the' 'quick' brown 'fox' jumped 'over the' lazy dog";
+                const string delimiter = "'";
 
                 // When
                 var values = value.GetValuesBetween(delimiter);
 
                 // Then
-                values.Should().Equal(new[] {"the", "quick", "fox", "over the"});
+                values.Should().Equal(new[] { "the", "quick", "fox", "over the" });
             }
 
             [Fact]
             public void ReturnsValuesWhenStringDoesNotStartsDelimiter()
             {
                 // Given
-                var value = "the 'quick' brown 'fox' jumped 'over the' lazy dog";
-                var delimiter = "'";
+                const string value = "the 'quick' brown 'fox' jumped 'over the' lazy dog";
+                const string delimiter = "'";
 
                 // When
                 var values = value.GetValuesBetween(delimiter);
 
                 // Then
-                values.Should().Equal(new[] {"quick", "fox", "over the"});
+                values.Should().Equal(new[] { "quick", "fox", "over the" });
             }
 
             [Fact]
             public void ReturnsZeroValuesWhen_value_DoesNotHaveAnyValues()
             {
                 // Given
-                var value = "the quick brown fox";
-                var delimiter = "'";
+                const string value = "the quick brown fox";
+                const string delimiter = "'";
 
                 // When
                 var values = value.GetValuesBetween(delimiter);
@@ -109,7 +102,7 @@ namespace OpenMagic.Tests.Extensions
             private void ReturnsZeroValuesWhenValueIs(string value)
             {
                 // Given
-                var delimiter = "'";
+                const string delimiter = "'";
 
                 // When
                 var values = value.GetValuesBetween(delimiter);
@@ -153,15 +146,15 @@ namespace OpenMagic.Tests.Extensions
                 sb.AppendLine();
 
                 // When
-                var lines = sb.ToString().ToLines();
+                var lines = sb.ToString().ToLines().ToArray();
 
                 // Then
-                lines.Count().Should().Be(5);
-                lines.ElementAt(0).Should().Be("line 1");
-                lines.ElementAt(1).Should().Be("line 2 with trailing space ");
-                lines.ElementAt(2).Should().Be("");
-                lines.ElementAt(3).Should().Be(" line 4 with leading space");
-                lines.ElementAt(4).Should().Be("");
+                lines.Length.Should().Be(5);
+                lines[0].Should().Be("line 1");
+                lines[1].Should().Be("line 2 with trailing space ");
+                lines[2].Should().Be("");
+                lines[3].Should().Be(" line 4 with leading space");
+                lines[4].Should().Be("");
             }
 
             [Fact]
@@ -177,22 +170,22 @@ namespace OpenMagic.Tests.Extensions
                 sb.AppendLine();
 
                 // When
-                var lines = sb.ToString().ToLines(true);
+                var lines = sb.ToString().ToLines(true).ToArray();
 
                 // Then
-                lines.Count().Should().Be(5);
-                lines.ElementAt(0).Should().Be("line 1");
-                lines.ElementAt(1).Should().Be("line 2 with trailing space trimmed");
-                lines.ElementAt(2).Should().Be("");
-                lines.ElementAt(3).Should().Be("line 4 with leading space trimmed");
-                lines.ElementAt(4).Should().Be("");
+                lines.Length.Should().Be(5);
+                lines[0].Should().Be("line 1");
+                lines[1].Should().Be("line 2 with trailing space trimmed");
+                lines[2].Should().Be("");
+                lines[3].Should().Be("line 4 with leading space trimmed");
+                lines[4].Should().Be("");
             }
 
             [Fact]
             public void ReturnsZeroLinesWhenValueIsEmptyString()
             {
                 // Given
-                var value = "";
+                const string value = "";
 
                 // When
                 var lines = value.ToLines();
@@ -208,6 +201,7 @@ namespace OpenMagic.Tests.Extensions
                 string value = null;
 
                 // When
+                // ReSharper disable once ExpressionIsAlwaysNull
                 var lines = value.ToLines();
 
                 // Then
@@ -221,11 +215,12 @@ namespace OpenMagic.Tests.Extensions
             public void WritesUntrimmedLinesTo_textWriter_When_trimLines_IsFalse()
             {
                 // Given
-                var value = "line 1\r\n line 2 \r\nline 3";
+                const string value = "line 1\r\n line 2 \r\nline 3";
                 var textWriter = new StringWriter();
-                var trimLines = false;
+                const bool trimLines = false;
 
                 // When
+                // ReSharper disable once RedundantArgumentDefaultValue
                 value.WriteLines(textWriter, trimLines);
 
                 // Then
@@ -236,9 +231,9 @@ namespace OpenMagic.Tests.Extensions
             public void WritesTrimmedLinesTo_textWriter_When_trimLines_IsTrue()
             {
                 // Given
-                var value = "line 1\r\n line 2 \r\nline 3";
+                const string value = "line 1\r\n line 2 \r\nline 3";
                 var textWriter = new StringWriter();
-                var trimLines = true;
+                const bool trimLines = true;
 
                 // When
                 value.WriteLines(textWriter, trimLines);
@@ -253,9 +248,10 @@ namespace OpenMagic.Tests.Extensions
                 // Given
                 string value = null;
                 var textWriter = new StringWriter();
-                var trimLines = true;
+                const bool trimLines = true;
 
                 // When
+                // ReSharper disable once ExpressionIsAlwaysNull
                 value.WriteLines(textWriter, trimLines);
 
                 // Then

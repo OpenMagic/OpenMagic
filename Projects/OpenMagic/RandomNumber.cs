@@ -7,7 +7,7 @@ namespace OpenMagic
     /// </summary>
     public static class RandomNumber
     {
-        private static readonly Random _Random = new Random();
+        private static readonly Random Random = new Random();
 
         /// <summary>
         ///     Returns a random <see cref="Integer" />.
@@ -31,7 +31,7 @@ namespace OpenMagic
         /// </returns>
         public static int NextInt(int minValue, int maxValue)
         {
-            return _Random.Next(minValue, maxValue);
+            return Random.Next(minValue, maxValue);
         }
     }
 }

@@ -4,7 +4,7 @@ using NullGuard;
 
 namespace OpenMagic.Extensions.Collections.Generic
 {
-    public static class IEnumerableExtensions
+    public static class EnumerableExtensions
     {
         /// <summary>
         ///     Indicates whether a specified enumerable is null or empty.

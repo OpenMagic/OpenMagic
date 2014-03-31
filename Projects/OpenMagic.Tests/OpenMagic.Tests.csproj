@@ -76,10 +76,10 @@
     <Compile Include="Collections\Generic\EnumerableBaseTests.cs" />
     <Compile Include="DataAnnotations\PropertyMetadataTests.cs" />
     <Compile Include="DataAnnotations\ClassMetadataTests.cs" />
-    <Compile Include="Extensions\IDictionaryExtensionsTests.cs" />
+    <Compile Include="Extensions\DictionaryExtensionsTests.cs" />
     <Compile Include="DataAnnotations\UriAttributeTests.cs" />
     <Compile Include="DataAnnotations\ValidationTests.cs" />
-    <Compile Include="Extensions\Collections\Generic\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\Collections\Generic\EnumerableExtensionsTests.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

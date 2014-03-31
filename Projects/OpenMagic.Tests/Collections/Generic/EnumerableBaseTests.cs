@@ -53,6 +53,7 @@ namespace OpenMagic.Tests.Collections.Generic
             }
         }
 
+        // ReSharper disable once InconsistentNaming
         public class GetEnumerator_NonGeneric
         {
             [Fact]

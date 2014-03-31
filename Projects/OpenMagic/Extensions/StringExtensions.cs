@@ -190,7 +190,6 @@ namespace OpenMagic.Extensions
         public static string TextAfter(this string text, string value, [AllowNull] string defaultValue)
         {
             // todo: unit tests
-            var index = 0;
 
             value.MustNotBeNullOrWhiteSpace("value");
 
@@ -199,7 +198,7 @@ namespace OpenMagic.Extensions
                 return defaultValue;
             }
 
-            index = text.IndexOf(value);
+            var index = text.IndexOf(value, StringComparison.Ordinal);
 
             if (index > -1)
             {
@@ -244,7 +243,7 @@ namespace OpenMagic.Extensions
                 return defaultValue;
             }
 
-            return text.TextAfter(text.LastIndexOf(value), defaultValue, value.Length);
+            return text.TextAfter(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue, value.Length);
         }
 
         /// <summary>
@@ -279,7 +278,7 @@ namespace OpenMagic.Extensions
                 return defaultValue;
             }
 
-            return text.TextBefore(text.IndexOf(value), defaultValue);
+            return text.TextBefore(text.IndexOf(value, StringComparison.Ordinal), defaultValue);
         }
 
         /// <summary>
@@ -339,7 +338,7 @@ namespace OpenMagic.Extensions
                 return defaultValue;
             }
 
-            return text.TextBefore(text.LastIndexOf(value), defaultValue);
+            return text.TextBefore(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue);
         }
 
         /// <summary>

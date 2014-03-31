@@ -5,7 +5,7 @@ using Xunit;
 
 namespace OpenMagic.Tests.Extensions.Collections.Generic
 {
-    public class IEnumerableExtensions
+    public class EnumerableExtensionsTests
     {
         public class IsNullOrEmpty
         {
@@ -15,7 +15,9 @@ namespace OpenMagic.Tests.Extensions.Collections.Generic
                 IEnumerable<string> nullString = null;
                 IEnumerable<int> nullInt = null;
 
+                // ReSharper disable once ExpressionIsAlwaysNull
                 nullString.IsNullOrEmpty().Should().BeTrue();
+                // ReSharper disable once ExpressionIsAlwaysNull
                 nullInt.IsNullOrEmpty().Should().BeTrue();
             }
 
@@ -32,8 +34,8 @@ namespace OpenMagic.Tests.Extensions.Collections.Generic
             [Fact]
             public void ReturnsFalseWhenValueHasElements()
             {
-                var enumerableString = new List<string> {"a", "b"};
-                var enumerableInt = new List<int> {1, 2};
+                var enumerableString = new List<string> { "a", "b" };
+                var enumerableInt = new List<int> { 1, 2 };
 
                 enumerableString.IsNullOrEmpty().Should().BeFalse();
                 enumerableInt.IsNullOrEmpty().Should().BeFalse();

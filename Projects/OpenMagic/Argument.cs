@@ -51,6 +51,7 @@ namespace OpenMagic
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         public static T MustNotBeNull<T>([AllowNull] this T param, string paramName)
         {
+            // ReSharper disable once CompareNonConstrainedGenericWithNull
             if (param == null)
             {
                 throw new ArgumentNullException(paramName);
@@ -69,13 +70,18 @@ namespace OpenMagic
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         public static IEnumerable<T> MustNotBeNullOrEmpty<T>([AllowNull] this IEnumerable<T> param, string paramName)
         {
-            param.MustNotBeNull(paramName);
+            if (param == null)
+            {
+                throw new ArgumentNullException("param");
+            }
 
+            // ReSharper disable once PossibleMultipleEnumeration
             if (!param.Any())
             {
                 throw new ArgumentException("Value cannot be empty.", paramName);
             }
 
+            // ReSharper disable once PossibleMultipleEnumeration
             return param;
         }
 

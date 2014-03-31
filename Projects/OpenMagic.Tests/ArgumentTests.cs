@@ -13,9 +13,9 @@ namespace OpenMagic.Tests
             public void ShouldThrowNotArgumentExceptionWhenAssertionResultIsTrue()
             {
                 // Given
-                var argument = 1;
-                var exceptionMessage = "Value must be 1.";
-                var paramName = "argument";
+                const int argument = 1;
+                const string exceptionMessage = "Value must be 1.";
+                const string paramName = "argument";
 
                 // When
                 Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
@@ -28,9 +28,9 @@ namespace OpenMagic.Tests
             public void ShouldThrowArgumentExceptionWhenAssertionResultIsFalse()
             {
                 // Given
-                var argument = 0;
-                var exceptionMessage = "Value must be 1.";
-                var paramName = "argument";
+                const int argument = 0;
+                const string exceptionMessage = "Value must be 1.";
+                const string paramName = "argument";
 
                 // When
                 Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
@@ -46,7 +46,7 @@ namespace OpenMagic.Tests
             public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
             {
                 // Given
-                var parameterValue = 1;
+                const int parameterValue = 1;
 
                 // When
                 var value = parameterValue.MustNotBeNull("parameterValue");
@@ -75,7 +75,7 @@ namespace OpenMagic.Tests
             public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
             {
                 // Given
-                var parameterValue = new List<int>(new[] {1, 2});
+                var parameterValue = new List<int>(new[] { 1, 2 });
 
                 // When
                 var value = parameterValue.MustNotBeNullOrEmpty("fakeParamName");
@@ -100,13 +100,14 @@ namespace OpenMagic.Tests
             }
         }
 
+        // ReSharper disable once InconsistentNaming
         public class MustNotBeNullOrEmpty_AsExtensionMethod
         {
             [Fact]
             public void ShouldReturn_param_When_param_IsNotNull()
             {
                 // Given
-                var param = new List<int>(new[] {1, 2});
+                var param = new List<int>(new[] { 1, 2 });
 
                 // When
                 var value = param.MustNotBeNullOrEmpty("fakeParamName");
@@ -137,7 +138,7 @@ namespace OpenMagic.Tests
             public void ShouldReturn_param_When_param_IsNotWhitespace()
             {
                 // Given
-                var param = "any string";
+                const string param = "any string";
 
                 // When
                 var value = param.MustNotBeNullOrWhiteSpace("param");
@@ -150,7 +151,7 @@ namespace OpenMagic.Tests
             public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
             {
                 // Given
-                var param = "";
+                const string param = "";
 
                 // When
                 Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
@@ -162,13 +163,14 @@ namespace OpenMagic.Tests
             }
         }
 
+        // ReSharper disable once InconsistentNaming
         public class MustNotBeNullOrWhiteSpace_AsExtensionMethod
         {
             [Fact]
             public void ShouldReturn_param_When_param_IsNotWhitespace()
             {
                 // Given
-                var param = "any string";
+                const string param = "any string";
 
                 // When
                 var value = param.MustNotBeNullOrWhiteSpace("param");
@@ -181,7 +183,7 @@ namespace OpenMagic.Tests
             public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
             {
                 // Given
-                var param = "";
+                const string param = "";
 
                 // When
                 Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
@@ -193,13 +195,14 @@ namespace OpenMagic.Tests
             }
         }
 
+        // ReSharper disable once InconsistentNaming
         public class MustNotBeNull_AsExtensionMethod
         {
             [Fact]
             public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
             {
                 // Given
-                var parameterValue = 1;
+                const int parameterValue = 1;
 
                 // When
                 var value = parameterValue.MustNotBeNull("parameterValue");

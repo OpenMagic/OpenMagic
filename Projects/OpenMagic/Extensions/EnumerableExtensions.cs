@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace OpenMagic.Extensions
 {
-    public static class IEnumerableExtensions
+    public static class EnumerableExtensions
     {
         /// <summary>
         ///     Gets a random item from the list.
@@ -20,9 +20,10 @@ namespace OpenMagic.Extensions
                 return default(T);
             }
 
-            var randomIndex = RandomNumber.NextInt(0, list.Count());
+            var items = list.ToArray();
+            var randomIndex = RandomNumber.NextInt(0, items.Length);
 
-            return list.ElementAt(randomIndex);
+            return items[randomIndex];
         }
 
         /// <summary>
@@ -34,11 +35,12 @@ namespace OpenMagic.Extensions
         public static T RandomItem<T>(this IEnumerable<T> list, T doesNotEqual)
         {
             // todo: unit tests
-            var thisItem = RandomItem(list);
+            var items = list.ToArray();
+            var thisItem = RandomItem(items);
 
             while (thisItem.Equals(doesNotEqual))
             {
-                thisItem = RandomItem(list);
+                thisItem = RandomItem(items);
             }
 
             return thisItem;

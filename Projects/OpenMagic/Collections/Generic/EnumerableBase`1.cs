@@ -14,7 +14,7 @@ namespace OpenMagic.Collections.Generic
         /// <summary>
         ///     Initializes a new instance of the Collection<T> class that is empty.
         /// </summary>
-        public EnumerableBase()
+        protected EnumerableBase()
         {
             Items = new List<T>();
         }

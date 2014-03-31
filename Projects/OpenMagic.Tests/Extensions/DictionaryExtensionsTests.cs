@@ -5,7 +5,7 @@ using Xunit;
 
 namespace OpenMagic.Tests.Extensions
 {
-    public class IDictionaryExtensionsTests
+    public class DictionaryExtensionsTests
     {
         public class FindValue
         {
@@ -13,10 +13,7 @@ namespace OpenMagic.Tests.Extensions
             public void ShouldReturnValueIfKeyIsInDictionary()
             {
                 // Given
-                var dictionary = new Dictionary<int, string>();
-
-                dictionary.Add(1, "a");
-                dictionary.Add(2, "b");
+                var dictionary = new Dictionary<int, string> {{1, "a"}, {2, "b"}};
 
                 // When / Then
                 dictionary.FindValue(1).Should().Be("a");
@@ -27,9 +24,7 @@ namespace OpenMagic.Tests.Extensions
             public void ShouldReturnNullIfKeyIsNotDictionary()
             {
                 // Given
-                var dictionary = new Dictionary<int, string>();
-
-                dictionary.Add(1, "a");
+                var dictionary = new Dictionary<int, string> {{1, "a"}};
 
                 // When / Then
                 dictionary.FindValue(2).Should().BeNull();

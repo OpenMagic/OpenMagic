@@ -22,10 +22,11 @@ namespace OpenMagic.Tests
                 }
 
                 // Then
-                var uniqueNumbers = from i in randomNumbers
+                var uniqueNumbers =
+                    from i in randomNumbers
                     group i by i
-                    into Group
-                    select new {Number = Group};
+                        into g
+                        select new { Number = g };
 
                 uniqueNumbers.Count().Should().BeGreaterThan(900, "because there should be more than 900 random int.");
             }
