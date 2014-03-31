@@ -42,7 +42,7 @@ echo.
 if "%GallioEcho%" == "" (
 
   echo Running tests with xUnit...
-  Packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe /testcontainer:Projects\OpenMagic.Tests\bin\Release\OpenMagic.Tests.dll"
+  Packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe Projects\OpenMagic.Tests\bin\Release\OpenMagic.Tests.dll"
   
 ) else (
 
