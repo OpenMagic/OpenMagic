@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21126.0
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic", "Projects\OpenMagic\OpenMagic.csproj", "{813600E6-945A-46FD-A27C-180E4131DA8C}"
 EndProject
@@ -17,12 +17,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{646E6C24-EB36-4073-93A2-CF33E81B01A6}"
 	ProjectSection(SolutionItems) = preProject
-		NuGet\OpenMagic.nuspec = NuGet\OpenMagic.nuspec
-		.nuget\packages.config = .nuget\packages.config
+		.nuget\Packages.config = .nuget\Packages.config
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{DFED32B6-8E98-4C07-A178-34C2B8D2373C}"
 	ProjectSection(SolutionItems) = preProject
+		Scripts\MyGet.bat = Scripts\MyGet.bat
 		Scripts\Publish.bat = Scripts\Publish.bat
 		Scripts\PublishAndPause.bat = Scripts\PublishAndPause.bat
 	EndProjectSection

@@ -41,8 +41,8 @@ echo.
 
 if "%GallioEcho%" == "" (
 
-  echo Running tests with mstest...
-  "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\mstest.exe" /testcontainer:Projects\OpenMagic.Tests\bin\Release\OpenMagic.Tests.dll"
+  echo Running tests with xUnit...
+  Packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe /testcontainer:Projects\OpenMagic.Tests\bin\Release\OpenMagic.Tests.dll"
   
 ) else (
 
