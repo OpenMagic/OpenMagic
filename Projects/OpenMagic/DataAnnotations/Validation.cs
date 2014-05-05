@@ -9,7 +9,7 @@ namespace OpenMagic.DataAnnotations
         /// </summary>
         public static T Validate<T>(this T value) where T : class
         {
-            Validator.ValidateObject(value, new ValidationContext(value, null, null), true);
+            Validator.ValidateObject(value, new ValidationContext(value), true);
             return value;
         }
     }

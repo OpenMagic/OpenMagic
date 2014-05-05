@@ -9,22 +9,22 @@ namespace OpenMagic.DataAnnotations
     /// </summary>
     public class UriAttribute : ValidationAttribute
     {
-        public override bool IsValid([AllowNull] object value)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if ((value == null) || (value is string && string.IsNullOrWhiteSpace(value.ToString())))
             {
-                return true;
+                return ValidationResult.Success;
             }
 
             try
             {
                 // ReSharper disable once UnusedVariable
                 var uri = new Uri(value.ToString());
-                return true;
+                return ValidationResult.Success;
             }
             catch (Exception)
             {
-                return false;
+                return new ValidationResult("Value is not a valid Uri.");
             }
         }
     }

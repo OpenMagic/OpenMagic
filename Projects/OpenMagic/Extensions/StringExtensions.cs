@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Common.Logging.Configuration;
 using NullGuard;
 using OpenMagic.Extensions.Collections.Generic;
 
@@ -26,11 +26,9 @@ namespace OpenMagic.Extensions
 
                     return value.ToLower().Contains(find.ToLower());
 
-                case StringComparison.InvariantCultureIgnoreCase:
-
-                    return value.ToLowerInvariant().Contains(find.ToLowerInvariant());
+                default:
+                    throw new ArgumentOutOfRangeException("stringComparison", string.Format("Value cannot be {0}.", stringComparison));
             }
-            throw new ArgumentOutOfRangeException("stringComparison", string.Format("Value cannot be {0}.", stringComparison));
         }
 
         /// <summary>
@@ -88,7 +86,7 @@ namespace OpenMagic.Extensions
         /// <exception cref="ArgumentNullException"> when find is null or empty.</exception>
         public static int Occurs(this string value, string find)
         {
-            find.MustNotBeNullOrEmpty("find");
+            find.MustNotBeNullOrWhiteSpace("find");
 
             if (value == null)
             {

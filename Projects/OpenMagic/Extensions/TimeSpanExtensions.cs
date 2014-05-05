@@ -19,7 +19,7 @@ namespace OpenMagic.Extensions
                 return;
             }
 
-            if (messageFormat.Contains("{milliseconds}", StringComparison.InvariantCultureIgnoreCase))
+            if (messageFormat.Contains("{milliseconds}", StringComparison.CurrentCultureIgnoreCase))
             {
                 log.WarnFormat(messageFormat.Replace("{milliseconds}", "{0:N0}"), timespan.TotalMilliseconds);
             }

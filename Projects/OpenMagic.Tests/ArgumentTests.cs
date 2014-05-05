@@ -239,9 +239,7 @@ namespace OpenMagic.Tests
                 Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
 
                 // Then
-                action
-                    .ShouldThrow<ArgumentOutOfRangeException>()
-                    .WithMessage("Value must be greater than 1.\r\nParameter name: fakeParamName\r\nActual value was 1.");
+                action.ShouldThrow<ArgumentOutOfRangeException>();
             }
 
             [Fact]
@@ -255,9 +253,7 @@ namespace OpenMagic.Tests
                 Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
 
                 // Then
-                action
-                    .ShouldThrow<ArgumentOutOfRangeException>()
-                    .WithMessage("Value must be greater than 1.\r\nParameter name: fakeParamName\r\nActual value was 0.");
+                action.ShouldThrow<ArgumentOutOfRangeException>();
             }
         }
     }

@@ -40,12 +40,17 @@ namespace OpenMagic.Extensions
         {
             var privateField = type.FindPrivateField(privateFieldName);
 
-            if (privateField == null)
+            if (privateField != null)
             {
-                throw new ArgumentOutOfRangeException("privateFieldName", privateFieldName, string.Format("Cannot find {1} in {0}.", type, privateFieldName));
+                return privateField;
             }
 
-            return privateField;
+            var exception = new ArgumentOutOfRangeException("privateFieldName", string.Format("Cannot find {1} in {0}.", type, privateFieldName));
+
+            exception.Data.Add("type", type);
+            exception.Data.Add("privateFieldName", privateFieldName);
+
+            throw exception;
         }
     }
 }

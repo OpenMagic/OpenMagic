@@ -62,7 +62,11 @@ namespace OpenMagic
         {
             if (formatItems < 1)
             {
-                throw new ArgumentOutOfRangeException("formatItems", formatItems, "Number of format items must be 1 or more.");
+                var exception = new ArgumentOutOfRangeException("formatItems", "Number of format items must be 1 or more.");
+
+                exception.Data.Add("formatItems", formatItems);
+
+                throw exception;
             }
 
             var format = new StringBuilder(Next(CharacterSets.AtoZ));

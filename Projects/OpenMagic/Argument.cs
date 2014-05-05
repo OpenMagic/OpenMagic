@@ -37,7 +37,14 @@ namespace OpenMagic
                 return param;
             }
 
-            throw new ArgumentOutOfRangeException(paramName, param, string.Format("Value must be greater than {0}.", greaterThan));
+            var exception = new ArgumentOutOfRangeException(paramName, string.Format("Value must be greater than {0}.", greaterThan));
+
+            exception.Data.Add("param", param);
+            exception.Data.Add("greaterThan", greaterThan);
+            exception.Data.Add("paramName", paramName);
+            
+            throw exception;
+
         }
 
         /// <summary>
