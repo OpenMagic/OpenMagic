@@ -39,18 +39,28 @@ echo Running unit tests...
 echo -------------------------------
 echo.
 
+rem todo: is there AND for batch files?
 if "%GallioEcho%" == "" (
 
+  if exist "C:\Program Files\Gallio\bin\Gallio.Echo.exe" (
+
+    echo Setting GallioEcho environment variable...
+    set GallioEcho=C:\Program Files\Gallio\bin\Gallio.Echo.exe
+  )
+)
+
+if "%GallioEcho%" == "" (
+
+  echo.
+  echo.
+  echo WARNING. Best to have same environment as MyGet.org. Install Gallio.
+  echo.
   echo Running tests with xUnit...
   Packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe Projects\OpenMagic.Tests\bin\Release\OpenMagic.Tests.dll"
   
 ) else (
 
   echo Running tests with Gallio...
-  echo.
-  echo %GallioEcho%
-  echo.
-  echo.
   "%GallioEcho%" Projects\OpenMagic.Tests\bin\Release\OpenMagic.Tests.dll
 )
 
