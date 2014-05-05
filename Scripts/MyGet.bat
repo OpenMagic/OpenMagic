@@ -46,7 +46,7 @@ if "%GallioEcho%" == "" (
   
 ) else (
 
-  echo Running tests with Gallio...
+  echo Running tests with Gallio (%GallioEcho%)...
   "%GallioEcho%" Projects\OpenMagic.Tests\bin\Release\OpenMagic.Tests.dll
 )
 
