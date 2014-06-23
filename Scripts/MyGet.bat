@@ -54,13 +54,16 @@ if "%GallioEcho%" == "" (
 
     echo Setting GallioEcho environment variable...
     set GallioEcho=""C:\Program Files\Gallio\bin\Gallio.Echo.exe""
+    
   ) else (
 
 	echo Gallio is required to run unit tests. Try cinst Gallio.
 	goto Error
+	
   )
 )
 
+"%GallioEcho%" Projects\OpenMagic.Tests\bin\Release\OpenMagic.Tests.dll
 if not "%errorlevel%" == "0" goto Error
 echo.
 echo.
