@@ -26,6 +26,15 @@ if not "%PackageVersion%" == "" (
    set version=-Version %PackageVersion%
 )
 
+echo Restoring packages...
+echo -------------------------------
+rem Packages must be explicity restored otherwise NullGuard.Fody does not run.
+echo.
+.nuget\nuget restore -PackagesDirectory .\Packages
+if not "%errorlevel%" == "0" goto Error
+echo.
+echo.
+
 echo Building solution...
 echo -------------------------------
 echo.
