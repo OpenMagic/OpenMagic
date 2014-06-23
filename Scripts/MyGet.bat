@@ -45,7 +45,7 @@ if "%GallioEcho%" == "" (
   if exist "C:\Program Files\Gallio\bin\Gallio.Echo.exe" (
 
     echo Setting GallioEcho environment variable...
-    set GallioEcho=C:\Program Files\Gallio\bin\Gallio.Echo.exe
+    set GallioEcho=""C:\Program Files\Gallio\bin\Gallio.Echo.exe""
   )
 )
 
@@ -54,6 +54,10 @@ if "%GallioEcho%" == "" (
   echo.
   echo.
   echo WARNING. Best to have same environment as MyGet.org. Install Gallio.
+  echo.
+  echo Tests will be run with xUnit.
+  echo.
+  pause
   echo.
   echo Running tests with xUnit...
   Packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe Projects\OpenMagic.Tests\bin\Release\OpenMagic.Tests.dll"
