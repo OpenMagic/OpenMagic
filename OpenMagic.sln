@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic", "Projects\OpenMagic\OpenMagic.csproj", "{813600E6-945A-46FD-A27C-180E4131DA8C}"
 EndProject
@@ -10,26 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E55564A-C382-4A6B-A1EE-9CCDEACB51A3}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
-		Scripts\Publish.bat = Scripts\Publish.bat
-		Scripts\PublishAndPause.bat = Scripts\PublishAndPause.bat
-		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{646E6C24-EB36-4073-93A2-CF33E81B01A6}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\Packages.config = .nuget\Packages.config
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{DFED32B6-8E98-4C07-A178-34C2B8D2373C}"
-	ProjectSection(SolutionItems) = preProject
 		Scripts\MyGet.bat = Scripts\MyGet.bat
 		Scripts\Publish.bat = Scripts\Publish.bat
-		Scripts\PublishAndPause.bat = Scripts\PublishAndPause.bat
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D1EC96D4-9CBA-45E1-B86B-935CA0928CCD}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
@@ -49,10 +32,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{646E6C24-EB36-4073-93A2-CF33E81B01A6} = {8E55564A-C382-4A6B-A1EE-9CCDEACB51A3}
-		{DFED32B6-8E98-4C07-A178-34C2B8D2373C} = {8E55564A-C382-4A6B-A1EE-9CCDEACB51A3}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = OpenMagic.vsmdi
