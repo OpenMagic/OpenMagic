@@ -29,8 +29,11 @@ if not "%PackageVersion%" == "" (
 echo Restoring packages...
 echo -------------------------------
 rem Packages must be explicity restored otherwise NullGuard.Fody does not run.
+rem
+rem Packages folder must be packages otherwise MyGet will push dependant
+rem packages to my feed.
 echo.
-.nuget\nuget restore -PackagesDirectory .\Packages
+.nuget\nuget restore -PackagesDirectory .\packages
 if not "%errorlevel%" == "0" goto Error
 echo.
 echo.
