@@ -62,6 +62,7 @@
     <Compile Include="DataAnnotations\IPropertyMetadata.cs" />
     <Compile Include="DataAnnotations\ClassMetadata.cs" />
     <Compile Include="DataAnnotations\PropertyMetadata.cs" />
+    <Compile Include="Exceptions\ToDoException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Collections\Generic\EnumerableBase`1.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
