@@ -81,6 +81,7 @@
     <Compile Include="Reflection\ObjectExtensions.cs" />
     <Compile Include="Reflection\PropertyInfoExtensions.cs" />
     <Compile Include="Reflection\Type.cs" />
+    <Compile Include="Utilities\Retry.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml">

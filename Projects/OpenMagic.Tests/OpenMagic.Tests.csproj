@@ -129,6 +129,7 @@
     <Compile Include="Reflection\ObjectExtensionsTests.cs" />
     <Compile Include="Reflection\PropertyInfoExtensionsTests.cs" />
     <Compile Include="Reflection\TypeTests.cs" />
+    <Compile Include="Utilities\RetryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -144,6 +145,7 @@
       <Name>OpenMagic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
