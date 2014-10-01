@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="ArgumentTests.cs" />
     <Compile Include="Assembly.cs" />
+    <Compile Include="Assertions\MustAssertionsTests.cs" />
     <Compile Include="Collections\Generic\CacheTests.cs" />
     <Compile Include="Collections\Generic\TypeCacheTests.cs" />
     <Compile Include="Collections\Generic\EnumerableBaseTests.cs" />
