@@ -1,5 +1,3 @@
-# OpenMagic
+# OpenMagic [![timpmurphy MyGet Build Status](https://www.myget.org/BuildSource/Badge/timpmurphy?identifier=1f6e9a18-30d2-4384-8795-716bb6fff507)](https://www.myget.org/)
 
 Collection of utility classes by Tim Murphy.
-
-[![timpmurphy MyGet Build Status](https://www.myget.org/BuildSource/Badge/timpmurphy?identifier=596057e2-64b8-4548-ba4d-c4df0b7fe5b6)](https://www.myget.org/)
