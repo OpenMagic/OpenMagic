@@ -4,7 +4,6 @@ using System.Reflection;
 using FluentAssertions;
 using OpenMagic.Collections.Generic;
 using OpenMagic.DataAnnotations;
-using TestMagic;
 using Xunit;
 
 namespace OpenMagic.Tests.DataAnnotations
@@ -51,9 +50,10 @@ namespace OpenMagic.Tests.DataAnnotations
             [Fact]
             public void ShouldThrowArgumentNullExceptionWhenTypeIsNull()
             {
-                GWT.Given("testing constructor")
-                    .When(x => new ClassMetadata(null))
-                    .Then<ArgumentException>().ShouldBeThrown().ForParameter("type");
+                // ReSharper disable once ObjectCreationAsStatement
+                Action action = () => new ClassMetadata(null);
+
+                action.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("type");
             }
 
             [Fact]
@@ -103,17 +103,21 @@ namespace OpenMagic.Tests.DataAnnotations
             [Fact]
             public void ShouldThrowArgumentExceptionWhenPropertyNameIsWhitespace()
             {
-                GWT.Given(ClassMetadata.Get<Exception>())
-                    .When(m => m.GetProperty(""))
-                    .Then<ArgumentException>().ShouldBeThrown().ForParameter("propertyName");
+                var metadata = ClassMetadata.Get<Exception>();
+
+                Action action = () => metadata.GetProperty("");
+
+                action.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("propertyName");
             }
 
             [Fact]
             public void ShouldThrowArgumentExceptionWhenPropertyNameDoesNotExist()
             {
-                GWT.Given(ClassMetadata.Get<Exception>())
-                    .When(m => m.GetProperty("MissingPropertyName"))
-                    .Then<ArgumentException>().ShouldBeThrown().ForParameter("propertyName");
+                var metadata = ClassMetadata.Get<Exception>();
+
+                Action action = () => metadata.GetProperty("MissingPropertyName");
+
+                action.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("propertyName");
             }
 
             [Fact]

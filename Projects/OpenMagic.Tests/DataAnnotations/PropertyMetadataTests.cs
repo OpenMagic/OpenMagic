@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using FluentAssertions;
 using OpenMagic.DataAnnotations;
-using TestMagic;
 using Xunit;
 
 namespace OpenMagic.Tests.DataAnnotations
@@ -16,9 +15,10 @@ namespace OpenMagic.Tests.DataAnnotations
             [Fact]
             public void ShouldThrowArgumentNullExceptionWhenPropertyInfoIsNull()
             {
-                GWT.Given("testing constructor")
-                    .When(x => new PropertyMetadata(null, true))
-                    .Then<ArgumentNullException>().ShouldBeThrown().ForParameter("property");
+                // ReSharper disable once ObjectCreationAsStatement
+                Action action = () => new PropertyMetadata(null, true);
+
+                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("property");
             }
         }
 
