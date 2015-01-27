@@ -74,17 +74,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TechTalk.SpecFlow, Version=1.9.0.77, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="xunit">
       <HintPath>..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.extensions, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Choose>
@@ -111,12 +102,6 @@
     <Compile Include="DataAnnotations\UriAttributeTests.cs" />
     <Compile Include="DataAnnotations\ValidationTests.cs" />
     <Compile Include="Extensions\Collections\Generic\EnumerableExtensionsTests.cs" />
-    <Compile Include="Extensions\Steps\TimeSpanExtensions_WarnWhenGreaterThanSteps.cs" />
-    <Compile Include="Extensions\TimeSpanExtensions_WarnWhenGreaterThan.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TimeSpanExtensions_WarnWhenGreaterThan.feature</DependentUpon>
-    </Compile>
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsTests.cs" />
     <Compile Include="Extensions\UriExtensionsTests.cs" />
@@ -129,11 +114,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
-    <None Include="Extensions\TimeSpanExtensions_WarnWhenGreaterThan.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>TimeSpanExtensions_WarnWhenGreaterThan.feature.cs</LastGenOutput>
-    </None>
     <None Include="Packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenMagic\OpenMagic.csproj">

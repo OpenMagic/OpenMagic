@@ -1,4 +1,4 @@
-﻿Feature: TimeSpanExtensions - WarnWhenGreaterThan
+﻿Feature: TimeSpanExtensions.WarnWhenGreaterThan
 
 Scenario: Elapsed time is less than maximum
 	Given elapsed time is '100' milliseconds
