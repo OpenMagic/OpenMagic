@@ -403,6 +403,30 @@ namespace OpenMagic.Extensions
         }
 
         /// <summary>
+        ///     Removes all occurrences of a specified string from the end of the current String object.
+        /// </summary>
+        /// <param name="value">The string to remove <paramref name="trimString" /> from.</param>
+        /// <param name="trimString">The string to be removed from the end of the current String object.</param>
+        /// <returns>
+        ///     <paramref name="value" /> is returned if it does not end with <paramref name="trimString" />. Otherwise
+        ///     <paramref name="value" /> without trailing <paramref name="trimString" /> is returned.
+        /// </returns>
+        /// <example>
+        ///     See OpenMagic.Specifications.Features.Extensions.TrimEnd.feature.
+        /// </example>
+        public static string TrimEnd(this string value, string trimString)
+        {
+            var newValue = value;
+
+            while (newValue.EndsWith(trimString))
+            {
+                newValue = newValue.Substring(0, newValue.Length - trimString.Length);
+            }
+
+            return newValue;
+        }
+
+        /// <summary>
         ///     Splits a string into lines and writes them to a <see cref="TextWriter" />.
         /// </summary>
         /// <param name="value">The string value to split into lines.</param>
