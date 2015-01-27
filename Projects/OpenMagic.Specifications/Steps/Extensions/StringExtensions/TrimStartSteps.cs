@@ -5,25 +5,25 @@ using OpenMagic.Extensions;
 namespace OpenMagic.Specifications.Steps.Extensions.StringExtensions
 {
     [Binding]
-    [Scope(Feature = "TrimEnd")]
-    public class TrimEndSteps
+    [Scope(Feature = "TrimStart")]
+    public class TrimStartSteps
     {
         private string _result;
         private string _trimString;
         private string _value;
 
-        [When(@"I call TrimEnd\((.*), (.*)\)")]
-        public void WhenICallTrimEnd(string value, string trimString)
+        [When(@"I call TrimStart\((.*), (.*)\)")]
+        public void WhenICallTrimStart(string value, string trimString)
         {
             _value = value;
             _trimString = trimString;
-            _result = value.TrimEnd(trimString);
+            _result = value.TrimStart(trimString);
         }
 
         [Then(@"the result should be (.*)")]
         public void ThenTheResultShouldBe(string expectedResult)
         {
-            _result.Should().Be(expectedResult, "because trimString '{0}' should have been removed from end of value '{1}'", _trimString, _value);
+            _result.Should().Be(expectedResult, "because trimString '{0}' should have been removed from start of value '{1}'", _trimString, _value);
         }
     }
 }

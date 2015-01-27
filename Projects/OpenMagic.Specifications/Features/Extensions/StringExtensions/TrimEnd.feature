@@ -22,5 +22,5 @@ Scenario Outline: <value> does not end with <trimString>
 	Then the result should be <expectedResult>
 
 	Examples: 
-	| value        | trimString | expectedResult |
-	| HomePagePage | Page       | Home           |
+	| value | trimString | expectedResult |
+	| Home  | Page       | Home           |
