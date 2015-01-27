@@ -5,8 +5,8 @@ namespace OpenMagic.Extensions
 {
     public static class TimeSpanExtensions
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
+        private static readonly ILog Log = LogManager.GetLogger("TimeSpanExtensions");
+        
         public static void WarnWhenGreaterThan(this TimeSpan timespan, TimeSpan maximumTimeSpan, string messageFormat)
         {
             timespan.WarnWhenGreaterThan(maximumTimeSpan, messageFormat, Log);

@@ -11,7 +11,7 @@ namespace OpenMagic.Tests.Extensions.Steps
     // ReSharper disable once InconsistentNaming
     public class TimeSpanExtensions_WarnWhenGreaterThanSteps
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private static readonly ILog Log = LogManager.GetLogger<TimeSpanExtensions_WarnWhenGreaterThanSteps>();
 
         private readonly ILog FakeLog;
         private object[] ActualArgs;
