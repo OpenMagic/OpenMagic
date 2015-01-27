@@ -65,6 +65,11 @@
     <Compile Include="..\OpenMagic\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Features\Extensions\StringExtensions\InsertStringBeforeEachUpperCaseCharacter.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InsertStringBeforeEachUpperCaseCharacter.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Extensions\StringExtensions\TrimStart.feature.cs">
       <DependentUpon>TrimStart.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -80,6 +85,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Steps\Extensions\StringExtensions\InsertStringBeforeEachUpperCaseCharacterSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\Extensions\StringExtensions\TrimStartSteps.cs" />
     <Compile Include="Steps\Extensions\StringExtensions\TrimEndSteps.cs" />
@@ -87,6 +93,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Features\Extensions\StringExtensions\InsertStringBeforeEachUpperCaseCharacter.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>InsertStringBeforeEachUpperCaseCharacter.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Extensions\StringExtensions\TrimStart.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>TrimStart.feature.cs</LastGenOutput>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using Common.Logging.Configuration;
 using NullGuard;
@@ -66,6 +67,30 @@ namespace OpenMagic.Extensions
             }
 
             return values;
+        }
+
+        /// <summary>
+        ///     Inserts a string before each upper case character in a string.
+        /// </summary>
+        /// <param name="value">The value to insert <paramref name="insert"/> into.</param>
+        /// <param name="insert">The string to insert into <paramref name="value"/>.</param>
+        /// <example>
+        ///     See OpenMagic.Specifications.Features.Extensions.InsertStringBeforeEachUpperCaseCharacter.feature.
+        /// </example>
+        public static string InsertStringBeforeEachUpperCaseCharacter(this string value, string insert)
+        {
+            var sb = new StringBuilder(value.Substring(0, 1));
+
+            for (var i = 1; i < value.Length; i++)
+            {
+                if (char.IsUpper(value[i]))
+                {
+                    sb.Append(insert);
+                }
+                sb.Append(value[i]);
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -449,7 +474,7 @@ namespace OpenMagic.Extensions
 
             return newValue;
         }
-        
+
         /// <summary>
         ///     Splits a string into lines and writes them to a <see cref="TextWriter" />.
         /// </summary>
