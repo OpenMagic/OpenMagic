@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic", "Projects\OpenMagic\OpenMagic.csproj", "{813600E6-945A-46FD-A27C-180E4131DA8C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Tests", "Projects\OpenMagic.Tests\OpenMagic.Tests.csproj", "{CB398C4E-3EB3-4E33-A3AA-F637B50131B4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E55564A-C382-4A6B-A1EE-9CCDEACB51A3}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
@@ -15,7 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Specifications", "Projects\OpenMagic.Specifications\OpenMagic.Specifications.csproj", "{37BF7FF0-3A79-4840-BFE0-C5D8358B6908}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{FABA1E80-B0E8-4C36-A018-EB03B4A6D6F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{82EB1058-23C2-4640-9D46-DEBC053FC03B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic", "source\OpenMagic\OpenMagic.csproj", "{813600E6-945A-46FD-A27C-180E4131DA8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Tests", "tests\OpenMagic.Tests\OpenMagic.Tests.csproj", "{CB398C4E-3EB3-4E33-A3AA-F637B50131B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Specifications", "tests\OpenMagic.Specifications\OpenMagic.Specifications.csproj", "{37BF7FF0-3A79-4840-BFE0-C5D8358B6908}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +42,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{813600E6-945A-46FD-A27C-180E4131DA8C} = {FABA1E80-B0E8-4C36-A018-EB03B4A6D6F1}
+		{CB398C4E-3EB3-4E33-A3AA-F637B50131B4} = {82EB1058-23C2-4640-9D46-DEBC053FC03B}
+		{37BF7FF0-3A79-4840-BFE0-C5D8358B6908} = {82EB1058-23C2-4640-9D46-DEBC053FC03B}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = OpenMagic.vsmdi

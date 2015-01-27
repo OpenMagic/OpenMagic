@@ -12,4 +12,5 @@
 *.DotSettings
 *.feature.cs
 *.user
+*.sln.GhostDoc.xml
 *.suo
