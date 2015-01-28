@@ -13,6 +13,6 @@
         <copyright>Copyright (c) 2013-2015 Tim Murphy</copyright>
     </metadata>
     <files>
-        <file src="source\OpenMagic\bin\Release\OpenMagic.dll" target="lib/net45"/>
+        <file src="..\artifacts\bin\OpenMagic.*" target="lib/net45"/>
     </files>
 </package>
