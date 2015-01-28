@@ -14,11 +14,21 @@ try
     Create-PackagesFolder
     Install-NuGet
     Install-NuGet-Package -packageId "psake" -excludeVersion $true
+    Install-NuGet-Package -packageId "SpecFlow"
     
     Write-Host
     .\packages\psake\tools\psake.ps1 .\build-tasks.ps1
 }
-finally
+Finally
 {
     Pop-Location
+}
+
+If ($psake.build_success -eq $false)
+{ 
+    exit 1
+}
+Else
+{
+    exit 0
 }

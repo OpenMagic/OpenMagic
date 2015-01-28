@@ -15,7 +15,26 @@ Task Restore-NuGet-Packages {
     Restore-NuGet-Packages $sln
 }
 
-Task Compile -depends Clean, Restore-NuGet-Packages {
+Task Generate-SpecFlow-Tests {
+
+    Write-Host "Generating SpecFlow tests..."
+    Write-Host
+
+    Remove-Item .\packages\SpecFlow.1.9.0\tools\specflow.exe.config -ErrorAction SilentlyContinue
+    Add-Content .\packages\SpecFlow.1.9.0\tools\specflow.exe.config "<?xml version=""1.0"" encoding=""utf-8"" ?>"
+    Add-Content .\packages\SpecFlow.1.9.0\tools\specflow.exe.config "<configuration>"
+    Add-Content .\packages\SpecFlow.1.9.0\tools\specflow.exe.config "<startup>"
+    Add-Content .\packages\SpecFlow.1.9.0\tools\specflow.exe.config "<supportedRuntime version=""v4.0.30319"" />"
+    Add-Content .\packages\SpecFlow.1.9.0\tools\specflow.exe.config "</startup>"
+    Add-Content .\packages\SpecFlow.1.9.0\tools\specflow.exe.config "</configuration>"
+
+    Exec { & .\packages\SpecFlow.1.9.0\tools\specflow.exe generateall .\tests\OpenMagic.Specifications\OpenMagic.Specifications.csproj /force }
+
+    Write-Host
+    Write-Host "Successfully generated SpecFlow tests."
+}
+
+Task Compile -depends Clean, Restore-NuGet-Packages, Generate-SpecFlow-Tests {
 
     Compile-Solution $sln $configuration
 }
