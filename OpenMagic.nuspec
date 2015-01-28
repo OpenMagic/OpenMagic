@@ -10,9 +10,9 @@
         <projectUrl>https://github.com/OpenMagic/OpenMagic</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Collection of utility classes by Tim Murphy.</description>
-        <copyright>Copyright (c) 2013-2014 Tim Murphy</copyright>
+        <copyright>Copyright (c) 2013-2015 Tim Murphy</copyright>
     </metadata>
     <files>
-        <file src="..\Projects\OpenMagic\bin\Release\OpenMagic.*" target="lib/net45"/>
+        <file src="source\OpenMagic\bin\Release\OpenMagic.dll" target="lib/net45"/>
     </files>
 </package>
