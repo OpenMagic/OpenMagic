@@ -47,7 +47,7 @@ Task End-to-End-Tests -depends Compile {
 
 Task Package -depends End-to-End-Tests {
 
-    $version = $env:Version
+    $version = $env:PackageVersion
 
     If ($version -eq $null -or $version -eq "")
     {
