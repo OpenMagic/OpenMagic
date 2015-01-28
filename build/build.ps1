@@ -7,6 +7,8 @@ param (
     [string] $specFlowVersion = "1.9.0"
 )
 
+# The rest of this script is fairly generic.
+
 $ErrorActionPreference = "Stop"
 $WarningPreference = "SilentlyContinue"
 $VerbosePreference = "SilentlyContinue"

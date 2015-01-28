@@ -50,43 +50,19 @@ Task Restore-NuGet-Packages {
     Restore-NuGet-Packages -nuGet $nuGet -nuGetConfig $nuGetConfig -sln $sln -packages $packages
 }
 
-Task Generate-SpecFlow-Tests {
-
-    Write-Host "Generating SpecFlow tests..."
-    Write-Host
-
-    $specFlowConfig = "$specFlowToolsFolder\specflow.exe.config"
-
-    Remove-Item $specFlowConfig -ErrorAction SilentlyContinue
-    Add-Content $specFlowConfig "<?xml version=""1.0"" encoding=""utf-8"" ?>"
-    Add-Content $specFlowConfig "<configuration>"
-    Add-Content $specFlowConfig "<startup>"
-    Add-Content $specFlowConfig "<supportedRuntime version=""v4.0.30319"" />"
-    Add-Content $specFlowConfig "</startup>"
-    Add-Content $specFlowConfig "</configuration>"
-
-    Exec { Invoke-Expression "&""$specFlow"" generateall ""$solutionFolder\tests\OpenMagic.Specifications\OpenMagic.Specifications.csproj"" /force" }
-
-    Write-Host
-    Write-Host "Successfully generated SpecFlow tests."
-    Write-Host
+Task Create-SpecFlow-Config {
+    
+    Create-SpecFlow-Config -specFlowToolsFolder $specFlowToolsFolder
 }
 
-Task Compile -depends Clean, Restore-NuGet-Packages, Generate-SpecFlow-Tests {
+Task Create-SpecFlow-Tests -depends Create-SpecFlow-Config {
+
+    Create-SpecFlow-Tests -specFlow $specFlow -project "$solutionFolder\tests\OpenMagic.Specifications\OpenMagic.Specifications.csproj"
+}
+
+Task Compile -depends Clean, Restore-NuGet-Packages, Create-SpecFlow-Tests {
 
     Compile-Solution $sln $configuration
-
-    Write-Host "Creating $binArtifacts folder..."
-    New-Item -Path $binArtifacts -ItemType Directory | Out-Null
-    Write-Host "Successfully created $binArtifacts folder."
-    
-    Write-Host
-    Write-Host "Copying $solutionName binaries to $binArtifacts..."
-    Get-ChildItem -Path $solutionFolder\source\$solutionName\bin\$configuration |
-        Copy-Item -Destination $binArtifacts
-    Write-Host "Successfully copied $solutionName binaries to $binArtifacts."
-
-    Write-Host
 }
 
 Task End-to-End-Tests -depends Compile {
@@ -94,26 +70,15 @@ Task End-to-End-Tests -depends Compile {
     Run-xUnit-Tests -xunit $xunit -testsFolder $tests -configuration $configuration
 }
 
-Task Package -depends End-to-End-Tests {
+Task Create-Bin-Artifacts {
 
-    Write-Host "Creating $nuGetArtifacts folder..."
-    New-Item -Path $nuGetArtifacts -ItemType Directory | Out-Null
-    Write-Host "Successfully created $nuGetArtifacts folder."
+    Create-Bin-Artifacts -bin $solutionFolder\source\$solutionName\bin\$configuration -artifacts $binArtifacts
+}
 
-    Write-Host
-    Write-Host "Creating $nuPkg..."
-    Exec { Invoke-Expression "&""$nuGet"" pack ""$nuSpec"" -OutputDirectory ""$nuGetArtifacts"" -Version $nuGetVersion" }
-    Write-Host "Successfully created $nupkg."
+Task Package -depends End-to-End-Tests, Create-Bin-Artifacts {
 
-    $buildRunner = $env:BuildRunner
-
-    if ($buildRunner -eq "MyGet")
-    {
-        Write-Host
-        Write-Host "Removing packages folder so MyGet doesn't publish any of them..."
-        Remove-Item $packages -Recurse -Force
-        Write-Host "Successfully removed packages folder."
-    }
+    Create-NuGet-Package -nuGet $nuGet -nuSpec $nuSpec -nuPkg $nuPkg -outputDirectory $nuGetArtifacts -version $nuGetVersion
+    MyGet-Cleanup -packages $packages
 }
 
 FormatTaskName {
