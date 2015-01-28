@@ -100,9 +100,20 @@ Task Package -depends End-to-End-Tests {
     New-Item -Path $nuGetArtifacts -ItemType Directory | Out-Null
     Write-Host "Successfully created $nuGetArtifacts folder."
 
+    Write-Host
     Write-Host "Creating $nuPkg..."
     Exec { Invoke-Expression "&""$nuGet"" pack ""$nuSpec"" -OutputDirectory ""$nuGetArtifacts"" -Version $nuGetVersion" }
     Write-Host "Successfully created $nupkg."
+
+    $buildRunner = $env:BuildRunner
+
+    if ($buildRunner -eq "MyGet")
+    {
+        Write-Host
+        Write-Host "Removing packages folder so MyGet doesn't publish any of them..."
+        Remove-Item $packages -Recurse -Force
+        Write-Host "Successfully removed packages folder."
+    }
 }
 
 FormatTaskName {
