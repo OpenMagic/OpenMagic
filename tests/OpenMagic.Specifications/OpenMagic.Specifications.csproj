@@ -97,12 +97,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Features\Extensions\UriExtensions\IsReposonding.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IsReposonding.feature</DependentUpon>
+    </Compile>
     <Compile Include="Steps\Arguments\FileMustExistSteps.cs" />
+    <Compile Include="Steps\Common\CommonThenSteps.cs" />
     <Compile Include="Steps\Extensions\StringExtensions\InsertStringBeforeEachUpperCaseCharacterSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steps\Extensions\StringExtensions\TrimStartSteps.cs" />
     <Compile Include="Steps\Extensions\StringExtensions\TrimEndSteps.cs" />
     <Compile Include="Steps\Extensions\TimeSpanExtensions\WarnWhenGreaterThanSteps.cs" />
+    <Compile Include="Helpers\GivenData.cs" />
+    <Compile Include="Steps\Extensions\UriExtensions\IsReposondingSteps.cs" />
+    <Compile Include="Helpers\ActualData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -125,6 +134,10 @@
     <None Include="Features\Extensions\TimeSpanExtensions\WarnWhenGreaterThan.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>WarnWhenGreaterThan.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Extensions\UriExtensions\IsReposonding.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>IsReposonding.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="README.md" />

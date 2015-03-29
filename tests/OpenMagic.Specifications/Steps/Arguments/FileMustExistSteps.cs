@@ -38,6 +38,7 @@ namespace OpenMagic.Specifications.Steps.Arguments
             }
         }
 
+        [Scope(Feature = "FileMustExist")]
         [Then(@"<param> should be returned")]
         public void ThenShouldBeReturned()
         {

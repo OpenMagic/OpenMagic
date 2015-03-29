@@ -22,6 +22,27 @@ namespace OpenMagic.Extensions
             }
         }
 
+        public static bool IsResponding(this Uri uri)
+        {
+            try
+            {
+                uri.GetResponse();
+                return true;
+            }
+            catch (HttpRequestException)
+            {
+                return false;
+            }
+            catch (AggregateException aggregateException)
+            {
+                if (aggregateException.InnerExceptions.Count == 1 && aggregateException.InnerException.GetType() == typeof(HttpRequestException))
+                {
+                    return false;
+                }
+                throw;
+            }
+        }
+
         public static bool ResponseIsSuccessStatusCode(this Uri uri)
         {
             try
