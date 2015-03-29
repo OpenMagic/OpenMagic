@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NullGuard;
 using OpenMagic.Extensions;
@@ -42,7 +43,7 @@ namespace OpenMagic
             exception.Data.Add("param", param);
             exception.Data.Add("greaterThan", greaterThan);
             exception.Data.Add("paramName", paramName);
-            
+
             throw exception;
 
         }
@@ -101,6 +102,15 @@ namespace OpenMagic
                 throw new ArgumentException("Value cannot be whitespace.", paramName);
             }
 
+            return param;
+        }
+
+        public static FileInfo FileMustExist(FileInfo param, string paramName)
+        {
+            if (!param.Exists)
+            {
+                throw new ArgumentException("File must exist.", paramName, new FileNotFoundException("Cannot find file.", param.FullName));
+            }
             return param;
         }
     }
