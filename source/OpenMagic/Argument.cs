@@ -38,7 +38,7 @@ namespace OpenMagic
                 return param;
             }
 
-            var exception = new ArgumentOutOfRangeException(paramName, string.Format("Value must be greater than {0}.", greaterThan));
+            var exception = new ArgumentOutOfRangeException(paramName, String.Format("Value must be greater than {0}.", greaterThan));
 
             exception.Data.Add("param", param);
             exception.Data.Add("greaterThan", greaterThan);
@@ -46,6 +46,17 @@ namespace OpenMagic
 
             throw exception;
 
+        }
+
+        public static T[] MustNotBeEmpty<T>(this T[] param, string paramName)
+        {
+            // todo: test & document
+            if (!param.Any())
+            {
+                throw new ArgumentException("Value cannot be empty.", paramName);
+            }
+
+            return param;
         }
 
         /// <summary>

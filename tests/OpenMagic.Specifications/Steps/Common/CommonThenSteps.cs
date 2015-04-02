@@ -8,17 +8,31 @@ namespace OpenMagic.Specifications.Steps.Common
     [Binding]
     public class CommonThenSteps
     {
+        private readonly GivenData _given;
         private readonly ActualData _actual;
 
-        public CommonThenSteps(ActualData actual)
+        public CommonThenSteps(GivenData given, ActualData actual)
         {
+            _given = given;
             _actual = actual;
         }
 
-        [Then(@"(.*) should be returned")]
-        public void ThenShouldBeReturned(string expectedResult)
+        [Then(@"<param> should be returned")]
+        public void ThenParamShouldBeReturned()
         {
-            _actual.Result.ToString().Should().Be(expectedResult);
+            _actual.Result.Should().Be(_given.Param);
+        }
+
+        [Then(@"True should be returned")]
+        public void ThenTrueShouldBeReturned()
+        {
+            _actual.Result.Should().Be(true);
+        }
+
+        [Then(@"False should be returned")]
+        public void ThenFalseShouldBeReturned()
+        {
+            _actual.Result.Should().Be(false);
         }
 
         [Then(@"ArgumentException should be thrown")]

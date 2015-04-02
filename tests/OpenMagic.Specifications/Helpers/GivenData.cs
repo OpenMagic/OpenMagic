@@ -7,5 +7,6 @@ namespace OpenMagic.Specifications.Helpers
     {
         public Uri Uri { get; set; }
         public FileInfo File { get; set; }
+        public object Param { get; set; }
     }
 }
