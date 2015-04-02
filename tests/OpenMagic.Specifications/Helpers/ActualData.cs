@@ -7,7 +7,7 @@ namespace OpenMagic.Specifications.Helpers
         public Exception Exception { get; set; }
         public object Result { get; set; }
 
-        public void GetResult(Func<bool> action)
+        public void GetResult(Func<object> action)
         {
             try
             {

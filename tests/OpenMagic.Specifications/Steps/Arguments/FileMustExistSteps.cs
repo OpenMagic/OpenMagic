@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using FluentAssertions;
+using OpenMagic.Specifications.Helpers;
 using TechTalk.SpecFlow;
 
 namespace OpenMagic.Specifications.Steps.Arguments
@@ -9,53 +10,39 @@ namespace OpenMagic.Specifications.Steps.Arguments
     [Binding]
     public class FileMustExistSteps
     {
-        private FileInfo _givenFile;
-        private FileInfo _actualFile;
-        private Exception _actualException;
+        private readonly GivenData _given;
+        private readonly ActualData _actual;
+
+        public FileMustExistSteps(GivenData given, ActualData actual)
+        {
+            _given = given;
+            _actual = actual;
+        }
 
         [Given(@"file exists")]
         public void GivenFileExists()
         {
-            _givenFile = new FileInfo(Directory.GetFiles(Directory.GetCurrentDirectory()).First());
+            _given.File = new FileInfo(Directory.GetFiles(Directory.GetCurrentDirectory()).First());
         }
 
         [Given(@"file does not exists")]
         public void GivenFileDoesNotExists()
         {
-            _givenFile = new FileInfo(Guid.NewGuid().ToString());
+            _given.File = new FileInfo(Guid.NewGuid().ToString());
         }
 
         [When(@"I call Argument\.FileExists\(<param>, <paramName>\)")]
         public void WhenICallArgument_FileExists_param_paramName()
         {
-            try
-            {
-                _actualFile = Argument.FileMustExist(_givenFile, "dummy");
-            }
-            catch (Exception exception)
-            {
-                _actualException = exception;
-            }
+            _actual.GetResult(() => Argument.FileMustExist(_given.File, "dummy"));
         }
 
         [Scope(Feature = "FileMustExist")]
         [Then(@"<param> should be returned")]
         public void ThenShouldBeReturned()
         {
-            _actualException.Should().BeNull();
-            _actualFile.Should().BeSameAs(_givenFile);
-        }
-
-        [Then(@"ArgumentExection should be thrown")]
-        public void ThenArgumentExectionShouldBeThrown()
-        {
-            _actualException.Should().BeOfType<ArgumentException>();
-        }
-
-        [Then(@"exception message should be:")]
-        public void ThenExceptionMessageShouldBe(string expectedMessage)
-        {
-            _actualException.Message.Should().Be(expectedMessage.Replace("\n", "\r\n"));
+            _actual.Exception.Should().BeNull();
+            _actual.Result.Should().BeSameAs(_given.File);
         }
     }
 }

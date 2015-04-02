@@ -9,8 +9,8 @@ Scenario: File exists
 Scenario: File does not exists
 	Given file does not exists
 	When I call Argument.FileExists(<param>, <paramName>)
-	Then ArgumentExection should be thrown
-	And exception message should be:
+	Then ArgumentException should be thrown
+	And the exception message should be:
 		"""
 		File must exist.
 		Parameter name: dummy
