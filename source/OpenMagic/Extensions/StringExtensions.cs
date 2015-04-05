@@ -72,8 +72,8 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Inserts a string before each upper case character in a string.
         /// </summary>
-        /// <param name="value">The value to insert <paramref name="insert"/> into.</param>
-        /// <param name="insert">The string to insert into <paramref name="value"/>.</param>
+        /// <param name="value">The value to insert <paramref name="insert" /> into.</param>
+        /// <param name="insert">The string to insert into <paramref name="value" />.</param>
         /// <example>
         ///     See OpenMagic.Specifications.Features.Extensions.InsertStringBeforeEachUpperCaseCharacter.feature.
         /// </example>
@@ -103,6 +103,14 @@ namespace OpenMagic.Extensions
         public static bool IsNullOrWhiteSpace([AllowNull] this string value)
         {
             return (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(value.Trim()));
+        }
+
+        /// <summary>
+        ///     Normalizes the line endings within a string.
+        /// </summary>
+        public static string NormalizeLineEndings(this string value)
+        {
+            return value.Replace(Environment.NewLine, "\n").Replace("\n", Environment.NewLine);
         }
 
         /// <summary>
