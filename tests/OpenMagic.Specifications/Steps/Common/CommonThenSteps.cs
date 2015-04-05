@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using OpenMagic.Extensions;
 using OpenMagic.Specifications.Helpers;
 using TechTalk.SpecFlow;
 
@@ -44,7 +45,7 @@ namespace OpenMagic.Specifications.Steps.Common
         [Then(@"the exception message should be:")]
         public void ThenTheExceptionMessageShouldBe(string expectedMessage)
         {
-            _actual.Exception.Message.Should().Be(expectedMessage.Replace("\n", "\r\n"));
+            _actual.Exception.Message.Should().Be(expectedMessage.NormalizeLineEndings());
         }
     }
 }
