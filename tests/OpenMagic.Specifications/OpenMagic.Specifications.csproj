@@ -72,6 +72,11 @@
     <Compile Include="..\..\source\OpenMagic\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Features\Argument\DirectoryMustExist.feature.cs">
+      <DependentUpon>DirectoryMustExist.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Features\Argument\MustNotBeEmpty.feature.cs">
       <DependentUpon>MustNotBeEmpty.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -107,6 +112,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IsReposonding.feature</DependentUpon>
     </Compile>
+    <Compile Include="Steps\ArgumentSteps\DirectoryMustExistSteps.cs" />
     <Compile Include="Steps\ArgumentSteps\MustNotBeEmptySteps.cs" />
     <Compile Include="Steps\ArgumentSteps\FileMustExistSteps.cs" />
     <Compile Include="Steps\Common\CommonThenSteps.cs" />
@@ -121,6 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Features\Argument\DirectoryMustExist.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>DirectoryMustExist.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Argument\MustNotBeEmpty.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>MustNotBeEmpty.feature.cs</LastGenOutput>

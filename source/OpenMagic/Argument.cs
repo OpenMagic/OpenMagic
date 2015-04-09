@@ -13,6 +13,48 @@ namespace OpenMagic
     public static class Argument
     {
         /// <summary>
+        ///     Throws <see cref="ArgumentException" /> when the <paramref name="param">directory</paramref> does not exist.
+        /// </summary>
+        /// <param name="param">
+        ///     The directory to test existence of.
+        /// </param>
+        /// <param name="paramName">
+        ///     Name of the parameter.
+        /// </param>
+        /// <returns>
+        ///     Returns <paramref name="param" /> when the directory exists.
+        /// </returns>
+        public static DirectoryInfo DirectoryMustExist(DirectoryInfo param, string paramName)
+        {
+            if (!param.Exists)
+            {
+                throw new ArgumentException("Directory must exist.", paramName, new DirectoryNotFoundException("Cannot find directory."));
+            }
+            return param;
+        }
+
+        /// <summary>
+        ///     Throws <see cref="ArgumentException" /> when the <paramref name="param">file</paramref> does not exist.
+        /// </summary>
+        /// <param name="param">
+        ///     The file to test existence of.
+        /// </param>
+        /// <param name="paramName">
+        ///     Name of the parameter.
+        /// </param>
+        /// <returns>
+        ///     Returns <paramref name="param" /> when the file exists.
+        /// </returns>
+        public static FileInfo FileMustExist(FileInfo param, string paramName)
+        {
+            if (!param.Exists)
+            {
+                throw new ArgumentException("File must exist.", paramName, new FileNotFoundException("Cannot find file.", param.FullName));
+            }
+            return param;
+        }
+
+        /// <summary>
         ///     Throws <see cref="ArgumentException" /> when assertion on <paramref name="param" /> has failed.
         /// </summary>
         /// <typeparam name="T">The <paramref name="param" /> type.</typeparam>
@@ -45,7 +87,6 @@ namespace OpenMagic
             exception.Data.Add("paramName", paramName);
 
             throw exception;
-
         }
 
         public static T[] MustNotBeEmpty<T>(this T[] param, string paramName)
@@ -113,15 +154,6 @@ namespace OpenMagic
                 throw new ArgumentException("Value cannot be whitespace.", paramName);
             }
 
-            return param;
-        }
-
-        public static FileInfo FileMustExist(FileInfo param, string paramName)
-        {
-            if (!param.Exists)
-            {
-                throw new ArgumentException("File must exist.", paramName, new FileNotFoundException("Cannot find file.", param.FullName));
-            }
             return param;
         }
     }
