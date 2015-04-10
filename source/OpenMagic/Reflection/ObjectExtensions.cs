@@ -66,6 +66,14 @@ namespace OpenMagic.Reflection
             }
         }
 
+        public static T GetPrivateFieldValue<T>(this object obj, string privateFieldName)
+        {
+            var field = obj.GetType().GetPrivateField(privateFieldName);
+            var value = field.GetValue(obj);
+
+            return (T) value;
+        }
+
         public static void SetPrivateField(this object obj, string privateFieldName, object value)
         {
             var field = obj.GetType().GetPrivateField(privateFieldName);
