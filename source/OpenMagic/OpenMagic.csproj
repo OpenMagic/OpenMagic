@@ -70,6 +70,7 @@
     <Compile Include="Exceptions\ToDoException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Collections\Generic\EnumerableBase`1.cs" />
+    <Compile Include="Extensions\DirectoryInfoExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="DataAnnotations\UriAttribute.cs" />
     <Compile Include="DataAnnotations\Validation.cs" />
