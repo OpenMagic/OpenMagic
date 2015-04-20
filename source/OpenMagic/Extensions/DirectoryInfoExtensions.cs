@@ -28,6 +28,20 @@ namespace OpenMagic.Extensions
         }
 
         /// <summary>
+        ///     Forcibly deletes a directory if it exists.
+        /// </summary>
+        /// <param name="directory">
+        ///     The directory to delete.
+        /// </param>
+        public static void ForceDeleteIfExists(this DirectoryInfo directory)
+        {
+            if (directory.Exists)
+            {
+                directory.ForceDelete();
+            }
+        }
+
+        /// <summary>
         ///     Set file <paramref name="attributes" /> to each file in <paramref name="directory" />.
         /// </summary>
         /// <param name="directory">
