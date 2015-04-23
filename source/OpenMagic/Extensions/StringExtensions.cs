@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Common.Logging.Configuration;
 using NullGuard;
 using OpenMagic.Extensions.Collections.Generic;
 

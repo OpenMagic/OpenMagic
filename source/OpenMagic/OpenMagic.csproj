@@ -38,14 +38,11 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Anotar.LibLog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=9d5b24f0733c26f7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Anotar.LibLog.Fody.2.17.0\Lib\Anotar.LibLog.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Common.Logging.Core">
-      <HintPath>..\..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="NullGuard">
       <HintPath>..\..\packages\NullGuard.Fody.1.2.0.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\NullGuard.dll</HintPath>
       <Private>True</Private>
@@ -57,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Packages\LibLog.4.2\LibLog.cs" />
     <Compile Include="Argument.cs" />
     <Compile Include="Assertions\AssertionException.cs" />
     <Compile Include="CharacterSets.cs" />

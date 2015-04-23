@@ -1,15 +1,15 @@
 ﻿using System;
-using Common.Logging;
+using OpenMagic.Logging;
 
 namespace OpenMagic.Extensions
 {
     public static class TimeSpanExtensions
     {
-        private static readonly ILog Log = LogManager.GetLogger("TimeSpanExtensions");
-        
+        private static readonly ILog Log = LogProvider.GetLogger("TimeSpanExtensions");
+
         public static void WarnWhenGreaterThan(this TimeSpan timespan, TimeSpan maximumTimeSpan, string messageFormat)
         {
-            timespan.WarnWhenGreaterThan(maximumTimeSpan, messageFormat, Log);
+            WarnWhenGreaterThan(timespan, maximumTimeSpan, messageFormat, Log);
         }
 
         public static void WarnWhenGreaterThan(this TimeSpan timespan, TimeSpan maximumTimeSpan, string messageFormat, ILog log)
