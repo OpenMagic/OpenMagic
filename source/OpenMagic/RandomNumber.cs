@@ -10,7 +10,7 @@ namespace OpenMagic
         private static readonly Random Random = new Random();
 
         /// <summary>
-        ///     Returns a random <see cref="Integer" />.
+        ///     Returns a random <see cref="int" />.
         /// </summary>
         public static int NextInt()
         {
@@ -18,9 +18,11 @@ namespace OpenMagic
         }
 
         /// <summary>
-        ///     Returns a random <see cref="Integer" /> within a specified range.
+        ///     Returns a random <see cref="int" /> within a specified range.
         /// </summary>
-        /// <param name="minValue">The inclusive lower bound of the random number returned.</param>
+        /// <param name="minValue">
+        ///     The inclusive lower bound of the random number returned.
+        /// </param>
         /// <param name="maxValue">
         ///     The exclusive upper bound of the random number returned. maxValue must be greater than or equal
         ///     to minValue.
