@@ -27,7 +27,7 @@ namespace OpenMagic.Specifications.Steps.Extensions.UriExtensions
         [Given(@"URI is not responding")]
         public void GivenUriIsNotResponding()
         {
-            _given.Uri = new Uri("http://" + Guid.NewGuid());
+            _given.Uri = new Uri("http://domainthat.doesnotexist");
         }
         
         [When(@"I call IsResponding\(<uri>\)")]
