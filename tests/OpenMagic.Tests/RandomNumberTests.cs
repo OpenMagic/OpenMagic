@@ -132,7 +132,7 @@ namespace OpenMagic.Tests
                 uniqueValues.Count()
                     .Should()
                     .BeGreaterThan(_expectedUniqueRandomNumbers,
-                        $"because there should be more than {_expectedUniqueRandomNumbers} random numbers");
+                        "because there should be more than {0} random numbers", _expectedUniqueRandomNumbers);
             }
 
             [Fact]

@@ -53,7 +53,7 @@ namespace OpenMagic.Tests
                 uniqueValues.Count()
                     .Should()
                     .BeGreaterThan(expectedUniqueValues,
-                        $"because there should be more than {expectedUniqueValues} random numbers");
+                        "because there should be more than {0} random numbers", expectedUniqueValues);
             }
 
             [Fact]
