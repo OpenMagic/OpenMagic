@@ -66,6 +66,7 @@
     <Compile Include="DataAnnotations\IPropertyMetadata.cs" />
     <Compile Include="DataAnnotations\ClassMetadata.cs" />
     <Compile Include="DataAnnotations\PropertyMetadata.cs" />
+    <Compile Include="Dummy.cs" />
     <Compile Include="Exceptions\ToDoException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Collections\Generic\EnumerableBase`1.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="Assertions\MustAssertions.cs" />
+    <Compile Include="IDummy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="RandomDateTime.cs" />
