@@ -76,7 +76,7 @@ namespace OpenMagic
             {
                 return Object(type);
             }
-            throw new NotImplementedException($"Dummy.Value({type}) is not implemented.");
+            throw new NotImplementedException(string.Format("Dummy.Value({0}) is not implemented.", type));
         }
 
         protected virtual object CreateObjectInstance(Type type)
