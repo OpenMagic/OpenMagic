@@ -81,7 +81,14 @@ namespace OpenMagic
 
         protected virtual object CreateObjectInstance(Type type)
         {
-            return Activator.CreateInstance(type);
+            try
+            {
+                return Activator.CreateInstance(type);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(string.Format("Cannot create instance of {0}.", type), exception);
+            }
         }
     }
 }
