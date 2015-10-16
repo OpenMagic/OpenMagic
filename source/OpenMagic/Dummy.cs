@@ -79,12 +79,30 @@ namespace OpenMagic
             var itemType = arrayType.GetElementType();
             var values = CreateValues(itemType);
 
-            var method = GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Single(m => m.Name == "CastArray");
+            var method = GetCastArrayMethodInfo();
             var genericMethod = method.MakeGenericMethod(itemType);
 
             var array = genericMethod.Invoke(this, new object[] { values });
 
             return array;
+        }
+
+        private MethodInfo GetCastArrayMethodInfo()
+        {
+            const string methodName = "CastArray";
+            var methodInfos = GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
+
+            try
+            {
+                return methodInfos.Single(m => m.Name == methodName);
+            }
+            catch (Exception exception)
+            {
+                var methodNames = string.Join(", ", methodInfos.Select(m => m.Name));
+                var message = string.Format("Cannot find '{0}' method in: {1}", methodName, methodNames);
+
+                throw new Exception(message, exception);
+            }
         }
 
         private T[] CastArray<T>(IEnumerable source)
