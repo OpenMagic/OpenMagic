@@ -74,12 +74,12 @@ namespace OpenMagic
             throw new NotImplementedException(string.Format("Dummy.Value({0}) is not implemented.", type));
         }
 
-        private object CreateArray(Type arrayType)
+        protected virtual object CreateArray(Type arrayType)
         {
             var itemType = arrayType.GetElementType();
             var values = CreateValues(itemType);
 
-            var method = GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Single(m => m.Name == "CastArray");
+            var method = GetCastArrayMethodInfo();
             var genericMethod = method.MakeGenericMethod(itemType);
 
             var array = genericMethod.Invoke(this, new object[] { values });
@@ -87,12 +87,30 @@ namespace OpenMagic
             return array;
         }
 
-        private T[] CastArray<T>(IEnumerable source)
+        protected virtual MethodInfo GetCastArrayMethodInfo()
+        {
+            const string methodName = "CastArray";
+            var methodInfos = GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
+
+            try
+            {
+                return methodInfos.Single(m => m.Name == methodName);
+            }
+            catch (Exception exception)
+            {
+                var methodNames = string.Join(", ", methodInfos.Select(m => m.Name));
+                var message = string.Format("Cannot find '{0}' method in: {1}", methodName, methodNames);
+
+                throw new Exception(message, exception);
+            }
+        }
+
+        protected virtual T[] CastArray<T>(IEnumerable source)
         {
             return source.Cast<T>().ToArray();
         }
 
-        private object CreateListOfT(Type type)
+        protected virtual object CreateListOfT(Type type)
         {
             var itemType = type.GetGenericArguments()[0];
             var values = CreateValues(itemType);
@@ -108,7 +126,7 @@ namespace OpenMagic
             return list;
         }
 
-        private IEnumerable CreateValues(Type itemType)
+        protected virtual IEnumerable CreateValues(Type itemType)
         {
             for (var i = 0; i < RandomNumber.NextInt(0, 1000); i++)
             {
