@@ -31,4 +31,7 @@ Scenario: type is List<T>
 	And the result should be a list of random number of items
 
 Scenario: type is array
-	Given todo
+	Given type is Exception[]
+	When Dummy.Value(type) is called
+	Then the type of the result should be Exception[]
+	And the result should be an array of random number of items

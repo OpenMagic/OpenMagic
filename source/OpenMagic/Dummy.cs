@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace OpenMagic
 {
@@ -33,7 +34,7 @@ namespace OpenMagic
 
         public virtual T Object<T>()
         {
-            return (T)Object(typeof (T));
+            return (T)Object(typeof(T));
         }
 
         public virtual object Object(Type type)
@@ -58,25 +59,61 @@ namespace OpenMagic
             {
                 return valueFactory();
             }
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof (List<>))
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
             {
-                var itemType = type.GetGenericArguments()[0];
-                var listType = typeof (List<>);
-                var genericListType = listType.MakeGenericType(itemType);
-                var list = (IList)Activator.CreateInstance(genericListType);
-
-                for (var i = 0; i < RandomNumber.NextInt(0, 1000); i++)
-                {
-                    list.Add(Value(itemType));
-                }
-
-                return list;
+                return CreateListOfT(type);
+            }
+            if (type.IsArray)
+            {
+                return CreateArray(type);
             }
             if (type.IsClass)
             {
                 return Object(type);
             }
             throw new NotImplementedException(string.Format("Dummy.Value({0}) is not implemented.", type));
+        }
+
+        private object CreateArray(Type arrayType)
+        {
+            var itemType = arrayType.GetElementType();
+            var values = CreateValues(itemType);
+
+            var method = GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Single(m => m.Name == "CastArray");
+            var genericMethod = method.MakeGenericMethod(itemType);
+
+            var array = genericMethod.Invoke(this, new object[] { values });
+
+            return array;
+        }
+
+        private T[] CastArray<T>(IEnumerable source)
+        {
+            return source.Cast<T>().ToArray();
+        }
+
+        private object CreateListOfT(Type type)
+        {
+            var itemType = type.GetGenericArguments()[0];
+            var values = CreateValues(itemType);
+            var listType = typeof(List<>);
+            var genericListType = listType.MakeGenericType(itemType);
+            var list = (IList)Activator.CreateInstance(genericListType);
+
+            foreach (var value in values)
+            {
+                list.Add(value);
+            }
+
+            return list;
+        }
+
+        private IEnumerable CreateValues(Type itemType)
+        {
+            for (var i = 0; i < RandomNumber.NextInt(0, 1000); i++)
+            {
+                yield return Value(itemType);
+            }
         }
 
         protected virtual object CreateObjectInstance(Type type)

@@ -28,11 +28,17 @@ namespace OpenMagic.Specifications.Steps
 
         private static Type GetTypeFromTypeName(string typeName)
         {
-            if (typeName == "List<T>")
+            switch (typeName)
             {
-                return typeof (List<string>);
+                case "List<T>":
+                    return typeof(List<string>);
+
+                case "Exception[]":
+                    return typeof(Exception[]);
+
+                default:
+                    return Type.GetType("System." + typeName, true);
             }
-            return Type.GetType("System." + typeName, true);
         }
 
         [When(@"Dummy\.Value\(type\) is called")]
@@ -40,7 +46,7 @@ namespace OpenMagic.Specifications.Steps
         {
             _actual.Result = new Dummy().Value(_given.Type);
         }
-        
+
         [Then(@"the type of the result should be (.*)")]
         public void ThenTheTypeOfTheResultShouldBe(string expectedResultType)
         {
@@ -51,6 +57,12 @@ namespace OpenMagic.Specifications.Steps
         public void ThenTheResultShouldBeAListOfRandomNumberOfItems()
         {
             ((List<string>)_actual.Result).Any().Should().BeTrue();
+        }
+
+        [Then(@"the result should be an array of random number of items")]
+        public void ThenTheResultShouldBeAnArrayOfRandomNumberOfItems()
+        {
+            ((Exception[])_actual.Result).Any().Should().BeTrue();
         }
     }
 }
