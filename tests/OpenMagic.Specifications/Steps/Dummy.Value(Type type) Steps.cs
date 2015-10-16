@@ -1,0 +1,56 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
+using OpenMagic.Specifications.Helpers;
+using TechTalk.SpecFlow;
+
+namespace OpenMagic.Specifications.Steps
+{
+    [Binding]
+    // ReSharper disable once InconsistentNaming
+    public class Dummy_Value_Type_type_Steps
+    {
+        private readonly GivenData _given;
+        private readonly ActualData _actual;
+
+        public Dummy_Value_Type_type_Steps(GivenData given, ActualData actual)
+        {
+            _given = given;
+            _actual = actual;
+        }
+
+        [Given(@"type is (.*)")]
+        public void GivenTypeIs(string givenType)
+        {
+            _given.Type = GetTypeFromTypeName(givenType);
+        }
+
+        private static Type GetTypeFromTypeName(string typeName)
+        {
+            if (typeName == "List<T>")
+            {
+                return typeof (List<string>);
+            }
+            return Type.GetType("System." + typeName, true);
+        }
+
+        [When(@"Dummy\.Value\(type\) is called")]
+        public void WhenDummy_ValueTypeIsCalled()
+        {
+            _actual.Result = new Dummy().Value(_given.Type);
+        }
+        
+        [Then(@"the type of the result should be (.*)")]
+        public void ThenTheTypeOfTheResultShouldBe(string expectedResultType)
+        {
+            _actual.Result.Should().BeOfType(GetTypeFromTypeName(expectedResultType));
+        }
+
+        [Then(@"the result should be a list of random number of items")]
+        public void ThenTheResultShouldBeAListOfRandomNumberOfItems()
+        {
+            ((List<string>)_actual.Result).Any().Should().BeTrue();
+        }
+    }
+}

@@ -65,6 +65,7 @@
     <Compile Include="..\..\source\OpenMagic\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Steps\Dummy.Value%28Type type%29 Steps.cs" />
     <Compile Include="Features\Argument\DirectoryMustExist.feature.cs">
       <DependentUpon>DirectoryMustExist.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -79,6 +80,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FileMustExist.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Dummy.Value%28Type type%29.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dummy.Value%28Type type%29.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Extensions\StringExtensions\InsertStringBeforeEachUpperCaseCharacter.feature.cs">
       <AutoGen>True</AutoGen>
@@ -131,6 +137,10 @@
     <None Include="Features\Argument\FileMustExist.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>FileMustExist.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Dummy.Value%28Type type%29.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Dummy.Value%28Type type%29.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Extensions\StringExtensions\InsertStringBeforeEachUpperCaseCharacter.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

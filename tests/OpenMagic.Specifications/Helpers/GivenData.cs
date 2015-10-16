@@ -9,5 +9,6 @@ namespace OpenMagic.Specifications.Helpers
         public FileInfo File { get; set; }
         public object Param { get; set; }
         public DirectoryInfo Directory { get; set; }
+        public Type Type { get; set; }
     }
 }
