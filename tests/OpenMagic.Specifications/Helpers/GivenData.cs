@@ -5,10 +5,13 @@ namespace OpenMagic.Specifications.Helpers
 {
     public class GivenData
     {
-        public Uri Uri { get; set; }
-        public FileInfo File { get; set; }
-        public object Param { get; set; }
-        public DirectoryInfo Directory { get; set; }
-        public Type Type { get; set; }
+        public int IntValue;
+        public Uri Uri;
+        public FileInfo File;
+        public object Param;
+        public DirectoryInfo Directory;
+        public Type Type;
+        public int MinimumInt;
+        public int MaximumInt;
     }
 }

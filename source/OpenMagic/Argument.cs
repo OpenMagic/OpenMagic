@@ -89,6 +89,23 @@ namespace OpenMagic
             throw exception;
         }
 
+        public static T MustBeBetween<T>(this T param, T minimumValue, T maximumValue, string paramName) where T : IComparable<T>
+        {
+            if (param.CompareTo(minimumValue) >= 0 && param.CompareTo(maximumValue) <=0)
+            {
+                return param;
+            }
+
+            var exception = new ArgumentOutOfRangeException(paramName, string.Format("Value must be between {0} and {1}.", minimumValue, maximumValue));
+
+            exception.Data.Add("param", param);
+            exception.Data.Add("minimumValue", minimumValue);
+            exception.Data.Add("maximumValue", maximumValue);
+            exception.Data.Add("paramName", paramName);
+
+            throw exception;
+        }
+
         public static T[] MustNotBeEmpty<T>(this T[] param, string paramName)
         {
             // todo: test & document
