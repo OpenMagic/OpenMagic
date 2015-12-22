@@ -27,7 +27,8 @@ namespace OpenMagic
                 {typeof (short), () => RandomNumber.NextShort()},
                 {typeof (uint), () => RandomNumber.NextUInt()},
                 {typeof (ulong), () => RandomNumber.NextULong()},
-                {typeof (ushort), () => RandomNumber.NextUShort()}
+                {typeof (ushort), () => RandomNumber.NextUShort()},
+                {typeof (Guid), () => Guid.NewGuid()}
             };
         }
 
