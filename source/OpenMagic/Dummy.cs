@@ -19,6 +19,7 @@ namespace OpenMagic
                 {typeof (byte), () => RandomNumber.NextByte()},
                 {typeof (char), () => RandomNumber.NextChar()},
                 {typeof (decimal), () => RandomNumber.NextDecimal()},
+                {typeof (decimal?), () => RandomNumber.NextNullableDecimal()},
                 {typeof (double), () => RandomNumber.NextDouble()},
                 {typeof (float), () => RandomNumber.NextFloat()},
                 {typeof (int), () => RandomNumber.NextInt()},
@@ -28,7 +29,8 @@ namespace OpenMagic
                 {typeof (uint), () => RandomNumber.NextUInt()},
                 {typeof (ulong), () => RandomNumber.NextULong()},
                 {typeof (ushort), () => RandomNumber.NextUShort()},
-                {typeof (Guid), () => Guid.NewGuid()}
+                {typeof (Guid), () => Guid.NewGuid()},
+                {typeof (Guid?), () => RandomBoolean.Next() ? Guid.NewGuid() : (Guid?)null}
             };
         }
 

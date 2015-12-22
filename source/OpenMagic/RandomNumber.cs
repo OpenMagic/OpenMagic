@@ -85,6 +85,14 @@ namespace OpenMagic
         }
 
         /// <summary>
+        ///     Returns a random nullable <see cref="decimal" />.
+        /// </summary>
+        public static decimal? NextNullableDecimal()
+        {
+            return RandomBoolean.Next() ? NextDecimal() : (decimal?)null;
+        }
+
+        /// <summary>
         ///     Returns a random <see cref="int" /> within a specified range.
         /// </summary>
         /// <param name="minValue">
