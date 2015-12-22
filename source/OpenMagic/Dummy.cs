@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NullGuard;
 
 namespace OpenMagic
 {
@@ -34,11 +35,13 @@ namespace OpenMagic
             };
         }
 
+        [return: AllowNull]
         public virtual T Object<T>()
         {
             return (T)Object(typeof (T));
         }
 
+        [return: AllowNull]
         public virtual object Object(Type type)
         {
             var obj = CreateObjectInstance(type);
@@ -53,6 +56,7 @@ namespace OpenMagic
             return obj;
         }
 
+        [return: AllowNull]
         public virtual object Value(Type type)
         {
             Func<object> valueFactory;
