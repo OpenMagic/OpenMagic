@@ -75,6 +75,7 @@
     <Compile Include="DataAnnotations\UriAttribute.cs" />
     <Compile Include="DataAnnotations\Validation.cs" />
     <Compile Include="Extensions\Collections\Generic\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\LazyExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
