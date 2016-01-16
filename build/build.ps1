@@ -32,8 +32,6 @@ try
     Create-PackagesFolder -packages $packages
     Install-NuGet -nuGet $nuGet
     
-    . $nuGet
-    
     Install-NuGet-Package -solutionFolder $solutionFolder -packageId "psake" -excludeVersion $true
     Install-NuGet-Package -solutionFolder $solutionFolder -packageId "SpecFlow" -version $specFlowVersion
     
