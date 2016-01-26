@@ -62,7 +62,8 @@ namespace OpenMagic
         {
             if (formatItems < 1)
             {
-                var exception = new ArgumentOutOfRangeException("formatItems", "Number of format items must be 1 or more.");
+                var exception = new ArgumentOutOfRangeException("formatItems",
+                    "Number of format items must be 1 or more.");
 
                 exception.Data.Add("formatItems", formatItems);
 
@@ -77,6 +78,24 @@ namespace OpenMagic
             }
 
             return format.ToString();
+        }
+
+        /// <summary>
+        ///     Get a random email address.
+        /// </summary>
+        public static string NextEmailAddress()
+        {
+            var user = Next(1, 30);
+            var domain = Next(2, 30);
+            var tld = Next(2, 6, CharacterSets.LowerAtoZ);
+
+            // 1 in 9 email addresses have a country extension
+            if (RandomNumber.NextInt(1, 10) == 3)
+            {
+                tld += $".{Next(2, 3, CharacterSets.LowerAtoZ)}";
+            }
+
+            return $"{user}@{domain}.{tld}";
         }
     }
 }
