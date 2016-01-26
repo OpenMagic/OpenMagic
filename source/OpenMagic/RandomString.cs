@@ -92,10 +92,10 @@ namespace OpenMagic
             // 1 in 9 email addresses have a country extension
             if (RandomNumber.NextInt(1, 10) == 3)
             {
-                tld += $".{Next(2, 3, CharacterSets.LowerAtoZ)}";
+                tld += "." + Next(2, 3, CharacterSets.LowerAtoZ);
             }
 
-            return $"{user}@{domain}.{tld}";
+            return string.Format("{0}@{1}.{2}", user, domain, tld);
         }
     }
 }
