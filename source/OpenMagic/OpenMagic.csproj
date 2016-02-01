@@ -66,6 +66,7 @@
     <Compile Include="DataAnnotations\IPropertyMetadata.cs" />
     <Compile Include="DataAnnotations\ClassMetadata.cs" />
     <Compile Include="DataAnnotations\PropertyMetadata.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="Dummy.cs" />
     <Compile Include="Exceptions\ToDoException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
