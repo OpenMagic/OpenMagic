@@ -44,7 +44,7 @@ Task Restore-NuGet-Packages {
     Restore-NuGet-Packages -nuGet $nuGet -nuGetConfig $nuGetConfig -sln $sln -packages $packages
 }
 
-Task Compile -depends Clean, Restore-NuGet-Packages {
+Task Compile -depends Restore-NuGet-Packages, Clean {
 
     Compile-Solution $sln $configuration
 }
