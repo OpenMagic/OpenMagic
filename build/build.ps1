@@ -1,10 +1,7 @@
 # None of the parameters are required. However I use them to emphasis what is unique to this script.
 param (
     [ValidateNotNullOrEmpty()]
-    [string] $SolutionName = "OpenMagic",
-
-    [ValidateNotNullOrEmpty()]
-    [string] $specFlowVersion = "1.9.0"
+    [string] $SolutionName = "OpenMagic"
 )
 
 # The rest of this script is fairly generic.
@@ -33,14 +30,12 @@ try
     Install-NuGet -nuGet $nuGet
     
     Install-NuGet-Package -solutionFolder $solutionFolder -packageId "psake" -excludeVersion $true
-    Install-NuGet-Package -solutionFolder $solutionFolder -packageId "SpecFlow" -version $specFlowVersion
     
     Write-Host
 
     $properties = @{
         "solutionFolder" = $solutionFolder
         "sln" = $sln
-        "specFlowVersion" = $specFlowVersion
     }
 
     Import-Module $psakeModule -Force
