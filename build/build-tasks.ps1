@@ -11,7 +11,7 @@
     $nuGetConfig = Resolve-Path $solutionFolder\NuGet.config
     $nuSpec = Resolve-Path $solutionFolder\build\$solutionName.nuspec
     $tests = Resolve-Path $solutionFolder\tests
-    $xunit = "$packages\xunit.runners\tools\xunit.console.clr4.exe"
+    $xunit = "$packages\xunit.runner.console\tools\xunit.console.exe"
     $artifacts = "$solutionFolder\artifacts"
     $nuGetArtifacts = "$artifacts\NuGet"
     $binArtifacts = "$artifacts\bin"
