@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Linq;
 using NullGuard;
 
+// ReSharper disable UseStringInterpolation
+
 namespace OpenMagic
 {
     public class AppSettings
@@ -49,7 +51,7 @@ namespace OpenMagic
             }
             catch (Exception exception)
             {
-                throw new Exception($"AppSettings[{GetFullKey(key)}] must be a boolean.", exception);
+                throw new Exception(string.Format("AppSettings[{0}] must be a boolean.", GetFullKey(key)), exception);
             }
         }
 
@@ -69,21 +71,21 @@ namespace OpenMagic
             {
                 if (throwExceptionIsValueIsNullOrWhitespace)
                 {
-                    throw new Exception($"AppSettings[{fullKey}] cannot be null or whitespace.");
+                    throw new Exception(string.Format("AppSettings[{0}] cannot be null or whitespace.", fullKey));
                 }
                 return value;
             }
 
             if (throwExceptionIfKeyNotFound)
             {
-                throw new Exception($"AppSettings[{fullKey}] must be defined. Maybe you need to create AppSettings.config. Maybe there is an AppSettings.Example.config file to copy.");
+                throw new Exception(string.Format("AppSettings[{0}] must be defined. Maybe you need to create AppSettings.config. Maybe there is an AppSettings.Example.config file to copy.", fullKey));
             }
             return null;
         }
 
         private string GetFullKey(string key)
         {
-            return $"{_appSettingsPrefix}{_appSettingsPrefixDelimiter}{key}";
+            return string.Format("{0}{1}{2}", _appSettingsPrefix, _appSettingsPrefixDelimiter, key);
         }
     }
 }
