@@ -9,7 +9,6 @@
 [Pp]ackages/
 
 *.cache
-*.DotSettings
 *.feature.cs
 *.user
 *.sln.GhostDoc.xml
