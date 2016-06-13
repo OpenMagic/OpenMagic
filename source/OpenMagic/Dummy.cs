@@ -48,21 +48,29 @@ namespace OpenMagic
         {
             Func<object> valueFactory;
 
-            if (ValueFactories.TryGetValue(type, out valueFactory))
+            try
             {
-                return valueFactory();
+                if (ValueFactories.TryGetValue(type, out valueFactory))
+                {
+                    return valueFactory();
+                }
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    return CreateListOfT(type);
+                }
+                if (type.IsArray)
+                {
+                    return CreateArray(type);
+                }
+                if (type.IsClass)
+                {
+                    return Object(type);
+                }
             }
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
+            catch (Exception exception)
             {
-                return CreateListOfT(type);
-            }
-            if (type.IsArray)
-            {
-                return CreateArray(type);
-            }
-            if (type.IsClass)
-            {
-                return Object(type);
+                var message = string.Format("Cannot create dummy value for type '{0}'.", type);
+                throw new Exception(message, exception);
             }
             throw new NotImplementedException(string.Format("Dummy.Value({0}) is not implemented.", type));
         }
@@ -73,14 +81,21 @@ namespace OpenMagic
 
             foreach (var propertyInfo in obj.GetType().GetProperties().Where(p => p.CanWrite))
             {
-                var value = Value(propertyInfo.PropertyType);
+                try
+                {
+                    var value = Value(propertyInfo.PropertyType);
 
-                propertyInfo.SetValue(obj, value);
+                    propertyInfo.SetValue(obj, value);
+                }
+                catch (Exception exception)
+                {
+                    var message = string.Format("Cannot set property value '{0}.{1}'.", type, propertyInfo.Name);
+                    throw new Exception(message, exception);
+                }
             }
 
             return obj;
         }
-
 
         protected virtual object CreateObjectInstance(Type type)
         {
@@ -94,7 +109,8 @@ namespace OpenMagic
             }
             catch (Exception exception)
             {
-                throw new Exception(string.Format("Cannot create instance of {0}.", type), exception);
+                var message = string.Format("Cannot create instance of {0}.", type);
+                throw new Exception(message, exception);
             }
         }
 
@@ -108,34 +124,50 @@ namespace OpenMagic
 
         private object CreateArray(Type arrayType)
         {
-            var itemType = arrayType.GetElementType();
-            var values = CreateValues(itemType);
+            try
+            {
+                var itemType = arrayType.GetElementType();
+                var values = CreateValues(itemType);
 
-            var method = typeof(Enumerable).GetMethod("Cast");
-            var genericMethod = method.MakeGenericMethod(itemType);
-            var enumerable = genericMethod.Invoke(this, new object[] {values});
+                var method = typeof(Enumerable).GetMethod("Cast");
+                var genericMethod = method.MakeGenericMethod(itemType);
+                var enumerable = genericMethod.Invoke(this, new object[] {values});
 
-            method = typeof(Enumerable).GetMethod("ToArray");
-            genericMethod = method.MakeGenericMethod(itemType);
-            var array = genericMethod.Invoke(this, new[] {enumerable});
+                method = typeof(Enumerable).GetMethod("ToArray");
+                genericMethod = method.MakeGenericMethod(itemType);
+                var array = genericMethod.Invoke(this, new[] {enumerable});
 
-            return array;
+                return array;
+            }
+            catch (Exception exception)
+            {
+                var message = string.Format("Cannot create array of type '{0}'.", arrayType);
+                throw new Exception(message, exception);
+            }
         }
 
         private object CreateListOfT(Type type)
         {
-            var itemType = type.GetGenericArguments()[0];
-            var values = CreateValues(itemType);
-            var listType = typeof(List<>);
-            var genericListType = listType.MakeGenericType(itemType);
-            var list = (IList)Activator.CreateInstance(genericListType);
-
-            foreach (var value in values)
+            try
             {
-                list.Add(value);
-            }
+                var itemType = type.GetGenericArguments()[0];
+                var values = CreateValues(itemType);
+                var listType = typeof(List<>);
+                var genericListType = listType.MakeGenericType(itemType);
+                var list = (IList)Activator.CreateInstance(genericListType);
 
-            return list;
+                foreach (var value in values)
+                {
+                    list.Add(value);
+                }
+
+                return list;
+            }
+            catch (Exception exception)
+            {
+                var message = string.Format("Cannot create list of type '{0}'.", type);
+                throw new Exception(message, exception);
+            }
         }
     }
 }
