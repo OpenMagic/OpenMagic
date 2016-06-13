@@ -85,7 +85,7 @@ namespace OpenMagic
 
         private IDictionary CreateDictionary()
         {
-            var keys = CreateValues(typeof(string)).Cast<string>();
+            var keys = CreateValues(typeof(string)).Cast<string>().Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
 
             return keys.ToDictionary(key => Value<string>());
         }
