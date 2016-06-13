@@ -85,9 +85,9 @@ namespace OpenMagic
 
         protected virtual IDictionary CreateDictionary()
         {
-            var keys = CreateValues(typeof(string)).Cast<string>().Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
+            var values = CreateValues(typeof(string)).Cast<string>().Where(s => !string.IsNullOrWhiteSpace(s));
 
-            return keys.ToDictionary(key => Value<string>());
+            return values.ToDictionary(value => Guid.NewGuid().ToString());
         }
 
         protected virtual object Object(Type type)
