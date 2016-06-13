@@ -6,6 +6,7 @@ namespace OpenMagic
     {
         T Object<T>();
         object Object(Type type);
+        T Value<T>();
         object Value(Type type);
     }
 }

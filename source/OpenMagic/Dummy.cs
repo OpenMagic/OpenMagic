@@ -57,6 +57,12 @@ namespace OpenMagic
         }
 
         [return: AllowNull]
+        public T Value<T>()
+        {
+            return (T)Value(typeof(T));
+        }
+
+        [return: AllowNull]
         public virtual object Value(Type type)
         {
             Func<object> valueFactory;
