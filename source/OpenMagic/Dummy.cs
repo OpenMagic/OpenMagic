@@ -8,52 +8,33 @@ namespace OpenMagic
 {
     public class Dummy : IDummy
     {
+        protected readonly Dictionary<Type, Func<object>> InstanceFactories;
         protected readonly Dictionary<Type, Func<object>> ValueFactories;
 
         public Dummy()
         {
+            InstanceFactories = new Dictionary<Type, Func<object>>();
             ValueFactories = new Dictionary<Type, Func<object>>
             {
-                {typeof (bool), () => RandomBoolean.Next()},
-                {typeof (DateTime), () => RandomDateTime.Next()},
-                {typeof (string), () => RandomString.Next(1, 100)},
-                {typeof (byte), () => RandomNumber.NextByte()},
-                {typeof (char), () => RandomNumber.NextChar()},
-                {typeof (decimal), () => RandomNumber.NextDecimal()},
-                {typeof (decimal?), () => RandomNumber.NextNullableDecimal()},
-                {typeof (double), () => RandomNumber.NextDouble()},
-                {typeof (float), () => RandomNumber.NextFloat()},
-                {typeof (int), () => RandomNumber.NextInt()},
-                {typeof (long), () => RandomNumber.NextLong()},
-                {typeof (sbyte), () => RandomNumber.NextSByte()},
-                {typeof (short), () => RandomNumber.NextShort()},
-                {typeof (uint), () => RandomNumber.NextUInt()},
-                {typeof (ulong), () => RandomNumber.NextULong()},
-                {typeof (ushort), () => RandomNumber.NextUShort()},
-                {typeof (Guid), () => Guid.NewGuid()},
-                {typeof (Guid?), () => RandomBoolean.Next() ? Guid.NewGuid() : (Guid?)null}
+                {typeof(bool), () => RandomBoolean.Next()},
+                {typeof(DateTime), () => RandomDateTime.Next()},
+                {typeof(string), () => RandomString.Next(1, 100)},
+                {typeof(byte), () => RandomNumber.NextByte()},
+                {typeof(char), () => RandomNumber.NextChar()},
+                {typeof(decimal), () => RandomNumber.NextDecimal()},
+                {typeof(decimal?), () => RandomNumber.NextNullableDecimal()},
+                {typeof(double), () => RandomNumber.NextDouble()},
+                {typeof(float), () => RandomNumber.NextFloat()},
+                {typeof(int), () => RandomNumber.NextInt()},
+                {typeof(long), () => RandomNumber.NextLong()},
+                {typeof(sbyte), () => RandomNumber.NextSByte()},
+                {typeof(short), () => RandomNumber.NextShort()},
+                {typeof(uint), () => RandomNumber.NextUInt()},
+                {typeof(ulong), () => RandomNumber.NextULong()},
+                {typeof(ushort), () => RandomNumber.NextUShort()},
+                {typeof(Guid), () => Guid.NewGuid()},
+                {typeof(Guid?), () => RandomBoolean.Next() ? Guid.NewGuid() : (Guid?)null}
             };
-        }
-
-        [return: AllowNull]
-        public virtual T Object<T>()
-        {
-            return (T)Object(typeof (T));
-        }
-
-        [return: AllowNull]
-        public virtual object Object(Type type)
-        {
-            var obj = CreateObjectInstance(type);
-
-            foreach (var propertyInfo in obj.GetType().GetProperties().Where(p => p.CanWrite))
-            {
-                var value = Value(propertyInfo.PropertyType);
-
-                propertyInfo.SetValue(obj, value);
-            }
-
-            return obj;
         }
 
         [return: AllowNull]
@@ -71,7 +52,7 @@ namespace OpenMagic
             {
                 return valueFactory();
             }
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof (List<>))
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
             {
                 return CreateListOfT(type);
             }
@@ -86,12 +67,30 @@ namespace OpenMagic
             throw new NotImplementedException(string.Format("Dummy.Value({0}) is not implemented.", type));
         }
 
+        private object Object(Type type)
+        {
+            var obj = CreateObjectInstance(type);
+
+            foreach (var propertyInfo in obj.GetType().GetProperties().Where(p => p.CanWrite))
+            {
+                var value = Value(propertyInfo.PropertyType);
+
+                propertyInfo.SetValue(obj, value);
+            }
+
+            return obj;
+        }
+
 
         protected virtual object CreateObjectInstance(Type type)
         {
             try
             {
-                return Activator.CreateInstance(type);
+                Func<object> instanceFactory;
+
+                return InstanceFactories.TryGetValue(type, out instanceFactory)
+                    ? instanceFactory()
+                    : Activator.CreateInstance(type);
             }
             catch (Exception exception)
             {
@@ -112,11 +111,11 @@ namespace OpenMagic
             var itemType = arrayType.GetElementType();
             var values = CreateValues(itemType);
 
-            var method = typeof (Enumerable).GetMethod("Cast");
+            var method = typeof(Enumerable).GetMethod("Cast");
             var genericMethod = method.MakeGenericMethod(itemType);
             var enumerable = genericMethod.Invoke(this, new object[] {values});
 
-            method = typeof (Enumerable).GetMethod("ToArray");
+            method = typeof(Enumerable).GetMethod("ToArray");
             genericMethod = method.MakeGenericMethod(itemType);
             var array = genericMethod.Invoke(this, new[] {enumerable});
 
@@ -127,7 +126,7 @@ namespace OpenMagic
         {
             var itemType = type.GetGenericArguments()[0];
             var values = CreateValues(itemType);
-            var listType = typeof (List<>);
+            var listType = typeof(List<>);
             var genericListType = listType.MakeGenericType(itemType);
             var list = (IList)Activator.CreateInstance(genericListType);
 
