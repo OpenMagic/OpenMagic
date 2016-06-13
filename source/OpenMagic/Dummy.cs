@@ -46,10 +46,10 @@ namespace OpenMagic
         [return: AllowNull]
         public virtual object Value(Type type)
         {
-            Func<object> valueFactory;
-
             try
             {
+                Func<object> valueFactory;
+
                 if (ValueFactories.TryGetValue(type, out valueFactory))
                 {
                     return valueFactory();
@@ -83,14 +83,14 @@ namespace OpenMagic
             throw new NotImplementedException(string.Format("Dummy.Value({0}) is not implemented.", type));
         }
 
-        private IDictionary CreateDictionary()
+        protected virtual IDictionary CreateDictionary()
         {
             var keys = CreateValues(typeof(string)).Cast<string>().Where(s => !string.IsNullOrWhiteSpace(s)).Distinct();
 
             return keys.ToDictionary(key => Value<string>());
         }
 
-        private object Object(Type type)
+        protected virtual object Object(Type type)
         {
             var obj = CreateObjectInstance(type);
 
@@ -142,7 +142,7 @@ namespace OpenMagic
             }
         }
 
-        private object CreateArray(Type arrayType)
+        protected virtual object[] CreateArray(Type arrayType)
         {
             try
             {
@@ -157,7 +157,7 @@ namespace OpenMagic
                 genericMethod = method.MakeGenericMethod(itemType);
                 var array = genericMethod.Invoke(this, new[] {enumerable});
 
-                return array;
+                return (object[])array;
             }
             catch (Exception exception)
             {
@@ -166,7 +166,7 @@ namespace OpenMagic
             }
         }
 
-        private object CreateListOfT(Type type)
+        protected virtual IList CreateListOfT(Type type)
         {
             try
             {
