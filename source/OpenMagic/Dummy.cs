@@ -58,7 +58,7 @@ namespace OpenMagic
                 {
                     return CreateListOfT(type);
                 }
-                if (type.IsGenericType && (type.GetGenericTypeDefinition() == typeof(IList)))
+                if (type == typeof(IList))
                 {
                     return CreateListOfT(typeof(string));
                 }
