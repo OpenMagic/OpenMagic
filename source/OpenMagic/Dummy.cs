@@ -62,6 +62,10 @@ namespace OpenMagic
                 {
                     return CreateArray(type);
                 }
+                if (type == typeof(IDictionary))
+                {
+                    return CreateDictionary();
+                }
                 if (type.IsClass)
                 {
                     return Object(type);
@@ -73,6 +77,13 @@ namespace OpenMagic
                 throw new Exception(message, exception);
             }
             throw new NotImplementedException(string.Format("Dummy.Value({0}) is not implemented.", type));
+        }
+
+        private IDictionary CreateDictionary()
+        {
+            var keys = CreateValues(typeof(string)).Cast<string>();
+
+            return keys.ToDictionary(key => Value<string>());
         }
 
         private object Object(Type type)
@@ -116,7 +127,12 @@ namespace OpenMagic
 
         protected virtual IEnumerable CreateValues(Type itemType)
         {
-            for (var i = 0; i < RandomNumber.NextInt(0, 1000); i++)
+            return CreateValues(itemType, RandomNumber.NextInt(0, 1000));
+        }
+
+        protected virtual IEnumerable CreateValues(Type itemType, int count)
+        {
+            for (var i = 0; i < count; i++)
             {
                 yield return Value(itemType);
             }
