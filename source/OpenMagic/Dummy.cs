@@ -60,7 +60,7 @@ namespace OpenMagic
                 }
                 if (type == typeof(IList))
                 {
-                    return CreateListOfT(typeof(string));
+                    return CreateListOfT(typeof(List<string>));
                 }
                 if (type.IsArray)
                 {
