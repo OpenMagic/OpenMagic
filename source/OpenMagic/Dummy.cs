@@ -54,7 +54,7 @@ namespace OpenMagic
                 {
                     return valueFactory();
                 }
-                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
+                if (type.IsGenericType && (type.GetGenericTypeDefinition() == typeof(List<>) || type.GetGenericTypeDefinition() == typeof(IList<>)))
                 {
                     return CreateListOfT(type);
                 }
