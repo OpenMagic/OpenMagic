@@ -22,7 +22,6 @@ namespace OpenMagic
                 {typeof(byte), () => RandomNumber.NextByte()},
                 {typeof(char), () => RandomNumber.NextChar()},
                 {typeof(decimal), () => RandomNumber.NextDecimal()},
-                {typeof(decimal?), () => RandomNumber.NextNullableDecimal()},
                 {typeof(double), () => RandomNumber.NextDouble()},
                 {typeof(float), () => RandomNumber.NextFloat()},
                 {typeof(int), () => RandomNumber.NextInt()},
@@ -33,7 +32,20 @@ namespace OpenMagic
                 {typeof(ulong), () => RandomNumber.NextULong()},
                 {typeof(ushort), () => RandomNumber.NextUShort()},
                 {typeof(Guid), () => Guid.NewGuid()},
-                {typeof(Guid?), () => RandomBoolean.Next() ? Guid.NewGuid() : (Guid?)null}
+                {typeof(bool?), () => RandomNullable(RandomBoolean.Next)},
+                {typeof(DateTime?), () => RandomNullable(RandomDateTime.Next)},
+                {typeof(byte?), () => RandomNullable(RandomNumber.NextByte)},
+                {typeof(char?), () => RandomNullable(RandomNumber.NextChar)},
+                {typeof(decimal?), () => RandomNullable(RandomNumber.NextDecimal)},
+                {typeof(double?), () => RandomNullable(RandomNumber.NextDouble)},
+                {typeof(float?), () => RandomNullable(RandomNumber.NextFloat)},
+                {typeof(int?), () => RandomNullable(RandomNumber.NextInt)},
+                {typeof(long?), () => RandomNullable(RandomNumber.NextLong)},
+                {typeof(sbyte?), () => RandomNullable(RandomNumber.NextSByte)},
+                {typeof(short?), () => RandomNullable(RandomNumber.NextShort)},
+                {typeof(uint?), () => RandomNullable(RandomNumber.NextUInt)},
+                {typeof(ulong?), () => RandomNullable(RandomNumber.NextULong)},
+                {typeof(ushort?), () => RandomNullable(RandomNumber.NextUShort)}
             };
         }
 
@@ -188,6 +200,11 @@ namespace OpenMagic
                 var message = string.Format("Cannot create list of type '{0}'.", type);
                 throw new Exception(message, exception);
             }
+        }
+
+        private static T RandomNullable<T>(Func<T> randomFactory)
+        {
+            return RandomNumber.NextInt(1, 5) == 1 ? default(T) : randomFactory();
         }
     }
 }
