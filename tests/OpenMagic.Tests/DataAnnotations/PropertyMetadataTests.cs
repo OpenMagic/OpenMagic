@@ -18,7 +18,7 @@ namespace OpenMagic.Tests.DataAnnotations
                 // ReSharper disable once ObjectCreationAsStatement
                 Action action = () => new PropertyMetadata(null, true);
 
-                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("property");
+                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("property");
             }
         }
 

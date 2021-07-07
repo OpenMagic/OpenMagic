@@ -23,7 +23,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBe(2, Message);
 
                 // Then
-                action.ShouldThrow<AssertionException>()
+                action.Should().Throw<AssertionException>()
                     .WithMessage(Message);
             }
 
@@ -37,7 +37,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBe(1, Message, ParamValue);
 
                 // Then
-                action.ShouldNotThrow<Exception>();
+                action.Should().NotThrow<Exception>();
             }
 
             [Fact]
@@ -50,7 +50,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBe(2, Message, ParamValue);
 
                 // Then
-                action.ShouldThrow<AssertionException>()
+                action.Should().Throw<AssertionException>()
                     .WithMessage(ExpectedMessage);
             }
 
@@ -64,7 +64,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBe(1, Message, ParamValue);
 
                 // Then
-                action.ShouldNotThrow<Exception>();
+                action.Should().NotThrow<Exception>();
             }
         }
 
@@ -80,7 +80,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBeFalse(Message);
 
                 // Then
-                action.ShouldThrow<AssertionException>()
+                action.Should().Throw<AssertionException>()
                     .WithMessage(Message);
             }
 
@@ -94,7 +94,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBeFalse(Message);
 
                 // Then
-                action.ShouldNotThrow<Exception>();
+                action.Should().NotThrow<Exception>();
             }
 
             [Fact]
@@ -107,7 +107,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBeFalse(Message, ParamValue);
 
                 // Then
-                action.ShouldThrow<AssertionException>()
+                action.Should().Throw<AssertionException>()
                     .WithMessage(ExpectedMessage);
             }
 
@@ -121,7 +121,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBeFalse(Message, ParamValue);
 
                 // Then
-                action.ShouldNotThrow<Exception>();
+                action.Should().NotThrow<Exception>();
             }
         }
 
@@ -137,7 +137,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBeTrue(Message, ParamValue);
 
                 // Then
-                action.ShouldThrow<AssertionException>()
+                action.Should().Throw<AssertionException>()
                     .WithMessage(ExpectedMessage);
             }
 
@@ -151,7 +151,7 @@ namespace OpenMagic.Tests.Assertions
                 Action action = () => value.MustBeTrue(Message, ParamValue);
 
                 // Then
-                action.ShouldNotThrow<Exception>();
+                action.Should().NotThrow<Exception>();
             }
         }
     }

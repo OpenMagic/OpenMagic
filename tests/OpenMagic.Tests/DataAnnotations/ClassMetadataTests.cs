@@ -53,7 +53,7 @@ namespace OpenMagic.Tests.DataAnnotations
                 // ReSharper disable once ObjectCreationAsStatement
                 Action action = () => new ClassMetadata(null);
 
-                action.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("type");
+                action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("type");
             }
 
             [Fact]
@@ -107,7 +107,7 @@ namespace OpenMagic.Tests.DataAnnotations
 
                 Action action = () => metadata.GetProperty("");
 
-                action.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("propertyName");
+                action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("propertyName");
             }
 
             [Fact]
@@ -117,7 +117,7 @@ namespace OpenMagic.Tests.DataAnnotations
 
                 Action action = () => metadata.GetProperty("MissingPropertyName");
 
-                action.ShouldThrow<ArgumentException>().And.ParamName.Should().Be("propertyName");
+                action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("propertyName");
             }
 
             [Fact]
