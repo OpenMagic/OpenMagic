@@ -39,10 +39,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Anotar.LibLog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=9d5b24f0733c26f7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Anotar.LibLog.Fody.3.0.1\lib\Anotar.LibLog.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NullGuard, Version=1.4.6.0, Culture=neutral, PublicKeyToken=1958ac8092168428, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NullGuard.Fody.1.4.6\lib\dotnet\NullGuard.dll</HintPath>
@@ -57,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
-    <Compile Include="App_Packages\LibLog.4.2\LibLog.cs" />
     <Compile Include="Argument.cs" />
     <Compile Include="Assertions\AssertionException.cs" />
     <Compile Include="CharacterSets.cs" />
@@ -79,7 +74,6 @@
     <Compile Include="DataAnnotations\Validation.cs" />
     <Compile Include="Extensions\Collections\Generic\EnumerableExtensions.cs" />
     <Compile Include="Extensions\LazyExtensions.cs" />
-    <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
