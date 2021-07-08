@@ -21,7 +21,7 @@ namespace OpenMagic.Tests
                 Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
 
                 // Then
-                action.ShouldNotThrow<ArgumentException>();
+                action.Should().NotThrow<ArgumentException>();
             }
 
             [Fact]
@@ -36,7 +36,7 @@ namespace OpenMagic.Tests
                 Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
 
                 // Then
-                action.ShouldThrow<ArgumentException>().WithMessage("Value must be 1.\r\nParameter name: argument");
+                action.Should().Throw<ArgumentException>().WithMessage("Value must be 1.\r\nParameter name: argument");
             }
         }
 
@@ -65,7 +65,7 @@ namespace OpenMagic.Tests
                 Action action = () => Argument.MustNotBeNull<Exception>(null, parameterName);
 
                 // Then
-                action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be(parameterName);
+                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be(parameterName);
             }
         }
 
@@ -95,7 +95,7 @@ namespace OpenMagic.Tests
 
                 // Then
                 action
-                    .ShouldThrow<ArgumentException>()
+                    .Should().Throw<ArgumentException>()
                     .WithMessage("Value cannot be empty.\r\nParameter name: fakeParamName");
             }
         }
@@ -127,7 +127,7 @@ namespace OpenMagic.Tests
 
                 // Then
                 action
-                    .ShouldThrow<ArgumentException>()
+                    .Should().Throw<ArgumentException>()
                     .WithMessage("Value cannot be empty.\r\nParameter name: fakeParamName");
             }
         }
@@ -158,7 +158,7 @@ namespace OpenMagic.Tests
 
                 // Then
                 action
-                    .ShouldThrow<ArgumentException>()
+                    .Should().Throw<ArgumentException>()
                     .WithMessage("Value cannot be whitespace.\r\nParameter name: fakeParamName");
             }
         }
@@ -190,7 +190,7 @@ namespace OpenMagic.Tests
 
                 // Then
                 action
-                    .ShouldThrow<ArgumentException>()
+                    .Should().Throw<ArgumentException>()
                     .WithMessage("Value cannot be whitespace.\r\nParameter name: fakeParamName");
             }
         }
@@ -239,7 +239,7 @@ namespace OpenMagic.Tests
                 Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
 
                 // Then
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
 
             [Fact]
@@ -253,7 +253,7 @@ namespace OpenMagic.Tests
                 Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
 
                 // Then
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
     }

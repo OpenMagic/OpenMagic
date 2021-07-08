@@ -28,14 +28,14 @@ namespace OpenMagic.Tests.Extensions
             public void Argument_delimiter_CannotLongerThanOneCharacter()
             {
                 "fake value".Invoking(x => x.GetValuesBetween("12"))
-                    .ShouldThrow<ArgumentException>()
+                    .Should().Throw<ArgumentException>()
                     .WithMessage("Value cannot be longer than 1 character.\r\nParameter name: delimiter");
             }
 
             private void ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(string delimiter)
             {
                 "fake value".Invoking(x => x.GetValuesBetween(delimiter))
-                    .ShouldThrow<ArgumentException>()
+                    .Should().Throw<ArgumentException>()
                     .WithMessage("Value cannot be whitespace.\r\nParameter name: delimiter");
             }
 

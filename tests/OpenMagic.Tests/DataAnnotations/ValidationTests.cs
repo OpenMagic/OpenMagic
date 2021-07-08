@@ -26,7 +26,7 @@ namespace OpenMagic.Tests.DataAnnotations
                 Action action = () => invalidObject.Validate();
 
                 // Then
-                action.ShouldThrow<ValidationException>();
+                action.Should().Throw<ValidationException>();
             }
 
             [Fact]

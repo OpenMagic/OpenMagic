@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Anotar.LibLog;
 using OpenMagic.Extensions.Collections.Generic;
 
 namespace OpenMagic.Extensions
@@ -21,8 +20,6 @@ namespace OpenMagic.Extensions
         /// </remarks>
         public static void ForceDelete(this DirectoryInfo directory)
         {
-            LogTo.Trace("ForceDelete(directory: {0})", directory.FullName);
-
             // Setting all file attributes to normal will ensure directory.Delete(true) works.
             directory.SetFileAttributes(FileAttributes.Normal, true);
 
@@ -38,7 +35,6 @@ namespace OpenMagic.Extensions
         /// </param>
         public static void ForceDeleteIfExists(this DirectoryInfo directory)
         {
-            LogTo.Trace("ForceDeleteIfExists(directory: {0})", directory.FullName);
             if (directory.Exists)
             {
                 directory.ForceDelete();
@@ -59,8 +55,6 @@ namespace OpenMagic.Extensions
         /// </param>
         public static void SetFileAttributes(this DirectoryInfo directory, FileAttributes attributes, bool recursive)
         {
-            LogTo.Trace("SetFileAttributes(directory: {0}, attributes: {1}, recursive: {2})", directory.FullName, attributes, recursive);
-
             directory.EnumerateFiles().ForEach(f => f.Attributes = attributes);
 
             if (!recursive)
