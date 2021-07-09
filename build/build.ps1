@@ -16,7 +16,7 @@ $sln = $(Resolve-Path $solutionFolder\$solutionName.sln)
 $commonBuildTasks = $(Resolve-Path $solutionFolder\submodules\common-code\source\build\Common-Build-Tasks.psm1)
 $buildTasks = $(Resolve-Path $solutionFolder\build\build-tasks.ps1)
 
-$psakeModule = "$solutionFolder\packages\psake\tools\psake.psm1"
+$psakeModule = "$solutionFolder\packages\psake\tools\psake\psake.psm1"
 $packages = "$solutionFolder\packages"
 $nuGet = "$packages\NuGet.exe"
 
