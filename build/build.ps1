@@ -5,7 +5,8 @@ param (
 )
 
 Write-Host "Setting PSRepository..."
-Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+Get-PSRepository
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted -Verbose
 
 Write-Host "Installing NuGet package provider..."
 $null = Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser
