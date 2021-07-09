@@ -4,6 +4,15 @@ param (
     [string] $SolutionName = "OpenMagic"
 )
 
+Write-Host "Setting PSRepository..."
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
+Write-Host "Installing NuGet package provider..."
+$null = Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser
+
+Write-Host "Installing VSSetup module..."
+Install-Module VSSetup -Scope CurrentUser
+
 # The rest of this script is fairly generic.
 
 $ErrorActionPreference = "Stop"
@@ -16,7 +25,7 @@ $sln = $(Resolve-Path $solutionFolder\$solutionName.sln)
 $commonBuildTasks = $(Resolve-Path $solutionFolder\submodules\common-code\source\build\Common-Build-Tasks.psm1)
 $buildTasks = $(Resolve-Path $solutionFolder\build\build-tasks.ps1)
 
-$psakeModule = "$solutionFolder\packages\psake\tools\psake.psm1"
+$psakeModule = "$solutionFolder\packages\psake\tools\psake\psake.psm1"
 $packages = "$solutionFolder\packages"
 $nuGet = "$packages\NuGet.exe"
 
@@ -39,6 +48,7 @@ try
     }
 
     Import-Module $psakeModule -Force
+
     Invoke-psake $buildTasks -properties $properties
 
     $successful = $psake.build_success

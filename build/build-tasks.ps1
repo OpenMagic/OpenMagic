@@ -1,4 +1,6 @@
-﻿Properties {
+﻿Framework "4.6"
+
+Properties {
     # Following properties are solution specific
     $solutionName = "OpenMagic"
 
