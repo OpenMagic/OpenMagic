@@ -85,7 +85,7 @@
       <Version>4.4.1</Version>
     </PackageReference>
     <PackageReference Include="Cucumber.Messages">
-      <Version>6.0.2</Version>
+      <Version>16.0.1</Version>
     </PackageReference>
     <PackageReference Include="FakeItEasy">
       <Version>7.3.0</Version>
