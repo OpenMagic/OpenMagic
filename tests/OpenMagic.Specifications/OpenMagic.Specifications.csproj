@@ -94,7 +94,7 @@
       <Version>6.5.1</Version>
     </PackageReference>
     <PackageReference Include="Google.Protobuf">
-      <Version>3.17.3</Version>
+      <Version>3.19.4</Version>
     </PackageReference>
     <PackageReference Include="SpecFlow.xUnit">
       <Version>3.9.8</Version>
