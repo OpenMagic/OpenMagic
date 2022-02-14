@@ -97,7 +97,7 @@
       <Version>3.19.4</Version>
     </PackageReference>
     <PackageReference Include="SpecFlow.xUnit">
-      <Version>3.9.8</Version>
+      <Version>3.9.52</Version>
     </PackageReference>
     <PackageReference Include="System.Memory">
       <Version>4.5.4</Version>
