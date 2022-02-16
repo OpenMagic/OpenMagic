@@ -17,7 +17,7 @@ Properties {
     $artifacts = "$solutionFolder\artifacts"
     $nuGetArtifacts = "$artifacts\NuGet"
     $binArtifacts = "$artifacts\bin"
-    $nuGetVersion = Get-NuGet-Version
+    $nuGetVersion = "4.0.0"
     $nuPkg = "$solutionName.$nuGetVersion.nupkg"
 }
 
