@@ -4,9 +4,6 @@ param (
     [string] $SolutionName = "OpenMagic"
 )
 
-Write-Host "Installing VSSetup module..."
-Install-Module VSSetup -Scope CurrentUser
-
 $ErrorActionPreference = "Stop"
 $WarningPreference = "SilentlyContinue"
 $VerbosePreference = "SilentlyContinue"
