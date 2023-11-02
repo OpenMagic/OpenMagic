@@ -8,8 +8,8 @@ $build = $(Resolve-Path $PSScriptRoot\build.ps1)
 #&git clean -d -X --force "$solutionFolder"
 #Write-Host
 
-#Write-Host "Installing VSSetup module..."
-#Install-Module -Name VSSetup -Scope CurrentUser -SkipPublisherCheck -Force -AllowClobber
+Write-Host "Installing VSSetup module..."
+Install-Module VSSetup -Scope CurrentUser -Force -AllowClobber
 
 Write-Host "Invoking build script '$build'..."
 Invoke-Expression ".""$build"""
