@@ -1,17 +1,35 @@
+function Test-ModulesPath {
+    [string]
+    $modulesPath
+
+    if (Test-Path($modulesPath)) {
+
+        $fullModulesPath = "$modulesPath\Modules"
+
+        if ((Test-Path -Path $fullModulesPath) -eq $false) {
+            New-Item -ItemType Directory -Path $fullModulesPath
+        }
+
+        return $true
+    } else {
+        return $false
+    }
+}
+
 function Get-ModulesPath {
 
     $myDocuments = $([Environment]::GetFolderPath("MyDocuments"))
 
-    $modulesPath = Resolve-Path "$myDocuments\WindowsPowerShell\Modules" -ErrorAction SilentlyContinue
+    $modulesPath = "$myDocuments\WindowsPowerShell"
 
-    if ($null -ne $modulesPath) {
-        return $modulesPath        
+    if (Test-ModulesPath($modulesPath)) {
+        return $modulesPath + "\Modules"
     }
 
-    $modulesPath = Resolve-Path "$myDocuments\PowerShell\Modules" -ErrorAction SilentlyContinue
+    $modulesPath = "$myDocuments\PowerShell"
 
-    if ($null -ne $modulesPath) {
-        return $modulesPath        
+    if (Test-ModulesPath($modulesPath)) {
+        return $modulesPath + "\Modules"
     }
 
     Write-Host
