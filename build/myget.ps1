@@ -15,9 +15,18 @@ function Get-ModulesPath {
     }
 
     Write-Host
+    Write-Host "env:PSModulePath $env:PSModulePath"
+    Write-Host
     Write-Host "$myDocuments directory"
     Write-Host "---------------------------"    
     Get-ChildItem $myDocuments | ForEach-Object -Process { Write-Host $_.FullName }
+    Write-Host "---------------------------"    
+    Write-Host
+
+    Write-Host
+    Write-Host "$myDocuments\WindowsPowerShell directory"
+    Write-Host "---------------------------"    
+    Get-ChildItem $myDocuments\WindowsPowerShell | ForEach-Object -Process { Write-Host $_.FullName }
     Write-Host "---------------------------"    
     Write-Host
 
