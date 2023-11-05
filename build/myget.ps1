@@ -14,7 +14,12 @@ function Get-ModulesPath {
         return $modulesPath        
     }
 
-    Get-ChildItem $myDocuments
+    Write-Host
+    Write-Host "$myDocuments directory"
+    Write-Host "---------------------------"    
+    Get-ChildItem $myDocuments | ForEach-Object -Process { Write-Host $_.FullName }
+    Write-Host "---------------------------"    
+    Write-Host
 
     throw "Could not find modules path in '$myDocuments'."
 }
