@@ -55,16 +55,16 @@ $buildScript = $(Resolve-Path $PSScriptRoot\build.ps1)
 $modulesPath = Get-ModulesPath + "\VSSetup"
 $vsSetupZip = $(Resolve-Path $PSScriptRoot\VSSetup.zip)
 
-# temporary test on myget build server to see if VSSetup is required
+# temporary test on myget build server to see if VSSetup needs to be installed
 if ($false) {
     Write-Host "Expanding '$vsSetupZip' to '$modulesPath'..."
     Expand-Archive $vsSetupZip $modulesPath
     Write-Host
-    
-    Write-Host "Installing VSSetup module..."
-    Install-Module VSSetup -Scope CurrentUser -Force
-    Write-Host
 }
+
+Write-Host "Installing VSSetup module..."
+Install-Module VSSetup -Scope CurrentUser -Force
+Write-Host
 
 Write-Host "Invoking build script '$buildScript'..."
 Invoke-Expression ".""$buildScript"""
