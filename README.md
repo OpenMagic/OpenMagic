@@ -5,3 +5,4 @@ Collection of utility classes by Tim Murphy.
 # NuGet Packages
 
 - xUnit cannot be updated past 2.4.2 until Visual Studio 2022 or later is used.
+- xunit.runner.visualstudio cannot be updated past 2.5.0 until Visual Studio 2022 or later is used.
