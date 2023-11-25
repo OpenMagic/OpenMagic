@@ -11,7 +11,8 @@ env:
   BUILD_CONFIGURATION: Release
   BUILD_VERBOSITY: Normal
   BUILD_TARGET: ReBuild
-  
+  XUNIT_FILE_PATH: .\packages\xunit.runner.console\tools\xunit.console.exe
+
 # todo: what is this?
 #permissions:
 #  contents: read
