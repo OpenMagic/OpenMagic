@@ -9,7 +9,7 @@ on:
 env:
   SOLUTION_FILE_PATH: .\OpenMagic.sln
   BUILD_CONFIGURATION: Release
-  BUILD_VERBOSITY: Minimal
+  BUILD_VERBOSITY: Normal
   BUILD_TARGET: ReBuild
   
 # todo: what is this?
