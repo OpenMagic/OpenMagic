@@ -9,9 +9,10 @@ on:
 env:
   SOLUTION_FILE_PATH: .\OpenMagic.sln
   BUILD_CONFIGURATION: Release
-  BUILD_VERBOSITY: Normal
   BUILD_TARGET: ReBuild
-  XUNIT_FILE_PATH: .\packages\xunit.runner.console\tools\xunit.console.exe
+  BUILD_VERBOSITY: Normal
+  PACKAGES_DIRECTORY: .\packages
+  XUNIT_FILE_PATH: .\{{env.PACKAGES_DIRECTORY}}\xunit.runner.console\tools\xunit.console.exe
 
 # todo: what is this?
 #permissions:
@@ -30,7 +31,7 @@ jobs:
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}} -PackagesDirectory ${{env.PACKAGES_DIRECTORY}}
 
     - name: Debug
       working-directory: ${{env.GITHUB_WORKSPACE}}
