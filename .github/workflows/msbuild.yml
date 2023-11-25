@@ -34,7 +34,7 @@ jobs:
 
     - name: Debug
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: dir /s
+      run: Get-ChildItem -Recurse
       
     - name: Build OpenMagic solution
       working-directory: ${{env.GITHUB_WORKSPACE}}
