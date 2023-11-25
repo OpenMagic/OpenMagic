@@ -12,7 +12,6 @@ env:
   BUILD_TARGET: ReBuild
   BUILD_VERBOSITY: Normal
   PACKAGES_DIRECTORY: .\packages
-  XUNIT_FILE_PATH: .\{{env.PACKAGES_DIRECTORY}}\xunit.runner.console\tools\xunit.console.exe
 
 # todo: what is this?
 #permissions:
@@ -41,10 +40,6 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /maxCpuCount /p:Configuration=${{env.BUILD_CONFIGURATION}} /verbosity:${{env.BUILD_VERBOSITY}} /target:${{env.BUILD_TARGET}} ${{env.SOLUTION_FILE_PATH}} 
 
-    - name: Run tests in OpenMagic.Specifications
+    - name: Run unit tests
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: ${{env.XUNIT_FILE_PATH}} .\tests\OpenMagic.Specifications\bin\${{env.BUILD_CONFIGURATION}}\OpenMagic.Specifications.dll
-
-    - name: Run tests in OpenMagic.Tests
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: ${{env.XUNIT_FILE_PATH}} .\tests\OpenMagic.Tests\bin\${{env.BUILD_CONFIGURATION}}\OpenMagic.Tests.dll
+      run: .\scripts\run-unit-tests.ps1
