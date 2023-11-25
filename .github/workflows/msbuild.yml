@@ -7,7 +7,6 @@ on:
     # branches: [ $default-branch ]
 
 env:
-  # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .\OpenMagic.sln
 
   # Configuration type to build.
@@ -15,8 +14,9 @@ env:
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
   BUILD_CONFIGURATION: Release
 
-permissions:
-  contents: read
+# todo: what is this?
+#permissions:
+#  contents: read
 
 jobs:
   build:
