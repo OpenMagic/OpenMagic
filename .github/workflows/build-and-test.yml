@@ -10,7 +10,7 @@ on:
 env:
   SOLUTION_FILE_PATH: .\OpenMagic.sln
   NUGET_FILE_PATH: .\OpenMagic.nuspec
-  MAJOR_PROJECT_PATH: .\source\OpenMagic
+  MAJOR_PROJECT_FOLDER: .\source\OpenMagic
   Version: 4.0.0-1
   TESTS_FOLDER: .\tests
   BUILD_CONFIGURATION: Release
@@ -44,10 +44,7 @@ jobs:
 
     - name: Create artifacts directory
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run:
-        New-Item -ItemType Directory -Path .\artifacts
-        New-Item -ItemType Directory -Path .\artifacts\bin
-        Get-ChildItem -Path ${{env.MAJOR_PROJECT_PATH}}\bin\${{env.BUILD_CONFIGURATION}} | Copy-Item -Destination .\artifacts\bin
+      run: .\scripts\create-artifacts-directory.ps1 -majorProjectFolder ${{env.MAJOR_PROJECT_FOLDER}} -buildConfiguration ${{env.BUILD_CONFIGURATION}}
 
     - name: Build NuGet package
       working-directory: ${{env.GITHUB_WORKSPACE}}
