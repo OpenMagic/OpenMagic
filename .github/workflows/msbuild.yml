@@ -8,10 +8,14 @@ on:
 
 env:
   SOLUTION_FILE_PATH: .\OpenMagic.sln
+  TESTS_FOLDER: .\tests
   BUILD_CONFIGURATION: Release
   BUILD_TARGET: ReBuild
   BUILD_VERBOSITY: Normal
-  PACKAGES_DIRECTORY: .\packages
+  PACKAGES_FOLDER: .\packages
+  XUNIT_FILE_PATH: .\packages\xunit.runner.console\2.0.0\tools\xunit.console.exe
+
+
 
 # todo: what is this?
 #permissions:
@@ -30,7 +34,7 @@ jobs:
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}} -PackagesDirectory ${{env.PACKAGES_DIRECTORY}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}} -PackagesDirectory ${{env.PACKAGES_FOLDER}}
 
     - name: Debug
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -42,4 +46,4 @@ jobs:
 
     - name: Run unit tests
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: .\scripts\run-unit-tests.ps1
+      run: .\scripts\run-unit-tests.ps1 -xunitPath ${{env.XUNIT_FILE_PATH}} -testsFolder ${{env.TESTS_FOLDER}} -buildConfiguration ${{env.BUILD_CONFIGURATION}}
