@@ -9,6 +9,9 @@ on:
 
 env:
   SOLUTION_FILE_PATH: .\OpenMagic.sln
+  NUGET_FILE_PATH: .\OpenMagic.nuspec
+  MAJOR_PROJECT_PATH: .\source\OpenMagic
+  Version: 4.0.0-1
   TESTS_FOLDER: .\tests
   BUILD_CONFIGURATION: Release
   BUILD_TARGET: ReBuild
@@ -38,3 +41,14 @@ jobs:
     - name: Run unit tests
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: .\scripts\run-unit-tests.ps1 -xunitPath ${{env.XUNIT_FILE_PATH}} -testsFolder ${{env.TESTS_FOLDER}} -buildConfiguration ${{env.BUILD_CONFIGURATION}}
+
+    - name: Create artifacts directory
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run:
+        New-Item -ItemType Directory -Path .\artifacts
+        New-Item -ItemType Directory -Path .\artifacts\bin
+        Get-ChildItem -Path ${{env.MAJOR_PROJECT_PATH}}\bin\${{env.BUILD_CONFIGURATION}} | Copy-Item -Destination .\artifacts\bin
+
+    - name: Build NuGet package
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget pack ${{env.NUGET_FILE_PATH}} -ConfigFile .\NuGet.config -PackagesDirectory ${{env.PACKAGES_FOLDER}} -Version ${{env.VERSION}} -OutputDirector .\artifacts
