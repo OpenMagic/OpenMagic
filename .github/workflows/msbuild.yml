@@ -13,7 +13,7 @@ env:
   BUILD_TARGET: ReBuild
   BUILD_VERBOSITY: Normal
   PACKAGES_FOLDER: .\packages
-  XUNIT_FILE_PATH: .\packages\xunit.runner.console\2.0.0\tools\xunit.console.exe
+  XUNIT_FILE_PATH: .\packages\xunit.runner.console\2.4.2\tools\net472\xunit.console.exe
 
 
 
