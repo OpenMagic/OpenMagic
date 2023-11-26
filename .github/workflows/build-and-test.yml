@@ -31,10 +31,6 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}} -PackagesDirectory ${{env.PACKAGES_FOLDER}}
 
-    - name: Debug
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: Get-ChildItem -Recurse
-      
     - name: Build OpenMagic solution
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /maxCpuCount /p:Configuration=${{env.BUILD_CONFIGURATION}} /verbosity:${{env.BUILD_VERBOSITY}} /target:${{env.BUILD_TARGET}} ${{env.SOLUTION_FILE_PATH}} 
