@@ -1,10 +1,11 @@
-name: MSBuild
+name: build-and-test
 
 on:
   push:
-    # branches: [ $default-branch ]
+    # all branches
+
   pull_request:
-    # branches: [ $default-branch ]
+    # all branches
 
 env:
   SOLUTION_FILE_PATH: .\OpenMagic.sln
@@ -14,12 +15,6 @@ env:
   BUILD_VERBOSITY: Normal
   PACKAGES_FOLDER: .\packages
   XUNIT_FILE_PATH: .\packages\xunit.runner.console\2.4.2\tools\net472\xunit.console.exe
-
-
-
-# todo: what is this?
-#permissions:
-#  contents: read
 
 jobs:
   build:
