@@ -26,33 +26,33 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checking out the source code...
+    - name: Check out the source code
       uses: actions/checkout@v3
 
-    - name: Adding MSBuild to PATH...
+    - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Restoring NuGet packages...
+    - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}} -PackagesDirectory ${{env.PACKAGES_FOLDER}}
 
-    - name: Building ${{env.PROJECT_NAME}} solution...
+    - name: Build ${{env.PROJECT_NAME}} solution
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /maxCpuCount /p:Configuration=${{env.BUILD_CONFIGURATION}} /verbosity:${{env.BUILD_VERBOSITY}} /target:${{env.BUILD_TARGET}} ${{env.SOLUTION_FILE_PATH}} 
 
-    - name: Running unit tests...
+    - name: Runn unit tests
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: .\scripts\run-unit-tests.ps1 -xunitPath ${{env.XUNIT_FILE_PATH}} -testsFolder ${{env.TESTS_FOLDER}} -buildConfiguration ${{env.BUILD_CONFIGURATION}}
 
-    - name: Creating artifacts directory...
+    - name: Create artifacts directory
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: .\scripts\create-artifacts-directory.ps1 -majorProjectFolder ${{env.MAJOR_PROJECT_FOLDER}} -buildConfiguration ${{env.BUILD_CONFIGURATION}}
 
-    - name: Building NuGet package...
+    - name: Build NuGet package
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget pack ${{env.NUGET_FILE_PATH}} -ConfigFile .\NuGet.config -PackagesDirectory ${{env.PACKAGES_FOLDER}} -Version ${{env.VERSION}} -OutputDirectory .\artifacts
 
-    - name: Publishing NuGet package...
+    - name: Publish NuGet package
       working-directory: ${{env.GITHUB_WORKSPACE}}
       env:
         MYGET_API_KEY: ${{secrets.MYGET_API_KEY}}
