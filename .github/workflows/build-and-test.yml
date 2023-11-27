@@ -8,14 +8,16 @@ on:
     # all branches
 
 env:
+  PROJECT_NAME: OpenMagic
   SOLUTION_FILE_PATH: .\OpenMagic.sln
   NUGET_FILE_PATH: .\OpenMagic.nuspec
   MAJOR_PROJECT_FOLDER: .\source\OpenMagic
-  Version: 4.0.0-alpha2
+  VERSION: 4.0.0-alpha3
   TESTS_FOLDER: .\tests
   BUILD_CONFIGURATION: Release
   BUILD_TARGET: ReBuild
   BUILD_VERBOSITY: Normal
+  NUGET_SERVER: https://www.myget.org/F/timpmurphy/api/v3/index.json
   PACKAGES_FOLDER: .\packages
   XUNIT_FILE_PATH: .\packages\xunit.runner.console\2.4.2\tools\net472\xunit.console.exe
 
@@ -24,28 +26,34 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Check out the source code
+    - name: Checking out the source code...
       uses: actions/checkout@v3
 
-    - name: Add MSBuild to PATH
+    - name: Adding MSBuild to PATH...
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Restore NuGet packages
+    - name: Restoring NuGet packages...
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}} -PackagesDirectory ${{env.PACKAGES_FOLDER}}
 
-    - name: Build solution
+    - name: Building ${{env.PROJECT_NAME}} solution...
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /maxCpuCount /p:Configuration=${{env.BUILD_CONFIGURATION}} /verbosity:${{env.BUILD_VERBOSITY}} /target:${{env.BUILD_TARGET}} ${{env.SOLUTION_FILE_PATH}} 
 
-    - name: Run unit tests
+    - name: Running unit tests...
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: .\scripts\run-unit-tests.ps1 -xunitPath ${{env.XUNIT_FILE_PATH}} -testsFolder ${{env.TESTS_FOLDER}} -buildConfiguration ${{env.BUILD_CONFIGURATION}}
 
-    - name: Create artifacts directory
+    - name: Creating artifacts directory...
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: .\scripts\create-artifacts-directory.ps1 -majorProjectFolder ${{env.MAJOR_PROJECT_FOLDER}} -buildConfiguration ${{env.BUILD_CONFIGURATION}}
 
-    - name: Build NuGet package
+    - name: Building NuGet package...
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget pack ${{env.NUGET_FILE_PATH}} -ConfigFile .\NuGet.config -PackagesDirectory ${{env.PACKAGES_FOLDER}} -Version ${{env.VERSION}} -OutputDirector .\artifacts
+      run: nuget pack ${{env.NUGET_FILE_PATH}} -ConfigFile .\NuGet.config -PackagesDirectory ${{env.PACKAGES_FOLDER}} -Version ${{env.VERSION}} -OutputDirectory .\artifacts
+
+    - name: Publishing NuGet package...
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      env:
+        MYGET_API_KEY: ${{secrets.MYGET_API_KEY}}
+      run: nuget push .\artifacts\${{env.PROJECT_NAME}}.${{env.VERSION}}.nupkg -ApiKey ${{env.MYGET_API_KEY}} -Source ${{env.NUGET_SERVER}}
