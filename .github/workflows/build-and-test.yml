@@ -11,7 +11,7 @@ env:
   SOLUTION_FILE_PATH: .\OpenMagic.sln
   NUGET_FILE_PATH: .\OpenMagic.nuspec
   MAJOR_PROJECT_FOLDER: .\source\OpenMagic
-  Version: 4.0.0-1
+  Version: 4.0.0-alpha2
   TESTS_FOLDER: .\tests
   BUILD_CONFIGURATION: Release
   BUILD_TARGET: ReBuild
