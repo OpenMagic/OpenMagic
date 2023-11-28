@@ -40,7 +40,7 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /maxCpuCount /p:Configuration=${{env.BUILD_CONFIGURATION}} /verbosity:${{env.BUILD_VERBOSITY}} /target:${{env.BUILD_TARGET}} ${{env.SOLUTION_FILE_PATH}} 
 
-    - name: Runn unit tests
+    - name: Run unit tests
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: .\scripts\run-unit-tests.ps1 -xunitPath ${{env.XUNIT_FILE_PATH}} -testsFolder ${{env.TESTS_FOLDER}} -buildConfiguration ${{env.BUILD_CONFIGURATION}}
 
