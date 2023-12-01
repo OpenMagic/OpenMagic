@@ -19,7 +19,7 @@ env:
   BUILD_VERBOSITY: Normal
   NUGET_SERVER: https://www.myget.org/F/timpmurphy/api/v3/index.json
   PACKAGES_FOLDER: .\packages
-  XUNIT_FILE_PATH: .\packages\xunit.runner.console\2.4.2\tools\net472\xunit.console.exe
+  XUNIT_FILE_PATH: .\packages\xunit.runner.console\2.6.2\tools\net472\xunit.console.exe
 
 jobs:
   build:
