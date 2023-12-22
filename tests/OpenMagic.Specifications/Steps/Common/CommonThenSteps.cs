@@ -18,12 +18,6 @@ namespace OpenMagic.Specifications.Steps.Common
             _actual = actual;
         }
 
-        [Then(@"<param> should be returned")]
-        public void ThenParamShouldBeReturned()
-        {
-            _actual.Result.Should().Be(_given.Param);
-        }
-
         [Then(@"True should be returned")]
         public void ThenTrueShouldBeReturned()
         {

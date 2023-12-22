@@ -20,7 +20,7 @@ namespace OpenMagic.Specifications.Steps.ArgumentSteps
         [Given(@"value is (.*)")]
         public void GivenValueIs(int value)
         {
-            _given.IntValue = value;
+            _given.ParameterValue = value;
         }
         
         [Given(@"minimumValue is (.*)")]
@@ -35,12 +35,13 @@ namespace OpenMagic.Specifications.Steps.ArgumentSteps
             _given.MaximumInt = maximumValue;
         }
 
-        [When(@"I call value\.MustBetween\(minimumValue, maximumValue\)")]
-        public void WhenICallValue_MustBetweenMinimumValueMaximumValue()
+        [When(@"I call Argument.MustBetween\(value, minimumValue, maximumValue\)")]
+        public void WhenICall_Argument_MustBetween_Value_MinimumValue_MaximumValue()
         {
             try
             {
-                _actual.Result = _given.IntValue.MustBeBetween(_given.MinimumInt, _given.MaximumInt, "value");
+                // ReSharper disable once InvokeAsExtensionMethod
+                _actual.Result = Argument.MustBeBetween((int)_given.ParameterValue, _given.MinimumInt, _given.MaximumInt, "value");
             }
             catch (Exception exception)
             {

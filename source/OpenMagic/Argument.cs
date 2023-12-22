@@ -118,6 +118,23 @@ namespace OpenMagic
         }
 
         /// <summary>
+        ///     Throws <see cref="ArgumentException" /> when <paramref name="param" /> is <see cref="Guid.Empty"/>.
+        /// </summary>
+        /// <param name="param">The value to test for <see cref="Guid.Empty"/>.</param>
+        /// <param name="paramName">The name of the parameter being tested.</param>
+        /// <returns>Returns <paramref name="param" /> when the value is not <see cref="Guid.Empty"/>.</returns>
+        /// <exception cref="ArgumentException">when <paramref name="param"/> is <see cref="Guid.Empty"/></exception>
+        public static Guid MustNotBeEmpty(this Guid param, string paramName)
+        {
+            if (Guid.Empty.Equals(param))
+            {
+                throw new ArgumentException("Value cannot be empty.", paramName);
+            }
+
+            return param;
+        }
+
+        /// <summary>
         ///     Throws <see cref="ArgumentNullException" /> when <paramref name="param" /> is null.
         /// </summary>
         /// <typeparam name="T">The <paramref name="param" /> type.</typeparam>
