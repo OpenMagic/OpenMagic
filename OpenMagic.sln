@@ -5,6 +5,7 @@ VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E55564A-C382-4A6B-A1EE-9CCDEACB51A3}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build-test-and-publish.yml = .github\workflows\build-test-and-publish.yml
 		source\OpenMagic\Properties\CommonAssemblyInfo.cs = source\OpenMagic\Properties\CommonAssemblyInfo.cs
 		LICENSE = LICENSE
 		README.md = README.md
