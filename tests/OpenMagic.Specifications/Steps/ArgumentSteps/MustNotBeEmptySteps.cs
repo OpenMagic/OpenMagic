@@ -1,9 +1,11 @@
-﻿using OpenMagic.Specifications.Helpers;
+﻿using System;
+using FluentAssertions;
+using OpenMagic.Specifications.Helpers;
 using TechTalk.SpecFlow;
 
 namespace OpenMagic.Specifications.Steps.ArgumentSteps
 {
-    [Binding]
+    [Binding, Scope(Feature = "MustNotBeEmpty")]
     public class MustNotBeEmptySteps
     {
         private readonly GivenData _given;
@@ -18,19 +20,44 @@ namespace OpenMagic.Specifications.Steps.ArgumentSteps
         [Given(@"param is an array with elements")]
         public void GivenParamIsAnArrayWithElements()
         {
-            _given.Param = new[] { 1, 2, 3 };
+            _given.ParameterValue = new[] { 1, 2, 3 };
         }
 
         [Given(@"param is an array with zero elements")]
         public void GivenParamIsAnArrayWithZeroElements()
         {
-            _given.Param = new int[] { };
+            _given.ParameterValue = new int[] { };
         }
 
-        [When(@"I call Argument\.MustNotBeEmpty\(<param>, <paramName>\)")]
-        public void WhenICallArgument_MustNotBeEmpty()
+        [Given(@"param is a guid with a value")]
+        public void GivenParamIsAGuidWithAValue()
         {
-            _actual.GetResult(() => ((int[])_given.Param).MustNotBeEmpty("dummy"));
+            _given.ParameterValue = Guid.NewGuid();
+        }
+
+        [Given(@"param is a guid with an empty value")]
+        public void GivenParamIsAGuidWithAnEmptyValue()
+        {
+            _given.ParameterValue = Guid.Empty;
+        }
+
+        [When(@"I call Argument\.MustNotBeEmpty\(int\[] (.*), (.*)\)")]
+        public void WhenICallArgument_MustNotBeEmpty(string param0, string paramName1)
+        {
+            _actual.GetResult(() => ((int[])_given.ParameterValue).MustNotBeEmpty("dummy"));
+        }
+
+        [When(@"I call Argument\.MustNotBeEmpty\(Guid (.*), (.*)\)")]
+        public void WhenICallArgument_MustNotBeEmptyGuid(string param0, string paramName1)
+        {
+            _actual.GetResult(() => ((Guid)_given.ParameterValue).MustNotBeEmpty("dummy"));
+        }
+
+        [Then(@"param should be returned")]
+        public void ThenShouldBeReturned()
+        {
+            _actual.Exception.Should().BeNull();
+            _actual.Result.Should().Be(_given.ParameterValue);
         }
     }
 }
