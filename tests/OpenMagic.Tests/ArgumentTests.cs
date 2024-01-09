@@ -256,5 +256,93 @@ namespace OpenMagic.Tests
                 action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
+
+        public class MustBeGreaterThanOrEqualTo
+        {
+            [Fact]
+            public void ShouldReturn_param_When_param_IsGreaterThan_greaterThanOrEqualTo()
+            {
+                // Given
+                const int highValue = 1;
+                const int lowValue = 0;
+
+                // When
+                var result = highValue.MustBeGreaterThanOrEqualTo(lowValue, "fakeParamName");
+
+                // Then
+                result.Should().Be(highValue);
+            }
+
+            [Fact]
+            public void ShouldReturn_param_When_param_IsEqualTo_greaterThanOrEqualTo()
+            {
+                // Given
+                const int equalToA = 1;
+                const int equalToB = 1;
+
+                // When
+                var result = equalToA.MustBeGreaterThanOrEqualTo(equalToB, "fakeParamName");
+
+                // Then
+                result.Should().Be(equalToA);
+            }
+
+            [Fact]
+            public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsLessThan_greaterThan()
+            {
+                // Given
+                const int lowValue = 0;
+                const int highValue = 1;
+
+                // When
+                Action action = () => lowValue.MustBeGreaterThanOrEqualTo(highValue, "fakeParamName");
+
+                // Then
+                action.Should().Throw<ArgumentOutOfRangeException>();
+            }
+
+            [Fact]
+            public void ShouldReturn_param_When_param_IsGreaterThan_greaterThanOrEqualTo_UsingDates()
+            {
+                // Given
+                var highValue = DateTime.Today;
+                var lowValue = highValue.AddDays(-1);
+
+                // When
+                var result = highValue.MustBeGreaterThanOrEqualTo(lowValue, "fakeParamName");
+
+                // Then
+                result.Should().Be(highValue);
+            }
+
+            [Fact]
+            public void ShouldReturn_param_When_param_IsEqualTo_greaterThanOrEqualTo_UsingDates()
+            {
+                // Given
+                var equalToA = DateTime.Today;
+                // ReSharper disable once InlineTemporaryVariable
+                var equalToB = equalToA;
+
+                // When
+                var result = equalToA.MustBeGreaterThanOrEqualTo(equalToB, "fakeParamName");
+
+                // Then
+                result.Should().Be(equalToA);
+            }
+
+            [Fact]
+            public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsLessThan_greaterThan_UsingDates()
+            {
+                // Given
+                var lowValue = DateTime.Today;
+                var highValue = lowValue.AddDays(1);
+
+                // When
+                Action action = () => lowValue.MustBeGreaterThanOrEqualTo(highValue, "fakeParamName");
+
+                // Then
+                action.Should().Throw<ArgumentOutOfRangeException>();
+            }
+        }
     }
 }
