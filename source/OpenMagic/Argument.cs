@@ -30,6 +30,7 @@ namespace OpenMagic
             {
                 throw new ArgumentException("Directory must exist.", paramName, new DirectoryNotFoundException("Cannot find directory."));
             }
+
             return param;
         }
 
@@ -51,6 +52,7 @@ namespace OpenMagic
             {
                 throw new ArgumentException("File must exist.", paramName, new FileNotFoundException("Cannot find file.", param.FullName));
             }
+
             return param;
         }
 
@@ -80,7 +82,7 @@ namespace OpenMagic
                 return param;
             }
 
-            var exception = new ArgumentOutOfRangeException(paramName, String.Format("Value must be greater than {0}.", greaterThan));
+            var exception = new ArgumentOutOfRangeException(paramName, string.Format("Value must be greater than {0}.", greaterThan));
 
             exception.Data.Add("param", param);
             exception.Data.Add("greaterThan", greaterThan);
@@ -89,9 +91,25 @@ namespace OpenMagic
             throw exception;
         }
 
+        public static T MustBeGreaterThanOrEqualTo<T>(this T param, T greaterThanOrEqualTo, string paramName) where T : IComparable<T>
+        {
+            if (param.CompareTo(greaterThanOrEqualTo) >= 0)
+            {
+                return param;
+            }
+
+            var exception = new ArgumentOutOfRangeException(paramName, $"Value must be greater than or equal to {greaterThanOrEqualTo}.");
+
+            exception.Data.Add(nameof(param), param);
+            exception.Data.Add(nameof(greaterThanOrEqualTo), greaterThanOrEqualTo);
+            exception.Data.Add(nameof(paramName), paramName);
+
+            throw exception;
+        }
+
         public static T MustBeBetween<T>(this T param, T minimumValue, T maximumValue, string paramName) where T : IComparable<T>
         {
-            if (param.CompareTo(minimumValue) >= 0 && param.CompareTo(maximumValue) <=0)
+            if (param.CompareTo(minimumValue) >= 0 && param.CompareTo(maximumValue) <= 0)
             {
                 return param;
             }
@@ -118,12 +136,12 @@ namespace OpenMagic
         }
 
         /// <summary>
-        ///     Throws <see cref="ArgumentException" /> when <paramref name="param" /> is <see cref="Guid.Empty"/>.
+        ///     Throws <see cref="ArgumentException" /> when <paramref name="param" /> is <see cref="Guid.Empty" />.
         /// </summary>
-        /// <param name="param">The value to test for <see cref="Guid.Empty"/>.</param>
+        /// <param name="param">The value to test for <see cref="Guid.Empty" />.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
-        /// <returns>Returns <paramref name="param" /> when the value is not <see cref="Guid.Empty"/>.</returns>
-        /// <exception cref="ArgumentException">when <paramref name="param"/> is <see cref="Guid.Empty"/></exception>
+        /// <returns>Returns <paramref name="param" /> when the value is not <see cref="Guid.Empty" />.</returns>
+        /// <exception cref="ArgumentException">when <paramref name="param" /> is <see cref="Guid.Empty" /></exception>
         public static Guid MustNotBeEmpty(this Guid param, string paramName)
         {
             if (Guid.Empty.Equals(param))
