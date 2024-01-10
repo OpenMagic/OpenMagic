@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -37,6 +38,87 @@ namespace OpenMagic.Tests
 
                 // Then
                 action.Should().Throw<ArgumentException>().WithMessage("Value must be 1.\r\nParameter name: argument");
+            }
+        }
+
+        public class MustBeAnEmailAddress
+        {
+            [Fact]
+            public void Should_Throw_ArgumentNullException_When_emailAddress_Is_Null()
+            {
+                // When
+                Action action = () => ((string)null).MustBeAnEmailAddress("dummy");
+
+                // Then
+                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("emailAddress");
+            }
+
+            [Fact]
+            public void Should_Throw_ArgumentException_When_emailAddress_Is_WhiteSpace()
+            {
+                // Given
+                const string paramName = "dummy";
+
+                // When
+                Action action = () => "".MustBeAnEmailAddress(paramName);
+
+                // Then
+                var exception = action.Should().Throw<ArgumentException>().Subject.Single();
+                exception.ParamName.Should().Be("emailAddress");
+                exception.Message.Should().Be($"Value cannot be whitespace.{Environment.NewLine}Parameter name: emailAddress");
+            }
+
+            [Fact]
+            public void Should_Throw_ArgumentNullException_When_paramName_Is_Null()
+            {
+                // When
+                Action action = () => "dummy".MustBeAnEmailAddress(null);
+
+                // Then
+                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("paramName");
+            }
+
+            [Fact]
+            public void Should_Throw_ArgumentException_When_paramName_Is_WhiteSpace()
+            {
+                // When
+                Action action = () => "dummy".MustBeAnEmailAddress("");
+
+                // Then
+                var exception = action.Should().Throw<ArgumentException>().Subject.Single();
+
+                exception.ParamName.Should().Be("paramName");
+                exception.Message.Should().Be($"Value cannot be whitespace.{Environment.NewLine}Parameter name: paramName");
+            }
+
+            [Fact]
+            public void Should_Throw_ArgumentException_When_emailAddress_Is_Invalid()
+            {
+                // Given
+                const string paramName = "dummy";
+
+                // When
+                Action action = () => "tim-26tp.com".MustBeAnEmailAddress(paramName);
+
+                // Then
+                var exception = action.Should().Throw<ArgumentException>().Subject.Single();
+
+                exception.ParamName.Should().Be(paramName);
+                exception.Message.Should().Be($"Value is not a valid email address.{Environment.NewLine}Parameter name: dummy");
+            }
+
+            [Fact]
+            public void Should_Return_emailAddress_When_emailAddress_Is_Valid()
+            {
+                // Given
+                const string emailAddress = "tim@26tp.com";
+                const string paramName = "dummy";
+
+                // When
+                var result = emailAddress.MustBeAnEmailAddress(paramName);
+
+                // Then
+                result.Should().Be(emailAddress);
             }
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using NullGuard;
@@ -47,6 +48,7 @@ namespace OpenMagic.Extensions
             {
                 throw new ArgumentException("Value cannot be whitespace.", "delimiter");
             }
+
             if (delimiter.Length > 1)
             {
                 throw new ArgumentException("Value cannot be longer than 1 character.", "delimiter");
@@ -87,6 +89,7 @@ namespace OpenMagic.Extensions
                 {
                     sb.Append(insert);
                 }
+
                 sb.Append(value[i]);
             }
 
@@ -102,7 +105,42 @@ namespace OpenMagic.Extensions
         /// </remarks>
         public static bool IsNullOrWhiteSpace([AllowNull] this string value)
         {
-            return (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(value.Trim()));
+            return string.IsNullOrEmpty(value) || string.IsNullOrEmpty(value.Trim());
+        }
+
+        /// <summary>
+        ///     Tests if
+        ///     <param name="emailAddress" />
+        ///     is a valid email address.
+        /// </summary>
+        /// <param name="emailAddress">The value to test.</param>
+        /// <returns>True is
+        ///     <param name="emailAddress" />
+        ///     is a valid email address.
+        /// </returns>
+        /// <remarks>
+        ///     Copied from https://stackoverflow.com/questions/1365407/c-sharp-code-to-validate-email-address.
+        /// </remarks>
+        public static bool IsValidEmailAddress(this string emailAddress)
+        {
+            emailAddress.MustNotBeNullOrWhiteSpace(nameof(emailAddress));
+
+            var trimmedEmail = emailAddress.Trim();
+
+            if (trimmedEmail.EndsWith("."))
+            {
+                return false; // suggested by @TK-421
+            }
+
+            try
+            {
+                var mailAddress = new MailAddress(emailAddress);
+                return mailAddress.Address == trimmedEmail;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -193,6 +231,7 @@ namespace OpenMagic.Extensions
             {
                 return defaultValue;
             }
+
             return text.Substring(value + offset);
         }
 
@@ -346,6 +385,7 @@ namespace OpenMagic.Extensions
             {
                 return defaultValue;
             }
+
             return text.Substring(0, value);
         }
 

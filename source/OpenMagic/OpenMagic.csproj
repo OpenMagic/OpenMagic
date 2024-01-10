@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AppSettings.cs" />
     <Compile Include="Argument.cs" />
+    <Compile Include="Exceptions\ArgumentNotValidEmailAddress.cs" />
     <Compile Include="Assertions\AssertionException.cs" />
     <Compile Include="CharacterSets.cs" />
     <Compile Include="Collections\Generic\Cache`1.cs" />
