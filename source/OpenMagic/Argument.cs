@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NullGuard;
+using OpenMagic.Exceptions;
 using OpenMagic.Extensions;
 
 namespace OpenMagic
@@ -73,6 +74,19 @@ namespace OpenMagic
             }
 
             return param;
+        }
+
+        public static string MustBeAnEmailAddress(this string emailAddress, string paramName)
+        {
+            emailAddress.MustNotBeNullOrWhiteSpace(nameof(emailAddress));
+            paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
+
+            if (!emailAddress.IsValidEmailAddress())
+            {
+                throw new ArgumentNotValidEmailAddress(paramName, emailAddress);
+            }
+
+            return emailAddress;
         }
 
         public static T MustBeGreaterThan<T>(this T param, T greaterThan, string paramName) where T : IComparable<T>
