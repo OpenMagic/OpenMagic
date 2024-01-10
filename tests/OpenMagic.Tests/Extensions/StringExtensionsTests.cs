@@ -50,7 +50,7 @@ namespace OpenMagic.Tests.Extensions
                 var values = value.GetValuesBetween(delimiter);
 
                 // Then
-                values.Should().Equal(new[] { "the", "quick", "fox", "over the" });
+                values.Should().Equal("the", "quick", "fox", "over the");
             }
 
             [Fact]
@@ -64,7 +64,7 @@ namespace OpenMagic.Tests.Extensions
                 var values = value.GetValuesBetween(delimiter);
 
                 // Then
-                values.Should().Equal(new[] { "quick", "fox", "over the" });
+                values.Should().Equal("quick", "fox", "over the");
             }
 
             [Fact]
@@ -128,6 +128,37 @@ namespace OpenMagic.Tests.Extensions
                 "a".IsNullOrWhiteSpace().Should().BeFalse();
                 " a".IsNullOrWhiteSpace().Should().BeFalse();
                 "a ".IsNullOrWhiteSpace().Should().BeFalse();
+            }
+        }
+
+        public class IsValidEmailAddress
+        {
+            [Fact]
+            public void ThrowArgumentNullExceptionWhenValueIsNull()
+            {
+                Action action = () => ((string)null).IsValidEmailAddress();
+
+                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("emailAddress");
+            }
+
+            [Fact]
+            public void ThrowArgumentExceptionWhenValueIsWhiteSpace()
+            {
+                Action action = () => "".IsValidEmailAddress();
+
+                action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("emailAddress");
+            }
+
+            [Fact]
+            public void ShouldReturnTrueWhenPassedAValidEmailAddress()
+            {
+                "tim@26tp.com".IsValidEmailAddress().Should().BeTrue();
+            }
+
+            [Fact]
+            public void ShouldReturnFalseWhenPassedAnInvalidEmailAddress()
+            {
+                "tim-26tp.com".IsValidEmailAddress().Should().BeFalse();
             }
         }
 
@@ -216,7 +247,7 @@ namespace OpenMagic.Tests.Extensions
             {
                 // Given
                 const string convert = "a=1;b=2";
-                
+
                 // When
                 var result = convert.ToNameValueCollection();
 
@@ -226,6 +257,7 @@ namespace OpenMagic.Tests.Extensions
                 result["b"].Should().Be("2");
             }
         }
+
         public class WriteLines
         {
             [Fact]
