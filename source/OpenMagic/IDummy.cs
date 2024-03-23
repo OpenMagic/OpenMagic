@@ -1,10 +1,9 @@
 using System;
 
-namespace OpenMagic
+namespace OpenMagic;
+
+public interface IDummy
 {
-    public interface IDummy
-    {
-        T Value<T>();
-        object Value(Type type);
-    }
+    T Value<T>();
+    object Value(Type type);
 }

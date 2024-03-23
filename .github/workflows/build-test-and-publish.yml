@@ -12,14 +12,13 @@ env:
   SOLUTION_FILE_PATH: .\OpenMagic.sln
   NUGET_FILE_PATH: .\OpenMagic.nuspec
   MAJOR_PROJECT_FOLDER: .\source\OpenMagic
-  VERSION: 4.4.0
+  VERSION: 5.0.0
   TESTS_FOLDER: .\tests
   BUILD_CONFIGURATION: Release
   BUILD_TARGET: ReBuild
   BUILD_VERBOSITY: Normal
   NUGET_SERVER: https://www.myget.org/F/timpmurphy/api/v3/index.json
   PACKAGES_FOLDER: .\packages
-  XUNIT_FILE_PATH: .\packages\xunit.runner.console\2.6.2\tools\net472\xunit.console.exe
 
 jobs:
   build:
@@ -42,7 +41,7 @@ jobs:
 
     - name: Run unit tests
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: .\scripts\run-unit-tests.ps1 -xunitPath ${{env.XUNIT_FILE_PATH}} -testsFolder ${{env.TESTS_FOLDER}} -buildConfiguration ${{env.BUILD_CONFIGURATION}}
+      run: dotnet test
 
     - name: Create artifacts directory
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -50,11 +49,11 @@ jobs:
 
     - name: Build NuGet package
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget pack ${{env.NUGET_FILE_PATH}} -ConfigFile .\NuGet.config -PackagesDirectory ${{env.PACKAGES_FOLDER}} -Version ${{env.VERSION}} -OutputDirectory .\artifacts
+      run: dotnet pack .\source\OpenMagic\OpenMagic.csproj --output .\artifacts
 
     - name: Publish NuGet package
       working-directory: ${{env.GITHUB_WORKSPACE}}
       env:
         MYGET_API_KEY: ${{secrets.MYGET_API_KEY}}
       if: github.ref == 'refs/heads/master'
-      run: nuget push .\artifacts\${{env.PROJECT_NAME}}.${{env.VERSION}}.nupkg -ApiKey ${{env.MYGET_API_KEY}} -Source ${{env.NUGET_SERVER}}
+      run: dotnet nuget push .\artifacts\${{env.PROJECT_NAME}}.${{env.VERSION}}.nupkg --api-key ${{env.MYGET_API_KEY}} --source ${{env.NUGET_SERVER}}

@@ -3,103 +3,101 @@ using FluentAssertions;
 using OpenMagic.Reflection;
 using Xunit;
 
-namespace OpenMagic.Tests.Reflection
+namespace OpenMagic.Tests.Reflection;
+
+public class PropertyInfoExtensionsTests
 {
-    public class PropertyInfoExtensionsTests
+    public class GetCustomAttribute
     {
-        public class GetCustomAttribute
+        [Fact]
+        public void ShouldReturnNullWhenPropertyIsNotDecoratedWithAttribute()
         {
-            [Fact]
-            public void ShouldReturnNullWhenPropertyIsNotDecoratedWithAttribute()
-            {
-                // Given
-                var propertyInfo = Type<TestClass>.Property(x => x.HasNoAttributes);
+            // Given
+            var propertyInfo = Type<TestClass>.Property(x => x.HasNoAttributes);
 
-                // When
-                var attribute = propertyInfo.GetCustomAttribute<RequiredAttribute>();
+            // When
+            var attribute = propertyInfo.GetCustomAttribute<RequiredAttribute>();
 
-                // Then
-                attribute.Should().BeNull();
-            }
-
-            [Fact]
-            public void ShouldReturnAttributeWhenPropertyIsDecoratedWithAttribute()
-            {
-                // Given
-                var propertyInfo = Type<TestClass>.Property(x => x.HasRequiredAttribute);
-
-                // When
-                var attribute = propertyInfo.GetCustomAttribute<RequiredAttribute>();
-
-                // Then
-                attribute.Should().NotBeNull().And.BeOfType<RequiredAttribute>();
-            }
+            // Then
+            attribute.Should().BeNull();
         }
 
-        public class IsDecoratedWith
+        [Fact]
+        public void ShouldReturnAttributeWhenPropertyIsDecoratedWithAttribute()
         {
-            [Fact]
-            public void Should_BeTrue_When_PropertyIsDecoratedWithNomitatedAttribute()
-            {
-                // Given
-                var propertyInfo = Type<TestClass>.Property(x => x.HasRequiredAttribute);
+            // Given
+            var propertyInfo = Type<TestClass>.Property(x => x.HasRequiredAttribute);
 
-                // When
-                var result = propertyInfo.IsDecoratedWith<RequiredAttribute>();
+            // When
+            var attribute = propertyInfo.GetCustomAttribute<RequiredAttribute>();
 
-                // Then
-                result.Should().BeTrue();
-            }
+            // Then
+            attribute.Should().NotBeNull().And.BeOfType<RequiredAttribute>();
+        }
+    }
 
-            [Fact]
-            public void Should_BeFalse_When_PropertyIsNotDecoratedWithNomitedAttribute()
-            {
-                // Given
-                var propertyInfo = Type<TestClass>.Property(x => x.HasNoAttributes);
+    public class IsDecoratedWith
+    {
+        [Fact]
+        public void Should_BeTrue_When_PropertyIsDecoratedWithNomitatedAttribute()
+        {
+            // Given
+            var propertyInfo = Type<TestClass>.Property(x => x.HasRequiredAttribute);
 
-                // When
-                var result = propertyInfo.IsDecoratedWith<RequiredAttribute>();
+            // When
+            var result = propertyInfo.IsDecoratedWith<RequiredAttribute>();
 
-                // Then
-                result.Should().BeFalse();
-            }
+            // Then
+            result.Should().BeTrue();
         }
 
-        public class IsRequired
+        [Fact]
+        public void Should_BeFalse_When_PropertyIsNotDecoratedWithNomitedAttribute()
         {
-            [Fact]
-            public void Should_BeTrue_When_PropertyIsDecoratedWith_RequiredAttribute()
-            {
-                // Given
-                var propertyInfo = Type<TestClass>.Property(x => x.HasRequiredAttribute);
+            // Given
+            var propertyInfo = Type<TestClass>.Property(x => x.HasNoAttributes);
 
-                // When
-                var result = propertyInfo.IsRequired();
+            // When
+            var result = propertyInfo.IsDecoratedWith<RequiredAttribute>();
 
-                // Then
-                result.Should().BeTrue();
-            }
+            // Then
+            result.Should().BeFalse();
+        }
+    }
 
-            [Fact]
-            public void Should_BeFalse_When_PropertyIsNotDecoratedWith_RequiredAttribute()
-            {
-                // Given
-                var propertyInfo = Type<TestClass>.Property(x => x.HasNoAttributes);
+    public class IsRequired
+    {
+        [Fact]
+        public void Should_BeTrue_When_PropertyIsDecoratedWith_RequiredAttribute()
+        {
+            // Given
+            var propertyInfo = Type<TestClass>.Property(x => x.HasRequiredAttribute);
 
-                // When
-                var result = propertyInfo.IsRequired();
+            // When
+            var result = propertyInfo.IsRequired();
 
-                // Then
-                result.Should().BeFalse();
-            }
+            // Then
+            result.Should().BeTrue();
         }
 
-        public class TestClass
+        [Fact]
+        public void Should_BeFalse_When_PropertyIsNotDecoratedWith_RequiredAttribute()
         {
-            public int HasNoAttributes { get; set; }
+            // Given
+            var propertyInfo = Type<TestClass>.Property(x => x.HasNoAttributes);
 
-            [Required]
-            public int HasRequiredAttribute { get; set; }
+            // When
+            var result = propertyInfo.IsRequired();
+
+            // Then
+            result.Should().BeFalse();
         }
+    }
+
+    public class TestClass
+    {
+        public int HasNoAttributes { get; set; }
+
+        [Required] public int HasRequiredAttribute { get; set; }
     }
 }

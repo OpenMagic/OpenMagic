@@ -1,14 +1,9 @@
 ﻿using System;
 
-namespace OpenMagic.Exceptions
-{
-    public class ArgumentNotValidEmailAddress : ArgumentException
-    {
-        public ArgumentNotValidEmailAddress(string paramName, string value) : base("Value is not a valid email address.", paramName)
-        {
-            Value = value;
-        }
+namespace OpenMagic.Exceptions;
 
-        public string Value { get; private set; }
-    }
+public class ArgumentNotValidEmailAddress(string paramName, string value) : 
+    ArgumentException("Value is not a valid email address.", paramName)
+{
+    public string Value { get; private set; } = value;
 }

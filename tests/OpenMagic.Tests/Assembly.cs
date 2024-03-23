@@ -1,6 +1,5 @@
-﻿namespace OpenMagic.Tests
+﻿namespace OpenMagic.Tests;
+
+public sealed class Assembly
 {
-    public sealed class Assembly
-    {
-    }
 }

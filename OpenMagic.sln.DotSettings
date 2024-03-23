@@ -66,4 +66,9 @@
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EMigrateThisQualifierSettings/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002EVB_002ECodeStyle_002ESettingsUpgrade_002EVBSpaceAfterUnaryMigration/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002EXml_002ECodeStyle_002EFormatSettingsUpgrade_002EXmlMoveToCommonFormatterSettingsUpgrade/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/Environment/UnitTesting/WrapLongLinesInUnitTestSessionOutput/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/Environment/UnitTesting/WrapLongLinesInUnitTestSessionOutput/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/GrammarAndSpelling/GrammarChecking/Exceptions/=an_0020enumerable_0020of/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/GrammarAndSpelling/GrammarChecking/Exceptions/=A_0020uint/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/GrammarAndSpelling/GrammarChecking/Exceptions/=A_0020ushort/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=appsettings/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Zand/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

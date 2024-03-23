@@ -2,429 +2,429 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using OpenMagic.Tests.TestHelpers;
 using Xunit;
 
-namespace OpenMagic.Tests
+namespace OpenMagic.Tests;
+
+public class ArgumentsTests
 {
-    public class ArgumentsTests
+    public class Must
     {
-        public class Must
+        [Fact]
+        public void ShouldThrowNotArgumentExceptionWhenAssertionResultIsTrue()
         {
-            [Fact]
-            public void ShouldThrowNotArgumentExceptionWhenAssertionResultIsTrue()
-            {
-                // Given
-                const int argument = 1;
-                const string exceptionMessage = "Value must be 1.";
-                const string paramName = "argument";
+            // Given
+            const int argument = 1;
+            const string exceptionMessage = "Value must be 1.";
+            const string paramName = "argument";
 
-                // When
-                Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
+            // When
+            Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
 
-                // Then
-                action.Should().NotThrow<ArgumentException>();
-            }
-
-            [Fact]
-            public void ShouldThrowArgumentExceptionWhenAssertionResultIsFalse()
-            {
-                // Given
-                const int argument = 0;
-                const string exceptionMessage = "Value must be 1.";
-                const string paramName = "argument";
-
-                // When
-                Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
-
-                // Then
-                action.Should().Throw<ArgumentException>().WithMessage("Value must be 1.\r\nParameter name: argument");
-            }
+            // Then
+            action.Should().NotThrow<ArgumentException>();
         }
 
-        public class MustBeAnEmailAddress
+        [Fact]
+        public void ShouldThrowArgumentExceptionWhenAssertionResultIsFalse()
         {
-            [Fact]
-            public void Should_Throw_ArgumentNullException_When_emailAddress_Is_Null()
-            {
-                // When
-                Action action = () => ((string)null).MustBeAnEmailAddress("dummy");
+            // Given
+            const int argument = 0;
+            const string exceptionMessage = "Value must be 1.";
+            const string paramName = "argument";
 
-                // Then
-                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("emailAddress");
-            }
+            // When
+            Action action = () => argument.Must(argument == 1, exceptionMessage, paramName);
 
-            [Fact]
-            public void Should_Throw_ArgumentException_When_emailAddress_Is_WhiteSpace()
-            {
-                // Given
-                const string paramName = "dummy";
+            // Then
+            action.Should().Throw<ArgumentException>().WithMessage("Value must be 1. (Parameter 'argument')");
+        }
+    }
 
-                // When
-                Action action = () => "".MustBeAnEmailAddress(paramName);
+    public class MustBeAnEmailAddress
+    {
+        [Fact]
+        public void Should_Throw_ArgumentNullException_When_emailAddress_Is_Null()
+        {
+            // When
+            Action action = () => ((string)null).MustBeAnEmailAddress("dummy");
 
-                // Then
-                var exception = action.Should().Throw<ArgumentException>().Subject.Single();
-                exception.ParamName.Should().Be("emailAddress");
-                exception.Message.Should().Be($"Value cannot be whitespace.{Environment.NewLine}Parameter name: emailAddress");
-            }
-
-            [Fact]
-            public void Should_Throw_ArgumentNullException_When_paramName_Is_Null()
-            {
-                // When
-                Action action = () => "dummy".MustBeAnEmailAddress(null);
-
-                // Then
-                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("paramName");
-            }
-
-            [Fact]
-            public void Should_Throw_ArgumentException_When_paramName_Is_WhiteSpace()
-            {
-                // When
-                Action action = () => "dummy".MustBeAnEmailAddress("");
-
-                // Then
-                var exception = action.Should().Throw<ArgumentException>().Subject.Single();
-
-                exception.ParamName.Should().Be("paramName");
-                exception.Message.Should().Be($"Value cannot be whitespace.{Environment.NewLine}Parameter name: paramName");
-            }
-
-            [Fact]
-            public void Should_Throw_ArgumentException_When_emailAddress_Is_Invalid()
-            {
-                // Given
-                const string paramName = "dummy";
-
-                // When
-                Action action = () => "tim-26tp.com".MustBeAnEmailAddress(paramName);
-
-                // Then
-                var exception = action.Should().Throw<ArgumentException>().Subject.Single();
-
-                exception.ParamName.Should().Be(paramName);
-                exception.Message.Should().Be($"Value is not a valid email address.{Environment.NewLine}Parameter name: dummy");
-            }
-
-            [Fact]
-            public void Should_Return_emailAddress_When_emailAddress_Is_Valid()
-            {
-                // Given
-                const string emailAddress = "tim@26tp.com";
-                const string paramName = "dummy";
-
-                // When
-                var result = emailAddress.MustBeAnEmailAddress(paramName);
-
-                // Then
-                result.Should().Be(emailAddress);
-            }
+            // Then
+            action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("emailAddress");
         }
 
-        public class MustNotBeNull
+        [Fact]
+        public void Should_Throw_ArgumentException_When_emailAddress_Is_WhiteSpace()
         {
-            [Fact]
-            public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
-            {
-                // Given
-                const int parameterValue = 1;
+            // Given
+            const string paramName = "dummy";
 
-                // When
-                var value = parameterValue.MustNotBeNull("parameterValue");
+            // When
+            Action action = () => "".MustBeAnEmailAddress(paramName);
 
-                // Then
-                value.Should().Be(parameterValue);
-            }
-
-            [Fact]
-            public void ShouldThrowArgumentNullExceptionWithParameterNameWhenParameterValueIsNull()
-            {
-                // Given
-                const string parameterName = "fakeParameterName";
-
-                // When
-                Action action = () => Argument.MustNotBeNull<Exception>(null, parameterName);
-
-                // Then
-                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be(parameterName);
-            }
+            // Then
+            var exception = action.Should().Throw<ArgumentException>().Subject.Single();
+            exception.ParamName.Should().Be("emailAddress");
+            exception.Message.Should().Be("emailAddress".ArgumentExceptionMessage("Value cannot be whitespace."));
         }
 
-        public class MustNotBeNullOrEmpty
+        [Fact]
+        public void Should_Throw_ArgumentNullException_When_paramName_Is_Null()
         {
-            [Fact]
-            public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
-            {
-                // Given
-                var parameterValue = new List<int>(new[] { 1, 2 });
+            // When
+            Action action = () => "dummy".MustBeAnEmailAddress(null);
 
-                // When
-                var value = parameterValue.MustNotBeNullOrEmpty("fakeParamName");
-
-                // Then
-                value.Should().BeEquivalentTo(parameterValue);
-            }
-
-            [Fact]
-            public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
-            {
-                // Given
-                var parameterValue = new List<int>();
-
-                // When
-                Action action = () => parameterValue.MustNotBeNullOrEmpty("fakeParamName");
-
-                // Then
-                action
-                    .Should().Throw<ArgumentException>()
-                    .WithMessage("Value cannot be empty.\r\nParameter name: fakeParamName");
-            }
+            // Then
+            action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("paramName");
         }
 
-        // ReSharper disable once InconsistentNaming
-        public class MustNotBeNullOrEmpty_AsExtensionMethod
+        [Fact]
+        public void Should_Throw_ArgumentException_When_paramName_Is_WhiteSpace()
         {
-            [Fact]
-            public void ShouldReturn_param_When_param_IsNotNull()
-            {
-                // Given
-                var param = new List<int>(new[] { 1, 2 });
+            // When
+            Action action = () => "dummy".MustBeAnEmailAddress("");
 
-                // When
-                var value = param.MustNotBeNullOrEmpty("fakeParamName");
+            // Then
+            var exception = action.Should().Throw<ArgumentException>().Subject.Single();
 
-                // Then
-                value.Should().BeEquivalentTo(param);
-            }
-
-            [Fact]
-            public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
-            {
-                // Given
-                var param = new List<int>();
-
-                // When
-                Action action = () => param.MustNotBeNullOrEmpty("fakeParamName");
-
-                // Then
-                action
-                    .Should().Throw<ArgumentException>()
-                    .WithMessage("Value cannot be empty.\r\nParameter name: fakeParamName");
-            }
+            exception.ParamName.Should().Be("paramName");
+            exception.Message.Should().Be("paramName".ArgumentExceptionMessage("Value cannot be whitespace."));
         }
 
-        public class MustNotBeNullOrWhiteSpace
+        [Fact]
+        public void Should_Throw_ArgumentException_When_emailAddress_Is_Invalid()
         {
-            [Fact]
-            public void ShouldReturn_param_When_param_IsNotWhitespace()
-            {
-                // Given
-                const string param = "any string";
+            // Given
+            const string paramName = "dummy";
 
-                // When
-                var value = param.MustNotBeNullOrWhiteSpace("param");
+            // When
+            Action action = () => "tim-26tp.com".MustBeAnEmailAddress(paramName);
 
-                // Then
-                value.Should().Be(param);
-            }
+            // Then
+            var exception = action.Should().Throw<ArgumentException>().Subject.Single();
 
-            [Fact]
-            public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
-            {
-                // Given
-                const string param = "";
-
-                // When
-                Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
-
-                // Then
-                action
-                    .Should().Throw<ArgumentException>()
-                    .WithMessage("Value cannot be whitespace.\r\nParameter name: fakeParamName");
-            }
+            exception.ParamName.Should().Be(paramName);
+            exception.Message.Should().Be(paramName.ArgumentExceptionMessage("Value is not a valid email address."));
         }
 
-        // ReSharper disable once InconsistentNaming
-        public class MustNotBeNullOrWhiteSpace_AsExtensionMethod
+        [Fact]
+        public void Should_Return_emailAddress_When_emailAddress_Is_Valid()
         {
-            [Fact]
-            public void ShouldReturn_param_When_param_IsNotWhitespace()
-            {
-                // Given
-                const string param = "any string";
+            // Given
+            const string emailAddress = "tim@26tp.com";
+            const string paramName = "dummy";
 
-                // When
-                var value = param.MustNotBeNullOrWhiteSpace("param");
+            // When
+            var result = emailAddress.MustBeAnEmailAddress(paramName);
 
-                // Then
-                value.Should().Be(param);
-            }
+            // Then
+            result.Should().Be(emailAddress);
+        }
+    }
 
-            [Fact]
-            public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
-            {
-                // Given
-                const string param = "";
+    public class MustNotBeNull
+    {
+        [Fact]
+        public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
+        {
+            // Given
+            const int parameterValue = 1;
 
-                // When
-                Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
+            // When
+            var value = parameterValue.MustNotBeNull("parameterValue");
 
-                // Then
-                action
-                    .Should().Throw<ArgumentException>()
-                    .WithMessage("Value cannot be whitespace.\r\nParameter name: fakeParamName");
-            }
+            // Then
+            value.Should().Be(parameterValue);
         }
 
-        // ReSharper disable once InconsistentNaming
-        public class MustNotBeNull_AsExtensionMethod
+        [Fact]
+        public void ShouldThrowArgumentNullExceptionWithParameterNameWhenParameterValueIsNull()
         {
-            [Fact]
-            public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
-            {
-                // Given
-                const int parameterValue = 1;
+            // Given
+            const string parameterName = "fakeParameterName";
 
-                // When
-                var value = parameterValue.MustNotBeNull("parameterValue");
+            // When
+            Action action = () => Argument.MustNotBeNull<Exception>(null, parameterName);
 
-                // Then
-                value.Should().Be(parameterValue);
-            }
+            // Then
+            action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be(parameterName);
+        }
+    }
+
+    public class MustNotBeNullOrEmpty
+    {
+        [Fact]
+        public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
+        {
+            // Given
+            var parameterValue = new List<int>(new[] { 1, 2 });
+
+            // When
+            var value = parameterValue.MustNotBeNullOrEmpty("fakeParamName");
+
+            // Then
+            value.Should().BeEquivalentTo(parameterValue);
         }
 
-        public class MustBeGreaterThan
+        [Fact]
+        public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
         {
-            [Fact]
-            public void ShouldReturn_param_When_param_IsGreaterThan_greaterThan()
-            {
-                // Given
-                const int param = 1;
-                const int greaterThan = 0;
+            // Given
+            var parameterValue = new List<int>();
 
-                // When
-                var result = param.MustBeGreaterThan(greaterThan, "fakeParamName");
+            // When
+            Action action = () => parameterValue.MustNotBeNullOrEmpty("fakeParamName");
 
-                // Then
-                result.Should().Be(param);
-            }
+            // Then
+            action
+                .Should().Throw<ArgumentException>()
+                .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be empty."));
+        }
+    }
 
-            [Fact]
-            public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsEqualTo_greaterThan()
-            {
-                // Given
-                const int param = 1;
-                const int greaterThan = 1;
+    // ReSharper disable once InconsistentNaming
+    public class MustNotBeNullOrEmpty_AsExtensionMethod
+    {
+        [Fact]
+        public void ShouldReturn_param_When_param_IsNotNull()
+        {
+            // Given
+            var param = new List<int>(new[] { 1, 2 });
 
-                // When
-                Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
+            // When
+            var value = param.MustNotBeNullOrEmpty("fakeParamName");
 
-                // Then
-                action.Should().Throw<ArgumentOutOfRangeException>();
-            }
-
-            [Fact]
-            public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsLessThan_greaterThan()
-            {
-                // Given
-                const int param = 0;
-                const int greaterThan = 1;
-
-                // When
-                Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
-
-                // Then
-                action.Should().Throw<ArgumentOutOfRangeException>();
-            }
+            // Then
+            value.Should().BeEquivalentTo(param);
         }
 
-        public class MustBeGreaterThanOrEqualTo
+        [Fact]
+        public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
         {
-            [Fact]
-            public void ShouldReturn_param_When_param_IsGreaterThan_greaterThanOrEqualTo()
-            {
-                // Given
-                const int highValue = 1;
-                const int lowValue = 0;
+            // Given
+            var param = new List<int>();
 
-                // When
-                var result = highValue.MustBeGreaterThanOrEqualTo(lowValue, "fakeParamName");
+            // When
+            Action action = () => param.MustNotBeNullOrEmpty("fakeParamName");
 
-                // Then
-                result.Should().Be(highValue);
-            }
+            // Then
+            action
+                .Should().Throw<ArgumentException>()
+                .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be empty."));
+        }
+    }
 
-            [Fact]
-            public void ShouldReturn_param_When_param_IsEqualTo_greaterThanOrEqualTo()
-            {
-                // Given
-                const int equalToA = 1;
-                const int equalToB = 1;
+    public class MustNotBeNullOrWhiteSpace
+    {
+        [Fact]
+        public void ShouldReturn_param_When_param_IsNotWhitespace()
+        {
+            // Given
+            const string param = "any string";
 
-                // When
-                var result = equalToA.MustBeGreaterThanOrEqualTo(equalToB, "fakeParamName");
+            // When
+            var value = param.MustNotBeNullOrWhiteSpace("param");
 
-                // Then
-                result.Should().Be(equalToA);
-            }
+            // Then
+            value.Should().Be(param);
+        }
 
-            [Fact]
-            public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsLessThan_greaterThan()
-            {
-                // Given
-                const int lowValue = 0;
-                const int highValue = 1;
+        [Fact]
+        public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
+        {
+            // Given
+            const string param = "";
 
-                // When
-                Action action = () => lowValue.MustBeGreaterThanOrEqualTo(highValue, "fakeParamName");
+            // When
+            Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
 
-                // Then
-                action.Should().Throw<ArgumentOutOfRangeException>();
-            }
+            // Then
+            action
+                .Should().Throw<ArgumentException>()
+                .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be whitespace."));
+        }
+    }
 
-            [Fact]
-            public void ShouldReturn_param_When_param_IsGreaterThan_greaterThanOrEqualTo_UsingDates()
-            {
-                // Given
-                var highValue = DateTime.Today;
-                var lowValue = highValue.AddDays(-1);
+    // ReSharper disable once InconsistentNaming
+    public class MustNotBeNullOrWhiteSpace_AsExtensionMethod
+    {
+        [Fact]
+        public void ShouldReturn_param_When_param_IsNotWhitespace()
+        {
+            // Given
+            const string param = "any string";
 
-                // When
-                var result = highValue.MustBeGreaterThanOrEqualTo(lowValue, "fakeParamName");
+            // When
+            var value = param.MustNotBeNullOrWhiteSpace("param");
 
-                // Then
-                result.Should().Be(highValue);
-            }
+            // Then
+            value.Should().Be(param);
+        }
 
-            [Fact]
-            public void ShouldReturn_param_When_param_IsEqualTo_greaterThanOrEqualTo_UsingDates()
-            {
-                // Given
-                var equalToA = DateTime.Today;
-                // ReSharper disable once InlineTemporaryVariable
-                var equalToB = equalToA;
+        [Fact]
+        public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
+        {
+            // Given
+            const string param = "";
 
-                // When
-                var result = equalToA.MustBeGreaterThanOrEqualTo(equalToB, "fakeParamName");
+            // When
+            Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
 
-                // Then
-                result.Should().Be(equalToA);
-            }
+            // Then
+            action
+                .Should().Throw<ArgumentException>()
+                .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be whitespace."));
+        }
+    }
 
-            [Fact]
-            public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsLessThan_greaterThan_UsingDates()
-            {
-                // Given
-                var lowValue = DateTime.Today;
-                var highValue = lowValue.AddDays(1);
+    // ReSharper disable once InconsistentNaming
+    public class MustNotBeNull_AsExtensionMethod
+    {
+        [Fact]
+        public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
+        {
+            // Given
+            const int parameterValue = 1;
 
-                // When
-                Action action = () => lowValue.MustBeGreaterThanOrEqualTo(highValue, "fakeParamName");
+            // When
+            var value = parameterValue.MustNotBeNull("parameterValue");
 
-                // Then
-                action.Should().Throw<ArgumentOutOfRangeException>();
-            }
+            // Then
+            value.Should().Be(parameterValue);
+        }
+    }
+
+    public class MustBeGreaterThan
+    {
+        [Fact]
+        public void ShouldReturn_param_When_param_IsGreaterThan_greaterThan()
+        {
+            // Given
+            const int param = 1;
+            const int greaterThan = 0;
+
+            // When
+            var result = param.MustBeGreaterThan(greaterThan, "fakeParamName");
+
+            // Then
+            result.Should().Be(param);
+        }
+
+        [Fact]
+        public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsEqualTo_greaterThan()
+        {
+            // Given
+            const int param = 1;
+            const int greaterThan = 1;
+
+            // When
+            Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
+
+            // Then
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsLessThan_greaterThan()
+        {
+            // Given
+            const int param = 0;
+            const int greaterThan = 1;
+
+            // When
+            Action action = () => param.MustBeGreaterThan(greaterThan, "fakeParamName");
+
+            // Then
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+    }
+
+    public class MustBeGreaterThanOrEqualTo
+    {
+        [Fact]
+        public void ShouldReturn_param_When_param_IsGreaterThan_greaterThanOrEqualTo()
+        {
+            // Given
+            const int highValue = 1;
+            const int lowValue = 0;
+
+            // When
+            var result = highValue.MustBeGreaterThanOrEqualTo(lowValue, "fakeParamName");
+
+            // Then
+            result.Should().Be(highValue);
+        }
+
+        [Fact]
+        public void ShouldReturn_param_When_param_IsEqualTo_greaterThanOrEqualTo()
+        {
+            // Given
+            const int equalToA = 1;
+            const int equalToB = 1;
+
+            // When
+            var result = equalToA.MustBeGreaterThanOrEqualTo(equalToB, "fakeParamName");
+
+            // Then
+            result.Should().Be(equalToA);
+        }
+
+        [Fact]
+        public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsLessThan_greaterThan()
+        {
+            // Given
+            const int lowValue = 0;
+            const int highValue = 1;
+
+            // When
+            Action action = () => lowValue.MustBeGreaterThanOrEqualTo(highValue, "fakeParamName");
+
+            // Then
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void ShouldReturn_param_When_param_IsGreaterThan_greaterThanOrEqualTo_UsingDates()
+        {
+            // Given
+            var highValue = DateTime.Today;
+            var lowValue = highValue.AddDays(-1);
+
+            // When
+            var result = highValue.MustBeGreaterThanOrEqualTo(lowValue, "fakeParamName");
+
+            // Then
+            result.Should().Be(highValue);
+        }
+
+        [Fact]
+        public void ShouldReturn_param_When_param_IsEqualTo_greaterThanOrEqualTo_UsingDates()
+        {
+            // Given
+            var equalToA = DateTime.Today;
+            // ReSharper disable once InlineTemporaryVariable
+            var equalToB = equalToA;
+
+            // When
+            var result = equalToA.MustBeGreaterThanOrEqualTo(equalToB, "fakeParamName");
+
+            // Then
+            result.Should().Be(equalToA);
+        }
+
+        [Fact]
+        public void ShouldThrow_ArgumentOutOfRangeException_When_param_IsLessThan_greaterThan_UsingDates()
+        {
+            // Given
+            var lowValue = DateTime.Today;
+            var highValue = lowValue.AddDays(1);
+
+            // When
+            Action action = () => lowValue.MustBeGreaterThanOrEqualTo(highValue, "fakeParamName");
+
+            // Then
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
     }
 }

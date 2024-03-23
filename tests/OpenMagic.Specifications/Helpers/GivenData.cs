@@ -1,16 +1,15 @@
 ﻿using System;
 using System.IO;
 
-namespace OpenMagic.Specifications.Helpers
+namespace OpenMagic.Specifications.Helpers;
+
+public class GivenData
 {
-    public class GivenData
-    {
-        public Uri Uri;
-        public FileInfo File;
-        public object ParameterValue;
-        public DirectoryInfo Directory;
-        public Type Type;
-        public int MinimumInt;
-        public int MaximumInt;
-    }
+    public DirectoryInfo Directory;
+    public FileInfo File;
+    public int MaximumInt;
+    public int MinimumInt;
+    public object ParameterValue;
+    public Type Type;
+    public Uri Uri;
 }

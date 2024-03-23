@@ -5,7 +5,7 @@ Scenario Outline: value is in range
 	And minimumValue is <minimumValue>
 	And maximumValue is <maximumValue>
 	When I call Argument.MustBetween(value, minimumValue, maximumValue)
-	Then <value> should be returned
+	Then number <value> should be returned
 
 	Examples:
 		| value | minimumValue | maximumValue |
@@ -23,8 +23,7 @@ Scenario Outline: value is out of range
 	Then ArgumentOutOfRangeException should be thrown
 	And the exception message should be:
 		"""
-		Value must be between <minimumValue> and <maximumValue>.
-		Parameter name: value
+		Value must be between <minimumValue> and <maximumValue>. (Parameter 'value')
 		"""
 
 	Examples:
