@@ -6,119 +6,117 @@ using FluentAssertions;
 using OpenMagic.DataAnnotations;
 using Xunit;
 
-namespace OpenMagic.Tests.DataAnnotations
+namespace OpenMagic.Tests.DataAnnotations;
+
+public class PropertyMetadataTests
 {
-    public class PropertyMetadataTests
+    public class Constructor : PropertyMetadataTests
     {
-        public class Constructor : PropertyMetadataTests
+        [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenPropertyInfoIsNull()
         {
-            [Fact]
-            public void ShouldThrowArgumentNullExceptionWhenPropertyInfoIsNull()
-            {
-                // ReSharper disable once ObjectCreationAsStatement
-                Action action = () => new PropertyMetadata(null, true);
+            // ReSharper disable once ObjectCreationAsStatement
+            Action action = () => new PropertyMetadata(null, true);
 
-                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("property");
-            }
+            action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("property");
+        }
+    }
+
+    public class Display : PropertyMetadataTests
+    {
+        [Fact]
+        public void ShouldReturnTheDisplayAttributeAssociatedToAProperty()
+        {
+            // Given
+            var metadata = ClassMetadata.GetProperty<TestClassWithDisplayAttribute, int>(x => x.HasDisplayAttribute);
+
+            // When
+            var display = metadata.Display;
+
+            // Then
+            display.Should().NotBeNull();
         }
 
-        public class Display : PropertyMetadataTests
+        [Fact]
+        public void ShouldReturnADefaultDisplayAttributeForAPropertyThatDoesNotHaveADisplayAttribute()
         {
-            [Fact]
-            public void ShouldReturnTheDisplayAttributeAssociatedToAProperty()
-            {
-                // Given
-                var metadata = ClassMetadata.GetProperty<TestClassWithDisplayAttribute, int>(x => x.HasDisplayAttribute);
+            // Given
+            var metadata = ClassMetadata.GetProperty<TestClassWithDisplayAttribute, int>(x => x.DoesNotHaveDisplayAttribute);
 
-                // When
-                var display = metadata.Display;
+            // When
+            var display = metadata.Display;
 
-                // Then
-                display.Should().NotBeNull();
-            }
+            // Then
+            display.Should().NotBeNull();
+        }
+    }
 
-            [Fact]
-            public void ShouldReturnADefaultDisplayAttributeForAPropertyThatDoesNotHaveADisplayAttribute()
-            {
-                // Given
-                var metadata = ClassMetadata.GetProperty<TestClassWithDisplayAttribute, int>(x => x.DoesNotHaveDisplayAttribute);
+    public class IsNotPublic : PropertyMetadataTests
+    {
+        [Fact]
+        public void ShouldReturnTrueWhenPropertyIsNotPublic()
+        {
+            // Given
+            var privateProperty = typeof(Exception).GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).First();
+            var metadata = new PropertyMetadata(privateProperty, false);
 
-                // When
-                var display = metadata.Display;
+            // When
+            var isNotPublic = metadata.IsNotPublic;
 
-                // Then
-                display.Should().NotBeNull();
-            }
+            // Then
+            isNotPublic.Should().BeTrue();
         }
 
-        public class IsNotPublic : PropertyMetadataTests
+        [Fact]
+        public void ShouldReturnFalseWhenPropertyIsNotPublic()
         {
-            [Fact]
-            public void ShouldReturnTrueWhenPropertyIsNotPublic()
-            {
-                // Given
-                var privateProperty = typeof(Exception).GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).First();
-                var metadata = new PropertyMetadata(privateProperty, false);
+            // Given
+            var publicProperty = typeof(Exception).GetProperties(BindingFlags.Public | BindingFlags.Instance).First();
+            var metadata = new PropertyMetadata(publicProperty, true);
 
-                // When
-                var isNotPublic = metadata.IsNotPublic;
+            // When
+            var isNotPublic = metadata.IsNotPublic;
 
-                // Then
-                isNotPublic.Should().BeTrue();
-            }
+            // Then
+            isNotPublic.Should().BeFalse();
+        }
+    }
 
-            [Fact]
-            public void ShouldReturnFalseWhenPropertyIsNotPublic()
-            {
-                // Given
-                var publicProperty = typeof(Exception).GetProperties(BindingFlags.Public | BindingFlags.Instance).First();
-                var metadata = new PropertyMetadata(publicProperty, true);
+    public class IsPublic : PropertyMetadataTests
+    {
+        [Fact]
+        public void ShouldReturnTrueWhenPropertyIsPublic()
+        {
+            // Given
+            var publicProperty = typeof(Exception).GetProperties(BindingFlags.Public | BindingFlags.Instance).First();
+            var metadata = new PropertyMetadata(publicProperty, true);
 
-                // When
-                var isNotPublic = metadata.IsNotPublic;
+            // When
+            var isPublic = metadata.IsPublic;
 
-                // Then
-                isNotPublic.Should().BeFalse();
-            }
+            // Then
+            isPublic.Should().BeTrue();
         }
 
-        public class IsPublic : PropertyMetadataTests
+        [Fact]
+        public void ShouldReturnFalseWhenPropertyIsNotPublic()
         {
-            [Fact]
-            public void ShouldReturnTrueWhenPropertyIsPublic()
-            {
-                // Given
-                var publicProperty = typeof(Exception).GetProperties(BindingFlags.Public | BindingFlags.Instance).First();
-                var metadata = new PropertyMetadata(publicProperty, true);
+            // Given
+            var privateProperty = typeof(Exception).GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).First();
+            var metadata = new PropertyMetadata(privateProperty, false);
 
-                // When
-                var isPublic = metadata.IsPublic;
+            // When
+            var isPublic = metadata.IsPublic;
 
-                // Then
-                isPublic.Should().BeTrue();
-            }
-
-            [Fact]
-            public void ShouldReturnFalseWhenPropertyIsNotPublic()
-            {
-                // Given
-                var privateProperty = typeof(Exception).GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).First();
-                var metadata = new PropertyMetadata(privateProperty, false);
-
-                // When
-                var isPublic = metadata.IsPublic;
-
-                // Then
-                isPublic.Should().BeFalse();
-            }
+            // Then
+            isPublic.Should().BeFalse();
         }
+    }
 
-        public class TestClassWithDisplayAttribute
-        {
-            [Display]
-            public int HasDisplayAttribute { get; set; }
+    public class TestClassWithDisplayAttribute
+    {
+        [Display] public int HasDisplayAttribute { get; set; }
 
-            public int DoesNotHaveDisplayAttribute { get; set; }
-        }
+        public int DoesNotHaveDisplayAttribute { get; set; }
     }
 }

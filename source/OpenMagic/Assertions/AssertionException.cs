@@ -1,19 +1,18 @@
 ﻿using System;
 
-namespace OpenMagic.Assertions
+namespace OpenMagic.Assertions;
+
+/// <summary>
+///     The exception that is thrown when an assertion is false.
+/// </summary>
+public class AssertionException : Exception
 {
     /// <summary>
-    ///     The exception that is thrown when an assertion is false.
+    ///     Initializes a new instance of the <see cref="AssertionException" /> class.
     /// </summary>
-    public class AssertionException : Exception
+    /// <param name="message">The message that describes the error.</param>
+    public AssertionException(string message)
+        : base(message)
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AssertionException" /> class.
-        /// </summary>
-        /// <param name="message">The message that describes the error.</param>
-        public AssertionException(string message)
-            : base(message)
-        {
-        }
     }
 }

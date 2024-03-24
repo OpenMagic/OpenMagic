@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace OpenMagic.DataAnnotations
+namespace OpenMagic.DataAnnotations;
+
+public interface IPropertyMetadata
 {
-    public interface IPropertyMetadata
-    {
-        DisplayAttribute Display { get; }
-        bool IsPublic { get; }
-        bool IsNotPublic { get; }
-        PropertyInfo PropertyInfo { get; }
-    }
+    DisplayAttribute Display { get; }
+    bool IsPublic { get; }
+    bool IsNotPublic { get; }
+    PropertyInfo PropertyInfo { get; }
 }

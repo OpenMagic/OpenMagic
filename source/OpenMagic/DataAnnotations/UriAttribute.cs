@@ -1,31 +1,29 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using NullGuard;
 
-namespace OpenMagic.DataAnnotations
+namespace OpenMagic.DataAnnotations;
+
+/// <summary>
+///     Validates a string value is a Uri value.
+/// </summary>
+public class UriAttribute : ValidationAttribute
 {
-    /// <summary>
-    ///     Validates a string value is a Uri value.
-    /// </summary>
-    public class UriAttribute : ValidationAttribute
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        if (value == null || (value is string && string.IsNullOrWhiteSpace(value.ToString())))
         {
-            if ((value == null) || (value is string && string.IsNullOrWhiteSpace(value.ToString())))
-            {
-                return ValidationResult.Success;
-            }
+            return ValidationResult.Success;
+        }
 
-            try
-            {
-                // ReSharper disable once UnusedVariable
-                var uri = new Uri(value.ToString());
-                return ValidationResult.Success;
-            }
-            catch (Exception)
-            {
-                return new ValidationResult("Value is not a valid Uri.");
-            }
+        try
+        {
+            // ReSharper disable once UnusedVariable
+            var uri = new Uri(value.ToString()!);
+            return ValidationResult.Success;
+        }
+        catch (Exception)
+        {
+            return new ValidationResult("Value is not a valid Uri.");
         }
     }
 }

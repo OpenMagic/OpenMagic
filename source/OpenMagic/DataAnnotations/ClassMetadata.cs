@@ -6,63 +6,62 @@ using System.Reflection;
 using OpenMagic.Collections.Generic;
 using OpenMagic.Reflection;
 
-namespace OpenMagic.DataAnnotations
+namespace OpenMagic.DataAnnotations;
+
+public class ClassMetadata : IClassMetadata
 {
-    public class ClassMetadata : IClassMetadata
+    private static readonly TypeCache<IClassMetadata> Cache = new();
+
+    public ClassMetadata(Type type)
     {
-        private static readonly TypeCache<IClassMetadata> Cache = new TypeCache<IClassMetadata>();
+        Type = type;
+        Properties = new Lazy<IEnumerable<IPropertyMetadata>>(GetProperties);
+    }
 
-        public ClassMetadata(Type type)
+    public Lazy<IEnumerable<IPropertyMetadata>> Properties { get; }
+    public Type Type { get; }
+
+    public IPropertyMetadata GetProperty(string propertyName)
+    {
+        propertyName.MustNotBeNullOrWhiteSpace("propertyName");
+
+        var property = Properties.Value.SingleOrDefault(p => p.PropertyInfo.Name == propertyName);
+
+        if (property != null)
         {
-            Type = type;
-            Properties = new Lazy<IEnumerable<IPropertyMetadata>>(GetProperties);
+            return property;
         }
 
-        public Lazy<IEnumerable<IPropertyMetadata>> Properties { get; private set; }
-        public Type Type { get; private set; }
+        throw new ArgumentException($"Cannot find {propertyName} property for {Type}.", nameof(propertyName));
+    }
 
-        public IPropertyMetadata GetProperty(string propertyName)
-        {
-            propertyName.MustNotBeNullOrWhiteSpace("propertyName");
+    public IPropertyMetadata GetProperty(PropertyInfo property)
+    {
+        return GetProperty(property.Name);
+    }
 
-            var property = Properties.Value.SingleOrDefault(p => p.PropertyInfo.Name == propertyName);
+    public static IClassMetadata Get<TModel>()
+    {
+        return Cache.Get<TModel>(() => new ClassMetadata(typeof(TModel)));
+    }
 
-            if (property != null)
-            {
-                return property;
-            }
+    public static IPropertyMetadata GetProperty<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
+    {
+        var modelMetadata = Get<TModel>();
+        var propertyInfo = Type<TModel>.Property(property);
+        var propertyMetadata = modelMetadata.GetProperty(propertyInfo);
 
-            throw new ArgumentException(string.Format("Cannot find {0} property for {1}.", propertyName, Type), "propertyName");
-        }
+        return propertyMetadata;
+    }
 
-        public IPropertyMetadata GetProperty(PropertyInfo property)
-        {
-            return GetProperty(property.Name);
-        }
+    private IEnumerable<IPropertyMetadata> GetProperties()
+    {
+        var publicProperties = from p in Type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            select new PropertyMetadata(p, true);
 
-        public static IClassMetadata Get<TModel>()
-        {
-            return Cache.Get<TModel>(() => new ClassMetadata(typeof(TModel)));
-        }
+        var privateProperties = from p in Type.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
+            select new PropertyMetadata(p, false);
 
-        public static IPropertyMetadata GetProperty<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
-        {
-            var modelMetadata = Get<TModel>();
-            var propertyInfo = Type<TModel>.Property(property);
-            var propertyMetadata = modelMetadata.GetProperty(propertyInfo);
-
-            return propertyMetadata;
-        }
-
-        private IEnumerable<IPropertyMetadata> GetProperties()
-        {
-            var publicProperties = from p in Type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                select new PropertyMetadata(p, true);
-
-            var privateProperties = from p in Type.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
-                select new PropertyMetadata(p, false);
-
-            return publicProperties.Concat(privateProperties);
-        }
+        return publicProperties.Concat(privateProperties);
     }
 }

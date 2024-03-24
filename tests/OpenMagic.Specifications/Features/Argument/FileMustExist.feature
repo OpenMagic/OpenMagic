@@ -4,7 +4,7 @@
 Scenario: File exists
 	Given file exists
 	When I call Argument.FileExists(<param>, <paramName>)
-	Then <param> should be returned
+	Then passed <param> should be returned
 
 Scenario: File does not exists
 	Given file does not exists
@@ -12,6 +12,5 @@ Scenario: File does not exists
 	Then ArgumentException should be thrown
 	And the exception message should be:
 		"""
-		File must exist.
-		Parameter name: dummy
+		File must exist. (Parameter 'dummy')
 		"""
