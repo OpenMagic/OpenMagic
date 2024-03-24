@@ -1,4 +1,4 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("OpenMagic.Tests")]
-[assembly: AssemblyDescription("Tests for OpenMagic project.")]
+[assembly: AssemblyTitle("OpenMagic.Specifications")]
+[assembly: AssemblyDescription("Specifications for OpenMagic project.")]

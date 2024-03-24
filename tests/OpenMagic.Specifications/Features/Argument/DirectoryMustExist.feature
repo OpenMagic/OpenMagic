@@ -4,7 +4,7 @@
 Scenario: Directory exists
 	Given directory exists
 	When I call Argument.DirectoryExists(<param>, <paramName>)
-	Then <param> should be returned
+	Then passed <param> should be returned
 
 Scenario: Directory does not exists
 	Given directory does not exists
@@ -12,6 +12,5 @@ Scenario: Directory does not exists
 	Then ArgumentException should be thrown
 	And the exception message should be:
 		"""
-		Directory must exist.
-		Parameter name: dummy
+		Directory must exist. (Parameter 'dummy')
 		"""

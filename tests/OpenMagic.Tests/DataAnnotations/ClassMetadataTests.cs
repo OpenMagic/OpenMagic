@@ -6,182 +6,181 @@ using OpenMagic.Collections.Generic;
 using OpenMagic.DataAnnotations;
 using Xunit;
 
-namespace OpenMagic.Tests.DataAnnotations
+namespace OpenMagic.Tests.DataAnnotations;
+
+public class ClassMetadataTests
 {
-    public class ClassMetadataTests
+    public ClassMetadataTests()
     {
-        public ClassMetadataTests()
+        ClearCacheInClassMetadata();
+    }
+
+    private void ClearCacheInClassMetadata()
+    {
+        var cache = GetCacheInClassMetadata();
+
+        if (cache != null)
         {
-            ClearCacheInClassMetadata();
+            cache.Clear();
+        }
+    }
+
+    private TypeCache<IClassMetadata> GetCacheInClassMetadata()
+    {
+        var cacheField = typeof(ClassMetadata).GetField("Cache", BindingFlags.NonPublic | BindingFlags.Static);
+
+        if (cacheField == null)
+        {
+            throw new Exception("Cannot find private static field ClassMetadata.Cache.");
         }
 
-        private void ClearCacheInClassMetadata()
-        {
-            var cache = GetCacheInClassMetadata();
+        var cacheValue = cacheField.GetValue(null);
 
-            if (cache != null)
-            {
-                cache.Clear();
-            }
+        if (cacheValue == null)
+        {
+            // cache has not been created yet so nothing to clear.
+            return null;
         }
 
-        private TypeCache<IClassMetadata> GetCacheInClassMetadata()
+        return (TypeCache<IClassMetadata>)cacheValue;
+    }
+
+    public class Constructor : ClassMetadataTests
+    {
+        [Fact]
+        public void ShouldThrowArgumentNullExceptionWhenTypeIsNull()
         {
-            var cacheField = typeof(ClassMetadata).GetField("Cache", BindingFlags.NonPublic | BindingFlags.Static);
+            // ReSharper disable once ObjectCreationAsStatement
+            Action action = () => new ClassMetadata(null);
 
-            if (cacheField == null)
-            {
-                throw new Exception("Cannot find private static field ClassMetadata.Cache.");
-            }
-
-            var cacheValue = cacheField.GetValue(null);
-
-            if (cacheValue == null)
-            {
-                // cache has not been created yet so nothing to clear.
-                return null;
-            }
-
-            return (TypeCache<IClassMetadata>)cacheValue;
+            action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("type");
         }
 
-        public class Constructor : ClassMetadataTests
+        [Fact]
+        public void ShouldSetTypePropertyToPropertyArgument()
         {
-            [Fact]
-            public void ShouldThrowArgumentNullExceptionWhenTypeIsNull()
-            {
-                // ReSharper disable once ObjectCreationAsStatement
-                Action action = () => new ClassMetadata(null);
+            // Given
 
-                action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("type");
-            }
+            // When
+            var metadata = new ClassMetadata(typeof(Exception));
 
-            [Fact]
-            public void ShouldSetTypePropertyToPropertyArgument()
-            {
-                // Given
+            // Then
+            metadata.Should().NotBeNull();
+            metadata.Type.Should().Be(typeof(Exception));
+        }
+    }
 
-                // When
-                var metadata = new ClassMetadata(typeof(Exception));
+    public class Get : ClassMetadataTests
+    {
+        [Fact]
+        public void ShouldCreateAndReturnMetadataForClassThatHasNotBeGot()
+        {
+            // Given
 
-                // Then
-                metadata.Should().NotBeNull();
-                metadata.Type.Should().Be(typeof(Exception));
-            }
+            // When
+            var metaData = ClassMetadata.Get<Exception>();
+
+            // Then
+            metaData.Should().NotBeNull();
         }
 
-        public class Get : ClassMetadataTests
+        [Fact]
+        public void ShouldReturnMetadataFromCacheForClassThatHasBeenGot()
         {
-            [Fact]
-            public void ShouldCreateAndReturnMetadataForClassThatHasNotBeGot()
-            {
-                // Given
+            // Given
+            var firstGet = ClassMetadata.Get<Exception>();
 
-                // When
-                var metaData = ClassMetadata.Get<Exception>();
+            // When
+            var secondGet = ClassMetadata.Get<Exception>();
 
-                // Then
-                metaData.Should().NotBeNull();
-            }
+            // Then
+            firstGet.Should().BeSameAs(secondGet);
+        }
+    }
 
-            [Fact]
-            public void ShouldReturnMetadataFromCacheForClassThatHasBeenGot()
-            {
-                // Given
-                var firstGet = ClassMetadata.Get<Exception>();
+    public class GetProperty : ClassMetadataTests
+    {
+        [Fact]
+        public void ShouldThrowArgumentExceptionWhenPropertyNameIsWhitespace()
+        {
+            var metadata = ClassMetadata.Get<Exception>();
 
-                // When
-                var secondGet = ClassMetadata.Get<Exception>();
+            Action action = () => metadata.GetProperty("");
 
-                // Then
-                firstGet.Should().BeSameAs(secondGet);
-            }
+            action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("propertyName");
         }
 
-        public class GetProperty : ClassMetadataTests
+        [Fact]
+        public void ShouldThrowArgumentExceptionWhenPropertyNameDoesNotExist()
         {
-            [Fact]
-            public void ShouldThrowArgumentExceptionWhenPropertyNameIsWhitespace()
-            {
-                var metadata = ClassMetadata.Get<Exception>();
+            var metadata = ClassMetadata.Get<Exception>();
 
-                Action action = () => metadata.GetProperty("");
+            Action action = () => metadata.GetProperty("MissingPropertyName");
 
-                action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("propertyName");
-            }
-
-            [Fact]
-            public void ShouldThrowArgumentExceptionWhenPropertyNameDoesNotExist()
-            {
-                var metadata = ClassMetadata.Get<Exception>();
-
-                Action action = () => metadata.GetProperty("MissingPropertyName");
-
-                action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("propertyName");
-            }
-
-            [Fact]
-            public void ShouldReturnMetadataForRequestedProperty()
-            {
-                // Given
-                const string propertyName = "Message";
-                var classMetadata = ClassMetadata.Get<Exception>();
-
-                // When
-                var propertyMetadata = classMetadata.GetProperty(propertyName);
-
-                // Then
-                propertyMetadata.Should().NotBeNull();
-                propertyMetadata.PropertyInfo.Name.Should().Be(propertyName);
-            }
+            action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("propertyName");
         }
 
-        // ReSharper disable once InconsistentNaming
-        public class GetProperty_StaticMethod : ClassMetadataTests
+        [Fact]
+        public void ShouldReturnMetadataForRequestedProperty()
         {
-            [Fact]
-            public void ShouldReturnMetadataForRequestedProperty()
-            {
-                // Given
+            // Given
+            const string propertyName = "Message";
+            var classMetadata = ClassMetadata.Get<Exception>();
 
-                // When
-                var propertyMetadata = ClassMetadata.GetProperty<Exception, string>(x => x.Message);
+            // When
+            var propertyMetadata = classMetadata.GetProperty(propertyName);
 
-                // Then
-                propertyMetadata.Should().NotBeNull();
-                propertyMetadata.PropertyInfo.Name.Should().Be("Message");
-            }
+            // Then
+            propertyMetadata.Should().NotBeNull();
+            propertyMetadata.PropertyInfo.Name.Should().Be(propertyName);
+        }
+    }
+
+    // ReSharper disable once InconsistentNaming
+    public class GetProperty_StaticMethod : ClassMetadataTests
+    {
+        [Fact]
+        public void ShouldReturnMetadataForRequestedProperty()
+        {
+            // Given
+
+            // When
+            var propertyMetadata = ClassMetadata.GetProperty<Exception, string>(x => x.Message);
+
+            // Then
+            propertyMetadata.Should().NotBeNull();
+            propertyMetadata.PropertyInfo.Name.Should().Be("Message");
+        }
+    }
+
+    public class Properties : ClassMetadataTests
+    {
+        [Fact]
+        public void ShouldReturnLazyCollectionOfIPropertyMetadata()
+        {
+            // Given
+            var classMetadata = new ClassMetadata<Exception>();
+
+            // When
+            var properties = classMetadata.Properties;
+
+            // Then
+            properties.IsValueCreated.Should().BeFalse("because reflection is slow so we want a lazy collection");
+            properties.Value.Any().Should().BeTrue("because System.Exception has public properties and probably has private properties");
         }
 
-        public class Properties : ClassMetadataTests
+        [Fact]
+        public void ShouldReturnLazyCollectionThatContainsPublicAndNotPublicProperties()
         {
-            [Fact]
-            public void ShouldReturnLazyCollectionOfIPropertyMetadata()
-            {
-                // Given
-                var classMetadata = new ClassMetadata<Exception>();
+            // Given
+            var classMetadata = new ClassMetadata<Exception>();
 
-                // When
-                var properties = classMetadata.Properties;
+            // When
+            var properties = classMetadata.Properties;
 
-                // Then
-                properties.IsValueCreated.Should().BeFalse("because reflection is slow so we want a lazy collection");
-                properties.Value.Any().Should().BeTrue("because System.Exception has public properties and probably has private properties");
-            }
-
-            [Fact]
-            public void ShouldReturnLazyCollectionThatContainsPublicAndNotPublicProperties()
-            {
-                // Given
-                var classMetadata = new ClassMetadata<Exception>();
-
-                // When
-                var properties = classMetadata.Properties;
-
-                // Then
-                properties.Value.Any(p => p.IsPublic).Should().BeTrue();
-                properties.Value.Any(p => p.IsNotPublic).Should().BeTrue();
-            }
+            // Then
+            properties.Value.Any(p => p.IsPublic).Should().BeTrue();
+            properties.Value.Any(p => p.IsNotPublic).Should().BeTrue();
         }
     }
 }

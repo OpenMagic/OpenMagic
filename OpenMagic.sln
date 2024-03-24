@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
@@ -15,11 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{FABA1E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{82EB1058-23C2-4640-9D46-DEBC053FC03B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic", "source\OpenMagic\OpenMagic.csproj", "{813600E6-945A-46FD-A27C-180E4131DA8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMagic", "source\OpenMagic\OpenMagic.csproj", "{813600E6-945A-46FD-A27C-180E4131DA8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Tests", "tests\OpenMagic.Tests\OpenMagic.Tests.csproj", "{CB398C4E-3EB3-4E33-A3AA-F637B50131B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMagic.Tests", "tests\OpenMagic.Tests\OpenMagic.Tests.csproj", "{CB398C4E-3EB3-4E33-A3AA-F637B50131B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Specifications", "tests\OpenMagic.Specifications\OpenMagic.Specifications.csproj", "{37BF7FF0-3A79-4840-BFE0-C5D8358B6908}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMagic.Specifications", "tests\OpenMagic.Specifications\OpenMagic.Specifications.csproj", "{37BF7FF0-3A79-4840-BFE0-C5D8358B6908}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

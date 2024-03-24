@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace OpenMagic.Extensions
+namespace OpenMagic.Extensions;
+
+public static class LazyExtensions
 {
-    public static class LazyExtensions
+    public static void DisposeValueIfCreated<T>(this Lazy<T> obj) where T : IDisposable
     {
-        public static void DisposeValueIfCreated<T>(this Lazy<T> obj) where T : IDisposable
+        if (obj.IsValueCreated)
         {
-            if (obj.IsValueCreated)
-            {
-                obj.Value.Dispose();
-            }
+            obj.Value.Dispose();
         }
     }
 }

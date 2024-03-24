@@ -2,41 +2,40 @@
 using OpenMagic.DataAnnotations;
 using Xunit;
 
-namespace OpenMagic.Tests.DataAnnotations
+namespace OpenMagic.Tests.DataAnnotations;
+
+public class UriAttributeTests
 {
-    public class UriAttributeTests
+    public class IsValid
     {
-        public class IsValid
+        [Fact]
+        public void ShouldBeTrueWhenValueIsValidUri()
         {
-            [Fact]
-            public void ShouldBeTrueWhenValueIsValidUri()
-            {
-                IsValid_For("http://example.com").Should().BeTrue();
-            }
+            IsValid_For("http://example.com").Should().BeTrue();
+        }
 
-            [Fact]
-            public void ShouldBeFalseWhenValueIsNotValidUri()
-            {
-                IsValid_For("an invalid url").Should().BeFalse();
-                IsValid_For(2).Should().BeFalse();
-            }
+        [Fact]
+        public void ShouldBeFalseWhenValueIsNotValidUri()
+        {
+            IsValid_For("an invalid url").Should().BeFalse();
+            IsValid_For(2).Should().BeFalse();
+        }
 
-            [Fact]
-            public void ShouldBeTrueWhenValueIsNull()
-            {
-                IsValid_For(null).Should().BeTrue();
-            }
+        [Fact]
+        public void ShouldBeTrueWhenValueIsNull()
+        {
+            IsValid_For(null).Should().BeTrue();
+        }
 
-            [Fact]
-            public void ShouldBeTrueWhenValueIsWhitespace()
-            {
-                IsValid_For("").Should().BeTrue();
-            }
+        [Fact]
+        public void ShouldBeTrueWhenValueIsWhitespace()
+        {
+            IsValid_For("").Should().BeTrue();
+        }
 
-            private bool IsValid_For(object uri)
-            {
-                return (new UriAttribute()).IsValid(uri);
-            }
+        private bool IsValid_For(object uri)
+        {
+            return new UriAttribute().IsValid(uri);
         }
     }
 }
