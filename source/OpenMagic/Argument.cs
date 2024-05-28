@@ -83,7 +83,7 @@ public static class Argument
 
         if (!emailAddress.IsValidEmailAddress())
         {
-            throw new ArgumentNotValidEmailAddress(paramName, emailAddress);
+            throw new ArgumentNotAnEmailAddressException(paramName, emailAddress);
         }
 
         return emailAddress;
