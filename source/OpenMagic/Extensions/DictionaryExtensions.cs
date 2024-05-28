@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NullGuard;
+
 
 namespace OpenMagic.Extensions;
 
@@ -16,7 +16,7 @@ public static class DictionaryExtensions
     ///     The value associated with the specified key, if the key is found; otherwise, the default value for the type of
     ///     the value parameter.
     /// </returns>
-    [return: AllowNull]
+    
     public static TValue FindValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
     {
         dictionary.TryGetValue(key, out var value);

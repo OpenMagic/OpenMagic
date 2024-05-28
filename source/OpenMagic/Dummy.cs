@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NullGuard;
+
 
 namespace OpenMagic;
 
@@ -44,13 +44,13 @@ public class Dummy : IDummy
         { typeof(ushort?), () => RandomNullable(RandomNumber.NextUShort) }
     };
 
-    [return: AllowNull]
+    
     public T Value<T>()
     {
         return (T)Value(typeof(T));
     }
 
-    [return: AllowNull]
+    
     public virtual object Value(Type type)
     {
         try

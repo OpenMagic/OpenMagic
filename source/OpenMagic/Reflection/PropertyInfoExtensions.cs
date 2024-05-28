@@ -2,13 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
-using NullGuard;
+
 
 namespace OpenMagic.Reflection;
 
 public static class PropertyInfoExtensions
 {
-    [return: AllowNull]
+    
     public static T GetCustomAttribute<T>(this PropertyInfo value)
     {
         return value.GetCustomAttributes<T>().SingleOrDefault();

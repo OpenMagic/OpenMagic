@@ -221,7 +221,7 @@ namespace OpenMagic
         /// <param name="param">The value to test for null.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
-        public static T MustNotBeNull<T>([NullGuard.AllowNull] this T param, string paramName)
+        public static T MustNotBeNull<T>([AllowNull] this T param, string paramName)
         {
             paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
 
@@ -243,7 +243,7 @@ namespace OpenMagic
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-        public static IEnumerable<T> MustNotBeNullOrEmpty<T>([NullGuard.AllowNull] this IEnumerable<T> param, string paramName)
+        public static IEnumerable<T> MustNotBeNullOrEmpty<T>([AllowNull] this IEnumerable<T> param, string paramName)
         {
             paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
 
@@ -261,7 +261,7 @@ namespace OpenMagic
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null or whitespace.</returns>
         // ReSharper disable once FunctionRecursiveOnAllPaths because that's not true
-        public static string MustNotBeNullOrWhiteSpace([NullGuard.AllowNull] this string param, string paramName)
+        public static string MustNotBeNullOrWhiteSpace([AllowNull] this string param, string paramName)
         {
             paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
 

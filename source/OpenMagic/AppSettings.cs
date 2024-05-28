@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
-using NullGuard;
 
 // ReSharper disable UseStringInterpolation
 
@@ -43,7 +42,7 @@ public class AppSettings(Func<IConfigurationSection> appSettingsFactory)
         }
     }
 
-    [return: AllowNull]
+    
     public string GetString(string key, bool throwExceptionIfKeyNotFound = true, bool throwExceptionIsValueIsNullOrWhitespace = true)
     {
         var fullKey = GetFullKey(key);
