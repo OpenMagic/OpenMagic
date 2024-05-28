@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
-using NullGuard;
+
 using OpenMagic.Extensions.Collections.Generic;
 
 namespace OpenMagic.Extensions;
@@ -175,7 +176,7 @@ public static class StringExtensions
     ///     Nothing. An alternative
     ///     for this example is "abc".TextAfter("d").
     /// </remarks>
-    [return: AllowNull]
+    
     public static string TextAfter(this string text, int value)
     {
         return text.TextAfter(value, null);
@@ -197,7 +198,7 @@ public static class StringExtensions
     ///     Nothing. An alternative
     ///     for this example is "abc".TextAfter("d").
     /// </remarks>
-    [return: AllowNull]
+    
     public static string TextAfter(this string text, int value, [AllowNull] string defaultValue)
     {
         return text.TextAfter(value, defaultValue, 1);
@@ -220,7 +221,7 @@ public static class StringExtensions
     ///     Nothing. An alternative
     ///     for this example is "abc".TextAfter("d").
     /// </remarks>
-    [return: AllowNull]
+    
     public static string TextAfter(this string text, int value, [AllowNull] string defaultValue, int offset)
     {
         return value == -1 ? defaultValue : text[(value + offset)..];
@@ -235,7 +236,7 @@ public static class StringExtensions
     ///     The text after <paramref name="value" />. If <paramref name="value" /> does not exist then Nothing is
     ///     returned.
     /// </returns>
-    [return: AllowNull]
+    
     public static string TextAfter(this string text, string value)
     {
         // todo: unit tests
@@ -252,7 +253,7 @@ public static class StringExtensions
     ///     The text after <paramref name="value" />. If <paramref name="value" /> does not exist then
     ///     <paramref name="defaultValue" /> is returned.
     /// </returns>
-    [return: AllowNull]
+    
     public static string TextAfter(this string text, string value, [AllowNull] string defaultValue)
     {
         value.MustNotBeNullOrWhiteSpace("value");
@@ -281,7 +282,7 @@ public static class StringExtensions
     ///     The text after last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
     ///     Nothing is returned.
     /// </returns>
-    [return: AllowNull]
+    
     public static string TextAfterLast(this string text, string value)
     {
         // todo: unit tests
@@ -300,7 +301,7 @@ public static class StringExtensions
     ///     The text after last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
     ///     <paramref name="text" /> is returned.
     /// </returns>
-    [return: AllowNull]
+    
     public static string TextAfterLast(this string text, string value, [AllowNull] string defaultValue)
     {
         return text.IsNullOrWhiteSpace() ? defaultValue : text.TextAfter(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue, value.Length);
@@ -315,7 +316,7 @@ public static class StringExtensions
     ///     The text before <paramref name="value" />. If <paramref name="value" /> does not exist then Nothing is
     ///     returned.
     /// </returns>
-    [return: AllowNull]
+    
     public static string TextBefore(this string text, string value)
     {
         // todo: unit tests
@@ -334,7 +335,7 @@ public static class StringExtensions
     ///     The text before <paramref name="value" />. If <paramref name="value" /> does not exist then
     ///     <paramref name="defaultValue" /> is returned.
     /// </returns>
-    [return: AllowNull]
+    
     public static string TextBefore(this string text, string value, [AllowNull] string defaultValue)
     {
         return text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.IndexOf(value, StringComparison.Ordinal), defaultValue);
@@ -358,7 +359,7 @@ public static class StringExtensions
     ///     Nothing. An alternative
     ///     for this example is "abc".TextBefore("d").
     /// </remarks>
-    [return: AllowNull]
+    
     public static string TextBefore(this string text, int value, [AllowNull] string defaultValue)
     {
         // todo: unit tests
@@ -374,7 +375,7 @@ public static class StringExtensions
     ///     The text before last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
     ///     Nothing is returned.
     /// </returns>
-    [return: AllowNull]
+    
     public static string TextBeforeLast(this string text, string value)
     {
         return text.TextBeforeLast(value, null);
@@ -392,7 +393,7 @@ public static class StringExtensions
     ///     The text before last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
     ///     <paramref name="defaultValue" /> is returned.
     /// </returns>
-    [return: AllowNull]
+    
     public static string TextBeforeLast(this string text, string value, [AllowNull] string defaultValue)
     {
         return text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue);
