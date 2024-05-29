@@ -83,7 +83,6 @@ namespace OpenMagic
         public static string MustBeAnEmailAddress(this string emailAddress, string paramName)
         {
             emailAddress.MustNotBeNullOrWhiteSpace(nameof(emailAddress));
-            paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
 
             if (!emailAddress.IsValidEmailAddress())
             {
@@ -186,8 +185,6 @@ namespace OpenMagic
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         public static string MustNotBeEmpty(this string param, string paramName)
         {
-            paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
-
             if (param is "")
             {
                 throw new ArgumentEmptyException(paramName);
@@ -204,8 +201,6 @@ namespace OpenMagic
         /// <returns>Returns <paramref name="param" /> when the value is not null or empty, but contains only whitespace.</returns>
         public static string MustNotBeWhiteSpace(this string param, string paramName)
         {
-            paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
-
             if (!string.IsNullOrEmpty(param) && param.IsNullOrWhiteSpace())
             {
                 throw new ArgumentWhitespaceException(paramName);
@@ -223,8 +218,6 @@ namespace OpenMagic
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         public static T MustNotBeNull<T>([AllowNull] this T param, string paramName)
         {
-            paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
-
             // ReSharper disable once CompareNonConstrainedGenericWithNull
             if (param == null)
             {
@@ -245,8 +238,6 @@ namespace OpenMagic
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
         public static IEnumerable<T> MustNotBeNullOrEmpty<T>([AllowNull] this IEnumerable<T> param, string paramName)
         {
-            paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
-
             param.MustNotBeNull(paramName);
             param.MustNotBeEmpty(paramName);
 
@@ -260,11 +251,8 @@ namespace OpenMagic
         /// <param name="param">The value to test for null or whitespace.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null or whitespace.</returns>
-        // ReSharper disable once FunctionRecursiveOnAllPaths because that's not true
         public static string MustNotBeNullOrWhiteSpace([AllowNull] this string param, string paramName)
         {
-            paramName.MustNotBeNullOrWhiteSpace(nameof(paramName));
-
             param.MustNotBeNull(paramName);
             param.MustNotBeEmpty(paramName);
             param.MustNotBeWhiteSpace(paramName);

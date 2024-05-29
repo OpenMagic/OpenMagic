@@ -11,6 +11,8 @@ public class PropertyMetadata : IPropertyMetadata
 
     public PropertyMetadata(PropertyInfo property, bool isPublic)
     {
+        property.MustNotBeNull(nameof(property));
+
         PropertyInfo = property;
         IsPublic = isPublic;
         DisplayFactory = new Lazy<DisplayAttribute>(() => GetCustomAttribute(() => new DisplayAttribute()));

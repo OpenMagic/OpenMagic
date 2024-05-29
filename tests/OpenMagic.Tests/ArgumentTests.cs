@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using OpenMagic.Exceptions;
 using OpenMagic.Tests.TestHelpers;
 using Xunit;
 using Xunit.Abstractions;
@@ -67,30 +68,7 @@ public class ArgumentsTests
             // Then
             var exception = action.Should().Throw<ArgumentException>().Subject.Single();
             exception.ParamName.Should().Be("emailAddress");
-            exception.Message.Should().Be("emailAddress".ArgumentExceptionMessage("Value cannot be whitespace."));
-        }
-
-        [Fact]
-        public void Should_Throw_ArgumentNullException_When_paramName_Is_Null()
-        {
-            // When
-            Action action = () => "dummy".MustBeAnEmailAddress(null);
-
-            // Then
-            action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("paramName");
-        }
-
-        [Fact]
-        public void Should_Throw_ArgumentException_When_paramName_Is_WhiteSpace()
-        {
-            // When
-            Action action = () => "dummy".MustBeAnEmailAddress("");
-
-            // Then
-            var exception = action.Should().Throw<ArgumentException>().Subject.Single();
-
-            exception.ParamName.Should().Be("paramName");
-            exception.Message.Should().Be("paramName".ArgumentExceptionMessage("Value cannot be whitespace."));
+            exception.Message.Should().Be("emailAddress".ArgumentExceptionMessage("Value cannot be empty."));
         }
 
         [Fact]
@@ -258,14 +236,14 @@ public class ArgumentsTests
         public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
         {
             // Given
-            const string param = "";
+            const string param = " ";
 
             // When
             Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
 
             // Then
             action
-                .Should().Throw<ArgumentException>()
+                .Should().Throw<ArgumentWhitespaceException>()
                 .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be whitespace."));
         }
     }
@@ -290,14 +268,14 @@ public class ArgumentsTests
         public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
         {
             // Given
-            const string param = "";
+            const string param = " ";
 
             // When
             Action action = () => param.MustNotBeNullOrWhiteSpace("fakeParamName");
 
             // Then
             action
-                .Should().Throw<ArgumentException>()
+                .Should().Throw<ArgumentWhitespaceException>()
                 .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be whitespace."));
         }
     }
