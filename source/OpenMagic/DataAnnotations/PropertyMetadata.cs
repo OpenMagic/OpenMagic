@@ -3,33 +3,34 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using OpenMagic.Reflection;
 
-namespace OpenMagic.DataAnnotations;
-
-public class PropertyMetadata : IPropertyMetadata
+namespace OpenMagic.DataAnnotations
 {
-    private readonly Lazy<DisplayAttribute> DisplayFactory;
-
-    public PropertyMetadata(PropertyInfo property, bool isPublic)
+    public class PropertyMetadata : IPropertyMetadata
     {
-        property.MustNotBeNull(nameof(property));
+        private readonly Lazy<DisplayAttribute> DisplayFactory;
 
-        PropertyInfo = property;
-        IsPublic = isPublic;
-        DisplayFactory = new Lazy<DisplayAttribute>(() => GetCustomAttribute(() => new DisplayAttribute()));
-    }
+        public PropertyMetadata(PropertyInfo property, bool isPublic)
+        {
+            property.MustNotBeNull(nameof(property));
 
-    public DisplayAttribute Display => DisplayFactory.Value;
+            PropertyInfo = property;
+            IsPublic = isPublic;
+            DisplayFactory = new Lazy<DisplayAttribute>(() => GetCustomAttribute(() => new DisplayAttribute()));
+        }
 
-    public PropertyInfo PropertyInfo { get; }
+        public DisplayAttribute Display => DisplayFactory.Value;
 
-    public bool IsPublic { get; }
+        public PropertyInfo PropertyInfo { get; }
 
-    public bool IsNotPublic => !IsPublic;
+        public bool IsPublic { get; }
 
-    private T GetCustomAttribute<T>(Func<T> defaultValueFactory)
-    {
-        var attribute = PropertyInfo.GetCustomAttribute<T>();
+        public bool IsNotPublic => !IsPublic;
 
-        return attribute ?? defaultValueFactory();
+        private T GetCustomAttribute<T>(Func<T> defaultValueFactory)
+        {
+            var attribute = PropertyInfo.GetCustomAttribute<T>();
+
+            return attribute ?? defaultValueFactory();
+        }
     }
 }

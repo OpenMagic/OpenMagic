@@ -4,43 +4,44 @@ using FluentAssertions;
 using OpenMagic.Specifications.Helpers;
 using Reqnroll;
 
-namespace OpenMagic.Specifications.Steps.ArgumentSteps;
-
-[Binding]
-public class DirectoryMustExistSteps
+namespace OpenMagic.Specifications.Steps.ArgumentSteps
 {
-    private readonly ActualData _actual;
-    private readonly GivenData _given;
-
-    public DirectoryMustExistSteps(GivenData given, ActualData actual)
+    [Binding]
+    public class DirectoryMustExistSteps
     {
-        _given = given;
-        _actual = actual;
-    }
+        private readonly ActualData _actual;
+        private readonly GivenData _given;
 
-    [Given(@"directory exists")]
-    public void GivenDirectoryExists()
-    {
-        _given.Directory = new DirectoryInfo(Directory.GetCurrentDirectory());
-    }
+        public DirectoryMustExistSteps(GivenData given, ActualData actual)
+        {
+            _given = given;
+            _actual = actual;
+        }
 
-    [Given(@"directory does not exists")]
-    public void GivenDirectoryDoesNotExists()
-    {
-        _given.Directory = new DirectoryInfo(Guid.NewGuid().ToString());
-    }
+        [Given(@"directory exists")]
+        public void GivenDirectoryExists()
+        {
+            _given.Directory = new DirectoryInfo(Directory.GetCurrentDirectory());
+        }
 
-    [When(@"I call Argument\.DirectoryExists\(<param>, <paramName>\)")]
-    public void WhenICallArgument_DirectoryExists_param_paramName()
-    {
-        _actual.GetResult(() => Argument.DirectoryMustExist(_given.Directory, "dummy"));
-    }
+        [Given(@"directory does not exists")]
+        public void GivenDirectoryDoesNotExists()
+        {
+            _given.Directory = new DirectoryInfo(Guid.NewGuid().ToString());
+        }
 
-    [Scope(Feature = "DirectoryMustExist")]
-    [Then(@"passed <param> should be returned")]
-    public void ThenShouldBeReturned()
-    {
-        _actual.Exception.Should().BeNull();
-        _actual.Result.Should().BeSameAs(_given.Directory);
+        [When(@"I call Argument\.DirectoryExists\(<param>, <paramName>\)")]
+        public void WhenICallArgument_DirectoryExists_param_paramName()
+        {
+            _actual.GetResult(() => Argument.DirectoryMustExist(_given.Directory, "dummy"));
+        }
+
+        [Scope(Feature = "DirectoryMustExist")]
+        [Then(@"passed <param> should be returned")]
+        public void ThenShouldBeReturned()
+        {
+            _actual.Exception.Should().BeNull();
+            _actual.Result.Should().BeSameAs(_given.Directory);
+        }
     }
 }

@@ -2,25 +2,26 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace OpenMagic.Reflection;
-
-public static class Type<T>
+namespace OpenMagic.Reflection
 {
-    /// <summary>
-    ///     Get PropertyInfo a property via LINQ expression.
-    /// </summary>
-    public static PropertyInfo Property<TValue>(Expression<Func<T, TValue>> value)
+    public static class Type<T>
     {
-        if (value.NodeType != ExpressionType.Lambda)
+        /// <summary>
+        ///     Get PropertyInfo a property via LINQ expression.
+        /// </summary>
+        public static PropertyInfo Property<TValue>(Expression<Func<T, TValue>> value)
         {
-            throw new ArgumentException($"Value must be NodeType '{ExpressionType.Lambda}', not '{value.NodeType}'.", nameof(value));
-        }
+            if (value.NodeType != ExpressionType.Lambda)
+            {
+                throw new ArgumentException($"Value must be NodeType '{ExpressionType.Lambda}', not '{value.NodeType}'.", nameof(value));
+            }
 
-        if (value.Body.NodeType != ExpressionType.MemberAccess)
-        {
-            throw new ArgumentException($"Value's Body.NodeType must be '{ExpressionType.MemberAccess}', not '{value.Body.NodeType}'.", nameof(value));
-        }
+            if (value.Body.NodeType != ExpressionType.MemberAccess)
+            {
+                throw new ArgumentException($"Value's Body.NodeType must be '{ExpressionType.MemberAccess}', not '{value.Body.NodeType}'.", nameof(value));
+            }
 
-        return (PropertyInfo)((MemberExpression)value.Body).Member;
+            return (PropertyInfo)((MemberExpression)value.Body).Member;
+        }
     }
 }
