@@ -14,6 +14,8 @@ public class ClassMetadata : IClassMetadata
 
     public ClassMetadata(Type type)
     {
+        type.MustNotBeNull(nameof(type));
+
         Type = type;
         Properties = new Lazy<IEnumerable<IPropertyMetadata>>(GetProperties);
     }

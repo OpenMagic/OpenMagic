@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using OpenMagic.Exceptions;
 using OpenMagic.Extensions;
 using OpenMagic.Specifications.Helpers;
 using Reqnroll;
@@ -31,9 +32,21 @@ public class CommonThenSteps
     }
 
     [Then(@"ArgumentException should be thrown")]
-    public void ThenArgumentExectionShouldBeThrown()
+    public void ThenArgumentExceptionShouldBeThrown()
     {
         _actual.Exception.Should().BeOfType<ArgumentException>();
+    }
+
+    [Then(@"ArgumentEmptyException should be thrown")]
+    public void ThenArgumentEmptyExceptionShouldBeThrown()
+    {
+        _actual.Exception.Should().BeOfType<ArgumentEmptyException>();
+    }
+
+    [Then(@"ArgumentWhitespaceException should be thrown")]
+    public void ThenArgumentWhitespaceExceptionShouldBeThrown()
+    {
+        _actual.Exception.Should().BeOfType<ArgumentWhitespaceException>();
     }
 
     [Then(@"the exception message should be:")]

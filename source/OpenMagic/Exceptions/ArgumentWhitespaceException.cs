@@ -12,7 +12,7 @@ namespace OpenMagic.Exceptions
         /// </summary>
         /// <param name="paramName">The name of the parameter that caused the exception.</param>
         public ArgumentWhitespaceException(string paramName)
-            : base("Value cannot be whitespace.", paramName.MustNotBeNullOrWhiteSpace(nameof(paramName)))
+            : base("Value cannot be whitespace.", paramName)
         {
         }
     }

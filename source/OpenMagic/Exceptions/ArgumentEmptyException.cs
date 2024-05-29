@@ -12,7 +12,7 @@ namespace OpenMagic.Exceptions
         /// </summary>
         /// <param name="paramName">The name of the parameter that caused the exception.</param>
         public ArgumentEmptyException(string paramName)
-            : base("Value cannot be empty.", paramName.MustNotBeNullOrWhiteSpace(nameof(paramName)))
+            : base("Value cannot be empty.", paramName)
         {
         }
     }
