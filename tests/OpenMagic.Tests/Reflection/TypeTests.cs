@@ -3,20 +3,21 @@ using FluentAssertions;
 using OpenMagic.Reflection;
 using Xunit;
 
-namespace OpenMagic.Tests.Reflection;
-
-public class TypeTests
+namespace OpenMagic.Tests.Reflection
 {
-    public class Property
+    public class TypeTests
     {
-        [Fact]
-        public void Should_Be_PropertyInfo_ForRequestedProperty()
+        public class Property
         {
-            // When
-            var propertyInfo = Type<Exception>.Property(x => x.Message);
+            [Fact]
+            public void Should_Be_PropertyInfo_ForRequestedProperty()
+            {
+                // When
+                var propertyInfo = Type<Exception>.Property(x => x.Message);
 
-            // Then
-            propertyInfo.Name.Should().Be("Message");
+                // Then
+                propertyInfo.Name.Should().Be("Message");
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿namespace OpenMagic.Tests.TestHelpers;
-
-public static class StringExtensions
+﻿namespace OpenMagic.Tests.TestHelpers
 {
-    public static string ArgumentExceptionMessage(this string argumentName, string message)
+    public static class StringExtensions
     {
-        return $"{message} (Parameter '{argumentName}')";
+        public static string ArgumentExceptionMessage(this string argumentName, string message)
+        {
+            return $"{message} (Parameter '{argumentName}')";
+        }
     }
 }

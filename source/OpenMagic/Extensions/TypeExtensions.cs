@@ -3,53 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace OpenMagic.Extensions;
-
-public static class TypeExtensions
+namespace OpenMagic.Extensions
 {
-    /// <summary>
-    ///     Determines whether the specified type is IEnumerable of <string/>.
-    /// </summary>
-    /// <param name="value">The value to test.</param>
-    /// <remarks>
-    ///     Syntactic sugar.
-    /// </remarks>
-    public static bool IsEnumerableString(this Type value)
+    public static class TypeExtensions
     {
-        return value == typeof(IEnumerable<string>);
-    }
-
-    /// <summary>
-    ///     Determines whether the specified type is string.
-    /// </summary>
-    /// <param name="value">The value to test.</param>
-    /// <remarks>
-    ///     Syntactic sugar.
-    /// </remarks>
-    public static bool IsString(this Type value)
-    {
-        return value == typeof(string);
-    }
-
-    public static FieldInfo FindPrivateField(this Type type, string privateFieldName)
-    {
-        return type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic).SingleOrDefault(f => f.Name == privateFieldName);
-    }
-
-    public static FieldInfo GetPrivateField(this Type type, string privateFieldName)
-    {
-        var privateField = type.FindPrivateField(privateFieldName);
-
-        if (privateField != null)
+        /// <summary>
+        ///     Determines whether the specified type is IEnumerable of <string />.
+        /// </summary>
+        /// <param name="value">The value to test.</param>
+        /// <remarks>
+        ///     Syntactic sugar.
+        /// </remarks>
+        public static bool IsEnumerableString(this Type value)
         {
-            return privateField;
+            return value == typeof(IEnumerable<string>);
         }
 
-        var exception = new ArgumentOutOfRangeException(nameof(privateFieldName), $"Cannot find {privateFieldName} in {type}.");
+        /// <summary>
+        ///     Determines whether the specified type is string.
+        /// </summary>
+        /// <param name="value">The value to test.</param>
+        /// <remarks>
+        ///     Syntactic sugar.
+        /// </remarks>
+        public static bool IsString(this Type value)
+        {
+            return value == typeof(string);
+        }
 
-        exception.Data.Add("type", type);
-        exception.Data.Add("privateFieldName", privateFieldName);
+        public static FieldInfo FindPrivateField(this Type type, string privateFieldName)
+        {
+            return type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic).SingleOrDefault(f => f.Name == privateFieldName);
+        }
 
-        throw exception;
+        public static FieldInfo GetPrivateField(this Type type, string privateFieldName)
+        {
+            var privateField = type.FindPrivateField(privateFieldName);
+
+            if (privateField != null)
+            {
+                return privateField;
+            }
+
+            var exception = new ArgumentOutOfRangeException(nameof(privateFieldName), $"Cannot find {privateFieldName} in {type}.");
+
+            exception.Data.Add("type", type);
+            exception.Data.Add("privateFieldName", privateFieldName);
+
+            throw exception;
+        }
     }
 }

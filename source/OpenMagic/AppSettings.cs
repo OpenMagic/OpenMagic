@@ -3,78 +3,79 @@ using Microsoft.Extensions.Configuration;
 
 // ReSharper disable UseStringInterpolation
 
-namespace OpenMagic;
-
-public class AppSettings(Func<IConfigurationSection> appSettingsFactory)
+namespace OpenMagic
 {
-    private readonly string _appSettingsPrefix;
-    private readonly string _appSettingsPrefixDelimiter;
-
-    public AppSettings() : this(GetAppSettings)
+    public class AppSettings(Func<IConfigurationSection> appSettingsFactory)
     {
-    }
+        private readonly string _appSettingsPrefix;
+        private readonly string _appSettingsPrefixDelimiter;
 
-    public AppSettings(string appSettingsPrefix) : this(appSettingsPrefix, "_", GetAppSettings)
-    {
-    }
-
-    public AppSettings(string appSettingsPrefix, string appSettingsPrefixDelimiter) : this(appSettingsPrefix, appSettingsPrefixDelimiter, GetAppSettings)
-    {
-    }
-
-    public AppSettings(string appSettingsPrefix, string appSettingsPrefixDelimiter, Func<IConfigurationSection> appSettingsFactory) : this(appSettingsFactory)
-    {
-        _appSettingsPrefix = appSettingsPrefix;
-        _appSettingsPrefixDelimiter = appSettingsPrefixDelimiter;
-    }
-
-    public bool GetBoolean(string key, bool throwExceptionIsKeyNotFound = true, bool throwExceptionIsValueIsNullOrWhitespace = true)
-    {
-        var value = GetString(key, throwExceptionIsKeyNotFound, throwExceptionIsValueIsNullOrWhitespace);
-
-        try
+        public AppSettings() : this(GetAppSettings)
         {
-            return bool.Parse(value);
-        }
-        catch (Exception exception)
-        {
-            throw new Exception(string.Format("AppSettings[{0}] must be a boolean.", GetFullKey(key)), exception);
-        }
-    }
-
-    
-    public string GetString(string key, bool throwExceptionIfKeyNotFound = true, bool throwExceptionIsValueIsNullOrWhitespace = true)
-    {
-        var fullKey = GetFullKey(key);
-        var appSettings = appSettingsFactory();
-        var value = appSettings[fullKey];
-
-        if (!string.IsNullOrWhiteSpace(value))
-        {
-            return value;
         }
 
-        if (throwExceptionIfKeyNotFound)
+        public AppSettings(string appSettingsPrefix) : this(appSettingsPrefix, "_", GetAppSettings)
         {
-            throw new Exception(string.Format("AppSettings[{0}] must be defined. Maybe you need to create AppSettings.config. Maybe there is an AppSettings.Example.config file to copy.", fullKey));
         }
 
-        return null;
-    }
+        public AppSettings(string appSettingsPrefix, string appSettingsPrefixDelimiter) : this(appSettingsPrefix, appSettingsPrefixDelimiter, GetAppSettings)
+        {
+        }
 
-    private string GetFullKey(string key)
-    {
-        return string.Format("{0}{1}{2}", _appSettingsPrefix, _appSettingsPrefixDelimiter, key);
-    }
+        public AppSettings(string appSettingsPrefix, string appSettingsPrefixDelimiter, Func<IConfigurationSection> appSettingsFactory) : this(appSettingsFactory)
+        {
+            _appSettingsPrefix = appSettingsPrefix;
+            _appSettingsPrefixDelimiter = appSettingsPrefixDelimiter;
+        }
 
-    private static IConfigurationSection GetAppSettings()
-    {
-        var configurationRoot = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
+        public bool GetBoolean(string key, bool throwExceptionIsKeyNotFound = true, bool throwExceptionIsValueIsNullOrWhitespace = true)
+        {
+            var value = GetString(key, throwExceptionIsKeyNotFound, throwExceptionIsValueIsNullOrWhitespace);
 
-        var appSettings = configurationRoot.GetSection("AppSettings");
+            try
+            {
+                return bool.Parse(value);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(string.Format("AppSettings[{0}] must be a boolean.", GetFullKey(key)), exception);
+            }
+        }
 
-        return appSettings;
+
+        public string GetString(string key, bool throwExceptionIfKeyNotFound = true, bool throwExceptionIsValueIsNullOrWhitespace = true)
+        {
+            var fullKey = GetFullKey(key);
+            var appSettings = appSettingsFactory();
+            var value = appSettings[fullKey];
+
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                return value;
+            }
+
+            if (throwExceptionIfKeyNotFound)
+            {
+                throw new Exception(string.Format("AppSettings[{0}] must be defined. Maybe you need to create AppSettings.config. Maybe there is an AppSettings.Example.config file to copy.", fullKey));
+            }
+
+            return null;
+        }
+
+        private string GetFullKey(string key)
+        {
+            return string.Format("{0}{1}{2}", _appSettingsPrefix, _appSettingsPrefixDelimiter, key);
+        }
+
+        private static IConfigurationSection GetAppSettings()
+        {
+            var configurationRoot = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var appSettings = configurationRoot.GetSection("AppSettings");
+
+            return appSettings;
+        }
     }
 }

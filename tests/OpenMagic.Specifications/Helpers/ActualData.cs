@@ -1,23 +1,24 @@
 ﻿using System;
 
-namespace OpenMagic.Specifications.Helpers;
-
-public class ActualData
+namespace OpenMagic.Specifications.Helpers
 {
-    public Exception Exception { get; set; }
-    public object Result { get; set; }
-
-    public void GetResult(Func<object> action)
+    public class ActualData
     {
-        try
+        public Exception Exception { get; set; }
+        public object Result { get; set; }
+
+        public void GetResult(Func<object> action)
         {
-            Result = action();
-            Exception = null;
-        }
-        catch (Exception exception)
-        {
-            Result = null;
-            Exception = exception;
+            try
+            {
+                Result = action();
+                Exception = null;
+            }
+            catch (Exception exception)
+            {
+                Result = null;
+                Exception = exception;
+            }
         }
     }
 }

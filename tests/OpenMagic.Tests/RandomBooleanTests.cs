@@ -2,20 +2,21 @@
 using FluentAssertions;
 using Xunit;
 
-namespace OpenMagic.Tests;
-
-public class RandomBooleanTests
+namespace OpenMagic.Tests
 {
-    public class Next
+    public class RandomBooleanTests
     {
-        [Fact]
-        public void ShouldGetRandomValues()
+        public class Next
         {
-            // When
-            var randomBooleans = RandomBoolean.Enumerable(1000);
+            [Fact]
+            public void ShouldGetRandomValues()
+            {
+                // When
+                var randomBooleans = RandomBoolean.Enumerable(1000);
 
-            // Then
-            randomBooleans.Count(b => b).Should().BeInRange(450, 550, "because approximately 50% of values should be true");
+                // Then
+                randomBooleans.Count(b => b).Should().BeInRange(450, 550, "because approximately 50% of values should be true");
+            }
         }
     }
 }

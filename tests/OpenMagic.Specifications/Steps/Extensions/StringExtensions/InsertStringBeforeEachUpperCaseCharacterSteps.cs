@@ -2,28 +2,29 @@
 using OpenMagic.Extensions;
 using Reqnroll;
 
-namespace OpenMagic.Specifications.Steps.Extensions.StringExtensions;
-
-[Binding]
-[Scope(Feature = "InsertStringBeforeEachUpperCaseCharacter")]
-public class InsertStringBeforeEachUpperCaseCharacterSteps
+namespace OpenMagic.Specifications.Steps.Extensions.StringExtensions
 {
-    private string _insert;
-    private object _result;
-    private string _value;
-
-    [When(@"I call InsertStringBeforeEachUpperCaseCharacter\((.*), (.*)\)")]
-    public void WhenICallInsertStringBeforeEachUpperCaseCharacter(string value, string insert)
+    [Binding]
+    [Scope(Feature = "InsertStringBeforeEachUpperCaseCharacter")]
+    public class InsertStringBeforeEachUpperCaseCharacterSteps
     {
-        _value = value;
-        _insert = insert;
+        private string _insert;
+        private object _result;
+        private string _value;
 
-        _result = value.InsertStringBeforeEachUpperCaseCharacter(insert);
-    }
+        [When(@"I call InsertStringBeforeEachUpperCaseCharacter\((.*), (.*)\)")]
+        public void WhenICallInsertStringBeforeEachUpperCaseCharacter(string value, string insert)
+        {
+            _value = value;
+            _insert = insert;
 
-    [Then(@"the result should be (.*)")]
-    public void ThenTheResultShouldBe(string expectedResult)
-    {
-        _result.Should().Be(expectedResult, "because '{0}' should have been inserted before each upper case character in '{1}'", _insert, _value);
+            _result = value.InsertStringBeforeEachUpperCaseCharacter(insert);
+        }
+
+        [Then(@"the result should be (.*)")]
+        public void ThenTheResultShouldBe(string expectedResult)
+        {
+            _result.Should().Be(expectedResult, "because '{0}' should have been inserted before each upper case character in '{1}'", _insert, _value);
+        }
     }
 }

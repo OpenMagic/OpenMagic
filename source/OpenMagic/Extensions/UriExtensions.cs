@@ -2,67 +2,68 @@
 using System.Net;
 using System.Net.Http;
 
-namespace OpenMagic.Extensions;
-
-public static class UriExtensions
+namespace OpenMagic.Extensions
 {
-    private static HttpResponseMessage GetResponse(this Uri uri)
+    public static class UriExtensions
     {
-        using (var httpClient = new HttpClient())
+        private static HttpResponseMessage GetResponse(this Uri uri)
         {
-            return httpClient.GetAsync(uri).Result;
+            using (var httpClient = new HttpClient())
+            {
+                return httpClient.GetAsync(uri).Result;
+            }
         }
-    }
 
-    public static HttpStatusCode GetResponseStatusCode(this Uri uri)
-    {
-        using (var response = uri.GetResponse())
+        public static HttpStatusCode GetResponseStatusCode(this Uri uri)
         {
-            return response.StatusCode;
+            using (var response = uri.GetResponse())
+            {
+                return response.StatusCode;
+            }
         }
-    }
 
-    public static bool IsResponding(this Uri uri)
-    {
-        try
+        public static bool IsResponding(this Uri uri)
         {
-            uri.GetResponse();
-            return true;
-        }
-        catch (HttpRequestException)
-        {
-            return false;
-        }
-        catch (AggregateException aggregateException)
-        {
-            if (aggregateException.InnerExceptions.Count == 1 && 
-                aggregateException.InnerException != null && 
-                aggregateException.InnerException.GetType() == typeof(HttpRequestException))
+            try
+            {
+                uri.GetResponse();
+                return true;
+            }
+            catch (HttpRequestException)
             {
                 return false;
             }
-
-            throw;
-        }
-    }
-
-    public static bool ResponseIsSuccessStatusCode(this Uri uri)
-    {
-        try
-        {
-            using (var httpResponseMessage = uri.GetResponse())
+            catch (AggregateException aggregateException)
             {
-                return httpResponseMessage.IsSuccessStatusCode;
+                if (aggregateException.InnerExceptions.Count == 1 &&
+                    aggregateException.InnerException != null &&
+                    aggregateException.InnerException.GetType() == typeof(HttpRequestException))
+                {
+                    return false;
+                }
+
+                throw;
             }
         }
-        catch (AggregateException aggregateException)
-        {
-            if (aggregateException.InnerException != null && aggregateException.InnerException.GetType() == typeof(HttpRequestException))
-            {
-                return false;
-            }
 
-            throw;
+        public static bool ResponseIsSuccessStatusCode(this Uri uri)
+        {
+            try
+            {
+                using (var httpResponseMessage = uri.GetResponse())
+                {
+                    return httpResponseMessage.IsSuccessStatusCode;
+                }
+            }
+            catch (AggregateException aggregateException)
+            {
+                if (aggregateException.InnerException != null && aggregateException.InnerException.GetType() == typeof(HttpRequestException))
+                {
+                    return false;
+                }
+
+                throw;
+            }
         }
     }
 }

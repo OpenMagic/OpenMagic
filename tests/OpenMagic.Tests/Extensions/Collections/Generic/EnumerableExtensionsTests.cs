@@ -4,59 +4,60 @@ using FluentAssertions;
 using OpenMagic.Extensions.Collections.Generic;
 using Xunit;
 
-namespace OpenMagic.Tests.Extensions.Collections.Generic;
-
-public class EnumerableExtensionsTests
+namespace OpenMagic.Tests.Extensions.Collections.Generic
 {
-    public class ForEach
+    public class EnumerableExtensionsTests
     {
-        [Fact]
-        public void ShouldInvoke_action_OnEachItemIn_collection()
+        public class ForEach
         {
-            // Given
-            var list = Enumerable.Range(1, 3).ToArray();
-            var result = new List<int>();
+            [Fact]
+            public void ShouldInvoke_action_OnEachItemIn_collection()
+            {
+                // Given
+                var list = Enumerable.Range(1, 3).ToArray();
+                var result = new List<int>();
 
-            // When
-            list.ForEach(result.Add);
+                // When
+                list.ForEach(result.Add);
 
-            // Then
-            result.Should().Equal(list);
-        }
-    }
-
-    public class IsNullOrEmpty
-    {
-        [Fact]
-        public void ReturnsTrueWhenValueIsNull()
-        {
-            IEnumerable<string> nullString = null;
-            IEnumerable<int> nullInt = null;
-
-            // ReSharper disable once ExpressionIsAlwaysNull
-            nullString.IsNullOrEmpty().Should().BeTrue();
-            // ReSharper disable once ExpressionIsAlwaysNull
-            nullInt.IsNullOrEmpty().Should().BeTrue();
+                // Then
+                result.Should().Equal(list);
+            }
         }
 
-        [Fact]
-        public void ReturnsTrueWhenValueIsHasZeroElements()
+        public class IsNullOrEmpty
         {
-            var emptyString = new List<string>();
-            var emptyInt = new List<int>();
+            [Fact]
+            public void ReturnsTrueWhenValueIsNull()
+            {
+                IEnumerable<string> nullString = null;
+                IEnumerable<int> nullInt = null;
 
-            emptyString.IsNullOrEmpty().Should().BeTrue();
-            emptyInt.IsNullOrEmpty().Should().BeTrue();
-        }
+                // ReSharper disable once ExpressionIsAlwaysNull
+                nullString.IsNullOrEmpty().Should().BeTrue();
+                // ReSharper disable once ExpressionIsAlwaysNull
+                nullInt.IsNullOrEmpty().Should().BeTrue();
+            }
 
-        [Fact]
-        public void ReturnsFalseWhenValueHasElements()
-        {
-            var enumerableString = new List<string> { "a", "b" };
-            var enumerableInt = new List<int> { 1, 2 };
+            [Fact]
+            public void ReturnsTrueWhenValueIsHasZeroElements()
+            {
+                var emptyString = new List<string>();
+                var emptyInt = new List<int>();
 
-            enumerableString.IsNullOrEmpty().Should().BeFalse();
-            enumerableInt.IsNullOrEmpty().Should().BeFalse();
+                emptyString.IsNullOrEmpty().Should().BeTrue();
+                emptyInt.IsNullOrEmpty().Should().BeTrue();
+            }
+
+            [Fact]
+            public void ReturnsFalseWhenValueHasElements()
+            {
+                var enumerableString = new List<string> { "a", "b" };
+                var enumerableInt = new List<int> { 1, 2 };
+
+                enumerableString.IsNullOrEmpty().Should().BeFalse();
+                enumerableInt.IsNullOrEmpty().Should().BeFalse();
+            }
         }
     }
 }

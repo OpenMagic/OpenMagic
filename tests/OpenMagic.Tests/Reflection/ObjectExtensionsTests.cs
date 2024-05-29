@@ -4,53 +4,54 @@ using OpenMagic.DataAnnotations;
 using OpenMagic.Reflection;
 using Xunit;
 
-namespace OpenMagic.Tests.Reflection;
-
-public class ObjectExtensionsTests
+namespace OpenMagic.Tests.Reflection
 {
-    public class Method
+    public class ObjectExtensionsTests
     {
-        [Fact]
-        public void ShouldReturnMethodInfoForRequestedMethod()
+        public class Method
         {
-            // Given
-            var obj = new Exception();
+            [Fact]
+            public void ShouldReturnMethodInfoForRequestedMethod()
+            {
+                // Given
+                var obj = new Exception();
 
-            // When
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            var methodInfo = obj.Method(x => x.ToString());
+                // When
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                var methodInfo = obj.Method(x => x.ToString());
 
-            // Then
-            methodInfo.Name.Should().Be("ToString");
+                // Then
+                methodInfo.Name.Should().Be("ToString");
+            }
+
+            [Fact]
+            public void ShouldReturnMethodInfoForRequestedMethodThatTakesAnArgument()
+            {
+                // Given
+                var obj = new UriAttribute();
+
+                // When
+                var methodInfo = obj.Method(x => x.IsValid(null));
+
+                // Then
+                methodInfo.Name.Should().Be("IsValid");
+            }
         }
 
-        [Fact]
-        public void ShouldReturnMethodInfoForRequestedMethodThatTakesAnArgument()
+        public class Property
         {
-            // Given
-            var obj = new UriAttribute();
+            [Fact]
+            public void Should_Be_PropertyInfo_ForRequestedProperty()
+            {
+                // Given
+                var obj = new Exception();
 
-            // When
-            var methodInfo = obj.Method(x => x.IsValid(null));
+                // When
+                var propertyInfo = obj.Property(x => x.Message);
 
-            // Then
-            methodInfo.Name.Should().Be("IsValid");
-        }
-    }
-
-    public class Property
-    {
-        [Fact]
-        public void Should_Be_PropertyInfo_ForRequestedProperty()
-        {
-            // Given
-            var obj = new Exception();
-
-            // When
-            var propertyInfo = obj.Property(x => x.Message);
-
-            // Then
-            propertyInfo.Name.Should().Be("Message");
+                // Then
+                propertyInfo.Name.Should().Be("Message");
+            }
         }
     }
 }
