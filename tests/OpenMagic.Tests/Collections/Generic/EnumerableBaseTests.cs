@@ -3,76 +3,77 @@ using FluentAssertions;
 using OpenMagic.Collections.Generic;
 using Xunit;
 
-namespace OpenMagic.Tests.Collections.Generic;
-
-public class EnumerableBaseTests
+namespace OpenMagic.Tests.Collections.Generic
 {
-    public class Constructor
+    public class EnumerableBaseTests
     {
-        [Fact]
-        public void CanConstruct()
+        public class Constructor
         {
-            // When
-            var collection = new EnumerableBaseImplementation();
-
-            // Then
-            collection.Should().NotBeNull();
-        }
-    }
-
-    public class EnumerableBaseImplementation : EnumerableBase<int>
-    {
-        public EnumerableBaseImplementation()
-        {
-            for (var i = 0; i < 10; i++)
+            [Fact]
+            public void CanConstruct()
             {
-                Items.Add(i);
+                // When
+                var collection = new EnumerableBaseImplementation();
+
+                // Then
+                collection.Should().NotBeNull();
             }
         }
-    }
 
-    public class GetEnumerator
-    {
-        [Fact]
-        public void CanEnumerateAllValues()
+        public class EnumerableBaseImplementation : EnumerableBase<int>
         {
-            // Given
-            var collection = new EnumerableBaseImplementation();
-
-            // When
-            var enumerator = collection.GetEnumerator();
-
-            // Then
-            var i = -1;
-            while (enumerator.MoveNext())
+            public EnumerableBaseImplementation()
             {
-                enumerator.Current.Should().Be(++i, "because collection should be 0 ... 9");
+                for (var i = 0; i < 10; i++)
+                {
+                    Items.Add(i);
+                }
             }
-
-            i.Should().Be(9, "because the last item in collection should be 9");
         }
-    }
 
-    // ReSharper disable once InconsistentNaming
-    public class GetEnumerator_NonGeneric
-    {
-        [Fact]
-        public void CanEnumerateAllValues()
+        public class GetEnumerator
         {
-            // Given
-            IEnumerable collection = new EnumerableBaseImplementation();
-
-            // When
-            var enumerator = collection.GetEnumerator();
-
-            // Then
-            var i = -1;
-            while (enumerator.MoveNext())
+            [Fact]
+            public void CanEnumerateAllValues()
             {
-                enumerator.Current.Should().Be(++i, "because collection should be 0 ... 9");
-            }
+                // Given
+                var collection = new EnumerableBaseImplementation();
 
-            i.Should().Be(9, "because the last item in collection should be 9");
+                // When
+                var enumerator = collection.GetEnumerator();
+
+                // Then
+                var i = -1;
+                while (enumerator.MoveNext())
+                {
+                    enumerator.Current.Should().Be(++i, "because collection should be 0 ... 9");
+                }
+
+                i.Should().Be(9, "because the last item in collection should be 9");
+            }
+        }
+
+        // ReSharper disable once InconsistentNaming
+        public class GetEnumerator_NonGeneric
+        {
+            [Fact]
+            public void CanEnumerateAllValues()
+            {
+                // Given
+                IEnumerable collection = new EnumerableBaseImplementation();
+
+                // When
+                var enumerator = collection.GetEnumerator();
+
+                // Then
+                var i = -1;
+                while (enumerator.MoveNext())
+                {
+                    enumerator.Current.Should().Be(++i, "because collection should be 0 ... 9");
+                }
+
+                i.Should().Be(9, "because the last item in collection should be 9");
+            }
         }
     }
 }

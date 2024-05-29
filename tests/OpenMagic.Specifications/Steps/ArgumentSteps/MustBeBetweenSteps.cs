@@ -3,62 +3,63 @@ using FluentAssertions;
 using OpenMagic.Specifications.Helpers;
 using Reqnroll;
 
-namespace OpenMagic.Specifications.Steps.ArgumentSteps;
-
-[Binding]
-public class MustBeBetweenSteps
+namespace OpenMagic.Specifications.Steps.ArgumentSteps
 {
-    private readonly ActualData _actual;
-    private readonly GivenData _given;
-
-    public MustBeBetweenSteps(GivenData given, ActualData actual)
+    [Binding]
+    public class MustBeBetweenSteps
     {
-        _given = given;
-        _actual = actual;
-    }
+        private readonly ActualData _actual;
+        private readonly GivenData _given;
 
-    [Given(@"value is (.*)")]
-    public void GivenValueIs(int value)
-    {
-        _given.ParameterValue = value;
-    }
-
-    [Given(@"minimumValue is (.*)")]
-    public void GivenMinimumValueIs(int minimumValue)
-    {
-        _given.MinimumInt = minimumValue;
-    }
-
-    [Given(@"maximumValue is (.*)")]
-    public void GivenMaximumValueIs(int maximumValue)
-    {
-        _given.MaximumInt = maximumValue;
-    }
-
-    [When(@"I call Argument.MustBetween\(value, minimumValue, maximumValue\)")]
-    public void WhenICall_Argument_MustBetween_Value_MinimumValue_MaximumValue()
-    {
-        try
+        public MustBeBetweenSteps(GivenData given, ActualData actual)
         {
-            // ReSharper disable once InvokeAsExtensionMethod
-            _actual.Result = Argument.MustBeBetween((int)_given.ParameterValue, _given.MinimumInt, _given.MaximumInt, "value");
+            _given = given;
+            _actual = actual;
         }
-        catch (Exception exception)
+
+        [Given(@"value is (.*)")]
+        public void GivenValueIs(int value)
         {
-            _actual.Exception = exception;
+            _given.ParameterValue = value;
         }
-    }
 
-    [Then(@"number (.*) should be returned")]
-    public void ThenShouldBeReturned(int expectedValue)
-    {
-        _actual.Exception.Should().BeNull();
-        _actual.Result.Should().Be(expectedValue);
-    }
+        [Given(@"minimumValue is (.*)")]
+        public void GivenMinimumValueIs(int minimumValue)
+        {
+            _given.MinimumInt = minimumValue;
+        }
 
-    [Then(@"ArgumentOutOfRangeException should be thrown")]
-    public void ThenArgumentOutOfRangeExceptionShouldBeThrown()
-    {
-        _actual.Exception.Should().BeOfType<ArgumentOutOfRangeException>();
+        [Given(@"maximumValue is (.*)")]
+        public void GivenMaximumValueIs(int maximumValue)
+        {
+            _given.MaximumInt = maximumValue;
+        }
+
+        [When(@"I call Argument.MustBetween\(value, minimumValue, maximumValue\)")]
+        public void WhenICall_Argument_MustBetween_Value_MinimumValue_MaximumValue()
+        {
+            try
+            {
+                // ReSharper disable once InvokeAsExtensionMethod
+                _actual.Result = Argument.MustBeBetween((int)_given.ParameterValue, _given.MinimumInt, _given.MaximumInt, "value");
+            }
+            catch (Exception exception)
+            {
+                _actual.Exception = exception;
+            }
+        }
+
+        [Then(@"number (.*) should be returned")]
+        public void ThenShouldBeReturned(int expectedValue)
+        {
+            _actual.Exception.Should().BeNull();
+            _actual.Result.Should().Be(expectedValue);
+        }
+
+        [Then(@"ArgumentOutOfRangeException should be thrown")]
+        public void ThenArgumentOutOfRangeExceptionShouldBeThrown()
+        {
+            _actual.Exception.Should().BeOfType<ArgumentOutOfRangeException>();
+        }
     }
 }

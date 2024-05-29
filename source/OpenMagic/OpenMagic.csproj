@@ -12,9 +12,9 @@
         <Authors>Tim Murphy</Authors>
         <Company>Tim Murphy</Company>
         <Copyright>Copyright © Tim Murphy 2013-2024</Copyright>
-        <AssemblyVersion>5.0.0.0</AssemblyVersion>
-        <FileVersion>5.0.0.0</FileVersion>
-        <PackageVersion>5.0.0</PackageVersion>
+        <AssemblyVersion>5.1.0.0</AssemblyVersion>
+        <FileVersion>5.1.0.0</FileVersion>
+        <PackageVersion>5.1.0</PackageVersion>
         <PackageReadmeFile>docs\README.md</PackageReadmeFile>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/OpenMagic/OpenMagic</PackageProjectUrl>
@@ -22,8 +22,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-        <PackageReference Include="NullGuard.Fody" Version="3.1.1" />
-        <None Include="..\..\README.md" Pack="true" PackagePath="docs\"/>
-        <None Include="..\..\LICENSE" Pack="true" PackagePath="docs\"/>
+        <None Include="..\..\README.md" Pack="true" PackagePath="docs\" />
+        <None Include="..\..\LICENSE" Pack="true" PackagePath="docs\" />
     </ItemGroup>
 </Project>

@@ -3,31 +3,34 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using OpenMagic.Reflection;
 
-namespace OpenMagic.DataAnnotations;
-
-public class PropertyMetadata : IPropertyMetadata
+namespace OpenMagic.DataAnnotations
 {
-    private readonly Lazy<DisplayAttribute> DisplayFactory;
-
-    public PropertyMetadata(PropertyInfo property, bool isPublic)
+    public class PropertyMetadata : IPropertyMetadata
     {
-        PropertyInfo = property;
-        IsPublic = isPublic;
-        DisplayFactory = new Lazy<DisplayAttribute>(() => GetCustomAttribute(() => new DisplayAttribute()));
-    }
+        private readonly Lazy<DisplayAttribute> DisplayFactory;
 
-    public DisplayAttribute Display => DisplayFactory.Value;
+        public PropertyMetadata(PropertyInfo property, bool isPublic)
+        {
+            property.MustNotBeNull(nameof(property));
 
-    public PropertyInfo PropertyInfo { get; }
+            PropertyInfo = property;
+            IsPublic = isPublic;
+            DisplayFactory = new Lazy<DisplayAttribute>(() => GetCustomAttribute(() => new DisplayAttribute()));
+        }
 
-    public bool IsPublic { get; }
+        public DisplayAttribute Display => DisplayFactory.Value;
 
-    public bool IsNotPublic => !IsPublic;
+        public PropertyInfo PropertyInfo { get; }
 
-    private T GetCustomAttribute<T>(Func<T> defaultValueFactory)
-    {
-        var attribute = PropertyInfo.GetCustomAttribute<T>();
+        public bool IsPublic { get; }
 
-        return attribute ?? defaultValueFactory();
+        public bool IsNotPublic => !IsPublic;
+
+        private T GetCustomAttribute<T>(Func<T> defaultValueFactory)
+        {
+            var attribute = PropertyInfo.GetCustomAttribute<T>();
+
+            return attribute ?? defaultValueFactory();
+        }
     }
 }

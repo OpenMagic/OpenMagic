@@ -1,39 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NullGuard;
 
-namespace OpenMagic.Extensions.Collections.Generic;
-
-public static class EnumerableExtensions
+namespace OpenMagic.Extensions.Collections.Generic
 {
-    /// <summary>
-    ///     Invokes
-    ///     <param name="action" />
-    ///     on each item in
-    ///     <param name="collection" />
-    ///     .
-    /// </summary>
-    /// <typeparam name="TItem">The type of the item.</typeparam>
-    /// <param name="collection">The collection.</param>
-    /// <param name="action">The action to invoke on each item in
-    ///     <param name="collection" />
-    ///     .
-    /// </param>
-    public static void ForEach<TItem>(this IEnumerable<TItem> collection, Action<TItem> action)
+    public static class EnumerableExtensions
     {
-        foreach (var item in collection)
+        /// <summary>
+        ///     Invokes
+        ///     <param name="action" />
+        ///     on each item in
+        ///     <param name="collection" />
+        ///     .
+        /// </summary>
+        /// <typeparam name="TItem">The type of the item.</typeparam>
+        /// <param name="collection">The collection.</param>
+        /// <param name="action">
+        ///     The action to invoke on each item in
+        ///     <param name="collection" />
+        ///     .
+        /// </param>
+        public static void ForEach<TItem>(this IEnumerable<TItem> collection, Action<TItem> action)
         {
-            action(item);
+            foreach (var item in collection)
+            {
+                action(item);
+            }
         }
-    }
 
-    /// <summary>
-    ///     Indicates whether a specified enumerable is null or empty.
-    /// </summary>
-    /// <param name="value">The value to test.</param>
-    public static bool IsNullOrEmpty<T>([AllowNull] this IEnumerable<T> value)
-    {
-        return value == null || !value.Any();
+        /// <summary>
+        ///     Indicates whether a specified enumerable is null or empty.
+        /// </summary>
+        /// <param name="value">The value to test.</param>
+        public static bool IsNullOrEmpty<T>([AllowNull] this IEnumerable<T> value)
+        {
+            return value == null || !value.Any();
+        }
     }
 }

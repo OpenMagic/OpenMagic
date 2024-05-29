@@ -6,62 +6,65 @@ using System.Reflection;
 using OpenMagic.Collections.Generic;
 using OpenMagic.Reflection;
 
-namespace OpenMagic.DataAnnotations;
-
-public class ClassMetadata : IClassMetadata
+namespace OpenMagic.DataAnnotations
 {
-    private static readonly TypeCache<IClassMetadata> Cache = new();
-
-    public ClassMetadata(Type type)
+    public class ClassMetadata : IClassMetadata
     {
-        Type = type;
-        Properties = new Lazy<IEnumerable<IPropertyMetadata>>(GetProperties);
-    }
+        private static readonly TypeCache<IClassMetadata> Cache = new();
 
-    public Lazy<IEnumerable<IPropertyMetadata>> Properties { get; }
-    public Type Type { get; }
-
-    public IPropertyMetadata GetProperty(string propertyName)
-    {
-        propertyName.MustNotBeNullOrWhiteSpace("propertyName");
-
-        var property = Properties.Value.SingleOrDefault(p => p.PropertyInfo.Name == propertyName);
-
-        if (property != null)
+        public ClassMetadata(Type type)
         {
-            return property;
+            type.MustNotBeNull(nameof(type));
+
+            Type = type;
+            Properties = new Lazy<IEnumerable<IPropertyMetadata>>(GetProperties);
         }
 
-        throw new ArgumentException($"Cannot find {propertyName} property for {Type}.", nameof(propertyName));
-    }
+        public Lazy<IEnumerable<IPropertyMetadata>> Properties { get; }
+        public Type Type { get; }
 
-    public IPropertyMetadata GetProperty(PropertyInfo property)
-    {
-        return GetProperty(property.Name);
-    }
+        public IPropertyMetadata GetProperty(string propertyName)
+        {
+            propertyName.MustNotBeNullOrWhiteSpace("propertyName");
 
-    public static IClassMetadata Get<TModel>()
-    {
-        return Cache.Get<TModel>(() => new ClassMetadata(typeof(TModel)));
-    }
+            var property = Properties.Value.SingleOrDefault(p => p.PropertyInfo.Name == propertyName);
 
-    public static IPropertyMetadata GetProperty<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
-    {
-        var modelMetadata = Get<TModel>();
-        var propertyInfo = Type<TModel>.Property(property);
-        var propertyMetadata = modelMetadata.GetProperty(propertyInfo);
+            if (property != null)
+            {
+                return property;
+            }
 
-        return propertyMetadata;
-    }
+            throw new ArgumentException($"Cannot find {propertyName} property for {Type}.", nameof(propertyName));
+        }
 
-    private IEnumerable<IPropertyMetadata> GetProperties()
-    {
-        var publicProperties = from p in Type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            select new PropertyMetadata(p, true);
+        public IPropertyMetadata GetProperty(PropertyInfo property)
+        {
+            return GetProperty(property.Name);
+        }
 
-        var privateProperties = from p in Type.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
-            select new PropertyMetadata(p, false);
+        public static IClassMetadata Get<TModel>()
+        {
+            return Cache.Get<TModel>(() => new ClassMetadata(typeof(TModel)));
+        }
 
-        return publicProperties.Concat(privateProperties);
+        public static IPropertyMetadata GetProperty<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
+        {
+            var modelMetadata = Get<TModel>();
+            var propertyInfo = Type<TModel>.Property(property);
+            var propertyMetadata = modelMetadata.GetProperty(propertyInfo);
+
+            return propertyMetadata;
+        }
+
+        private IEnumerable<IPropertyMetadata> GetProperties()
+        {
+            var publicProperties = from p in Type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                select new PropertyMetadata(p, true);
+
+            var privateProperties = from p in Type.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
+                select new PropertyMetadata(p, false);
+
+            return publicProperties.Concat(privateProperties);
+        }
     }
 }
