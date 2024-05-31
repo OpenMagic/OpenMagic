@@ -219,7 +219,7 @@ namespace OpenMagic.Tests
 
                 // Then
                 action
-                    .Should().Throw<ArgumentWhitespaceException>()
+                    .Should().Throw<ArgumentWhiteSpaceException>()
                     .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be whitespace."));
             }
         }
@@ -251,7 +251,7 @@ namespace OpenMagic.Tests
 
                 // Then
                 action
-                    .Should().Throw<ArgumentWhitespaceException>()
+                    .Should().Throw<ArgumentWhiteSpaceException>()
                     .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be whitespace."));
             }
         }

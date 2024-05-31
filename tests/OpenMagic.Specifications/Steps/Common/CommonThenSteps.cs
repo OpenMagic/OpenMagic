@@ -46,7 +46,7 @@ namespace OpenMagic.Specifications.Steps.Common
         [Then(@"ArgumentWhitespaceException should be thrown")]
         public void ThenArgumentWhitespaceExceptionShouldBeThrown()
         {
-            _actual.Exception.Should().BeOfType<ArgumentWhitespaceException>();
+            _actual.Exception.Should().BeOfType<ArgumentWhiteSpaceException>();
         }
 
         [Then(@"the exception message should be:")]

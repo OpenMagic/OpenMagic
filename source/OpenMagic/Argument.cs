@@ -194,7 +194,7 @@ namespace OpenMagic
         }
 
         /// <summary>
-        ///     Throws <see cref="ArgumentWhitespaceException" /> when <paramref name="param" /> is not null or empty, but contains only whitespace.
+        ///     Throws <see cref="ArgumentWhiteSpaceException" /> when <paramref name="param" /> is not null or empty, but contains only whitespace.
         /// </summary>
         /// <param name="param">The value to test for whitespace.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
@@ -203,7 +203,7 @@ namespace OpenMagic
         {
             if (!string.IsNullOrEmpty(param) && param.IsNullOrWhiteSpace())
             {
-                throw new ArgumentWhitespaceException(paramName);
+                throw new ArgumentWhiteSpaceException(paramName);
             }
 
             return param;
