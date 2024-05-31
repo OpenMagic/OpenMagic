@@ -253,9 +253,10 @@ namespace OpenMagic
         /// <returns>Returns <paramref name="param" /> when the value is not null or whitespace.</returns>
         public static string MustNotBeNullOrWhiteSpace([AllowNull] this string param, string paramName)
         {
-            param.MustNotBeNull(paramName);
-            param.MustNotBeEmpty(paramName);
-            param.MustNotBeWhiteSpace(paramName);
+            if (param.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentNullOrWhiteSpaceException(paramName);
+            }
 
             return param;
         }

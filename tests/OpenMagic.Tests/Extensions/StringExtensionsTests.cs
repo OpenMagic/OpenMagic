@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using FluentAssertions;
+using OpenMagic.Exceptions;
 using OpenMagic.Extensions;
 using Xunit;
 
@@ -138,7 +139,7 @@ namespace OpenMagic.Tests.Extensions
             {
                 Action action = () => ((string)null).IsValidEmailAddress();
 
-                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("emailAddress");
+                action.Should().Throw<ArgumentNullOrWhiteSpaceException>().And.ParamName.Should().Be("emailAddress");
             }
 
             [Fact]
@@ -146,7 +147,7 @@ namespace OpenMagic.Tests.Extensions
             {
                 Action action = () => "".IsValidEmailAddress();
 
-                action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("emailAddress");
+                action.Should().Throw<ArgumentNullOrWhiteSpaceException>().And.ParamName.Should().Be("emailAddress");
             }
 
             [Fact]
