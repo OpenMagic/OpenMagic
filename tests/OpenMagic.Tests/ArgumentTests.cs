@@ -46,17 +46,17 @@ namespace OpenMagic.Tests
         public class MustBeAnEmailAddress
         {
             [Fact]
-            public void Should_Throw_ArgumentNullException_When_emailAddress_Is_Null()
+            public void Should_Throw_ArgumentNullOrWhiteSpaceException_When_emailAddress_Is_Null()
             {
                 // When
                 Action action = () => ((string)null).MustBeAnEmailAddress("dummy");
 
                 // Then
-                action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("emailAddress");
+                action.Should().Throw<ArgumentNullOrWhiteSpaceException>().And.ParamName.Should().Be("emailAddress");
             }
 
             [Fact]
-            public void Should_Throw_ArgumentException_When_emailAddress_Is_WhiteSpace()
+            public void Should_Throw_ArgumentNullOrWhiteSpaceException_When_emailAddress_Is_WhiteSpace()
             {
                 // Given
                 const string paramName = "dummy";
@@ -67,7 +67,7 @@ namespace OpenMagic.Tests
                 // Then
                 var exception = action.Should().Throw<ArgumentException>().Subject.Single();
                 exception.ParamName.Should().Be("emailAddress");
-                exception.Message.Should().Be("emailAddress".ArgumentExceptionMessage("Value cannot be empty."));
+                exception.Message.Should().Be("emailAddress".ArgumentExceptionMessage("Value cannot be null or whitespace."));
             }
 
             [Fact]
@@ -209,7 +209,7 @@ namespace OpenMagic.Tests
             }
 
             [Fact]
-            public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
+            public void ShouldThrowArgumentNullOrWhiteSpaceExceptionWhen_param_IsWhiteSpace()
             {
                 // Given
                 const string param = " ";
@@ -219,8 +219,8 @@ namespace OpenMagic.Tests
 
                 // Then
                 action
-                    .Should().Throw<ArgumentWhitespaceException>()
-                    .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be whitespace."));
+                    .Should().Throw<ArgumentNullOrWhiteSpaceException>()
+                    .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be null or whitespace."));
             }
         }
 
@@ -241,7 +241,7 @@ namespace OpenMagic.Tests
             }
 
             [Fact]
-            public void ShouldThrowArgumentExceptionWhen_param_IsWhiteSpace()
+            public void ShouldThrowArgumentNullOrWhiteSpaceExceptionWhen_param_IsWhiteSpace()
             {
                 // Given
                 const string param = " ";
@@ -251,8 +251,8 @@ namespace OpenMagic.Tests
 
                 // Then
                 action
-                    .Should().Throw<ArgumentWhitespaceException>()
-                    .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be whitespace."));
+                    .Should().Throw<ArgumentNullOrWhiteSpaceException>()
+                    .WithMessage("fakeParamName".ArgumentExceptionMessage("Value cannot be null or whitespace."));
             }
         }
 

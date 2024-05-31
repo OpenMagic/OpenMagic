@@ -28,4 +28,18 @@
     <ItemGroup>
         <ProjectReference Include="..\..\source\OpenMagic\OpenMagic.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Features\Argument\MustNotBeNullOrWhiteSpace.feature.cs">
+        <Visible>true</Visible>
+        <DependentUpon>MustNotBeNullOrWhiteSpace.feature</DependentUpon>
+        <DesignTime>true</DesignTime>
+        <AutoGen>true</AutoGen>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <ReqnrollFeatureFiles Update="Features\Argument\MustNotBeNullOrWhiteSpace.feature">
+        <Visible>$(UsingMicrosoftNETSdk)</Visible>
+        <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+      </ReqnrollFeatureFiles>
+    </ItemGroup>
 </Project>
