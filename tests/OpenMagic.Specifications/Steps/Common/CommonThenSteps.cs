@@ -8,51 +8,44 @@ using Reqnroll;
 namespace OpenMagic.Specifications.Steps.Common
 {
     [Binding]
-    public class CommonThenSteps
+    public class CommonThenSteps(GivenData given, ActualData actual)
     {
-        private readonly ActualData _actual;
-        private readonly GivenData _given;
-
-        public CommonThenSteps(GivenData given, ActualData actual)
-        {
-            _given = given;
-            _actual = actual;
-        }
+        private readonly GivenData _given = given;
 
         [Then(@"True should be returned")]
         public void ThenTrueShouldBeReturned()
         {
-            _actual.Result.Should().Be(true);
+            actual.Result.Should().Be(true);
         }
 
         [Then(@"False should be returned")]
         public void ThenFalseShouldBeReturned()
         {
-            _actual.Result.Should().Be(false);
+            actual.Result.Should().Be(false);
         }
 
         [Then(@"ArgumentException should be thrown")]
         public void ThenArgumentExceptionShouldBeThrown()
         {
-            _actual.Exception.Should().BeOfType<ArgumentException>();
+            actual.Exception.Should().BeOfType<ArgumentException>();
         }
 
         [Then(@"ArgumentEmptyException should be thrown")]
         public void ThenArgumentEmptyExceptionShouldBeThrown()
         {
-            _actual.Exception.Should().BeOfType<ArgumentEmptyException>();
+            actual.Exception.Should().BeOfType<ArgumentEmptyException>();
         }
 
         [Then(@"ArgumentWhitespaceException should be thrown")]
         public void ThenArgumentWhitespaceExceptionShouldBeThrown()
         {
-            _actual.Exception.Should().BeOfType<ArgumentWhiteSpaceException>();
+            actual.Exception.Should().BeOfType<ArgumentWhiteSpaceException>();
         }
 
         [Then(@"the exception message should be:")]
         public void ThenTheExceptionMessageShouldBe(string expectedMessage)
         {
-            _actual.Exception.Message.Should().Be(expectedMessage.NormalizeLineEndings());
+            actual.Exception.Message.Should().Be(expectedMessage.NormalizeLineEndings());
         }
     }
 }

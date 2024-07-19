@@ -70,6 +70,7 @@ namespace OpenMagic
         /// <param name="message">The exception message to use when <paramref name="assertionResult" /> is false.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Global
         public static T Must<T>(this T param, bool assertionResult, string message, string paramName)
         {
             if (!assertionResult)
@@ -80,6 +81,18 @@ namespace OpenMagic
             return param;
         }
 
+        /// <summary>
+        ///     Throws <see cref="ArgumentException" /> when the <paramref name="emailAddress">email address</paramref> is not a valid email address.
+        /// </summary>
+        /// <param name="emailAddress">
+        ///     The email address to validate.
+        /// </param>
+        /// <param name="paramName">
+        ///     Name of the parameter.
+        /// </param>
+        /// <returns>
+        ///     Returns <paramref name="emailAddress" /> when it is a valid email address.
+        /// </returns>
         public static string MustBeAnEmailAddress(this string emailAddress, string paramName)
         {
             emailAddress.MustNotBeNullOrWhiteSpace(nameof(emailAddress));
@@ -92,6 +105,16 @@ namespace OpenMagic
             return emailAddress;
         }
 
+        /// <summary>
+        ///     Throws <see cref="ArgumentException" /> when the <paramref name="param">value</paramref> is not greater than <paramref name="greaterThan" />.
+        /// </summary>
+        /// <typeparam name="T">The type of the value.</typeparam>
+        /// <param name="param">The value to test.</param>
+        /// <param name="greaterThan">The value to compare against.</param>
+        /// <param name="paramName">The name of the parameter being tested.</param>
+        /// <returns>
+        ///     Returns <paramref name="param" /> when the value is greater than <paramref name="greaterThan" />.
+        /// </returns>
         public static T MustBeGreaterThan<T>(this T param, T greaterThan, string paramName) where T : IComparable<T>
         {
             if (param.CompareTo(greaterThan) > 0)
@@ -99,15 +122,30 @@ namespace OpenMagic
                 return param;
             }
 
-            var exception = new ArgumentOutOfRangeException(paramName, $"Value must be greater than {greaterThan}.");
+            var exception = new ArgumentOutOfRangeException(paramName, $"Value must be greater than {greaterThan}.")
+            {
+                Data =
+                {
+                    [nameof(param)] = param,
+                    [nameof(greaterThan)] = greaterThan,
+                    [nameof(paramName)] = paramName
+                }
+            };
 
-            exception.Data.Add("param", param);
-            exception.Data.Add("greaterThan", greaterThan);
-            exception.Data.Add("paramName", paramName);
 
             throw exception;
         }
 
+        /// <summary>
+        ///     Throws <see cref="ArgumentException" /> when the <paramref name="param">value</paramref> is not greater than or equal to <paramref name="greaterThanOrEqualTo" />.
+        /// </summary>
+        /// <typeparam name="T">The type of the value.</typeparam>
+        /// <param name="param">The value to test.</param>
+        /// <param name="greaterThanOrEqualTo">The value to compare against.</param>
+        /// <param name="paramName">The name of the parameter being tested.</param>
+        /// <returns>
+        ///     Returns <paramref name="param" /> when the value is greater than or equal to <paramref name="greaterThanOrEqualTo" />.
+        /// </returns>
         public static T MustBeGreaterThanOrEqualTo<T>(this T param, T greaterThanOrEqualTo, string paramName) where T : IComparable<T>
         {
             if (param.CompareTo(greaterThanOrEqualTo) >= 0)
@@ -115,15 +153,64 @@ namespace OpenMagic
                 return param;
             }
 
-            var exception = new ArgumentOutOfRangeException(paramName, $"Value must be greater than or equal to {greaterThanOrEqualTo}.");
-
-            exception.Data.Add(nameof(param), param);
-            exception.Data.Add(nameof(greaterThanOrEqualTo), greaterThanOrEqualTo);
-            exception.Data.Add(nameof(paramName), paramName);
+            var exception = new ArgumentOutOfRangeException(paramName, $"Value must be greater than or equal to {greaterThanOrEqualTo}.")
+            {
+                Data =
+                {
+                    [nameof(param)] = param,
+                    [nameof(greaterThanOrEqualTo)] = greaterThanOrEqualTo,
+                    [nameof(paramName)] = paramName
+                }
+            };
 
             throw exception;
         }
 
+        /// <summary>
+        ///     Throws <see cref="ArgumentException" /> when the <paramref name="param">value</paramref> is not less than or equal to <paramref name="lessThanOrEqualTo" />.
+        /// </summary>
+        /// <typeparam name="T">The type of the value.</typeparam>
+        /// <param name="param">The value to test.</param>
+        /// <param name="lessThanOrEqualTo">The value to compare against.</param>
+        /// <param name="paramName">The name of the parameter being tested.</param>
+        /// <returns>
+        ///     Returns <paramref name="param" /> when the value is less than or equal to <paramref name="lessThanOrEqualTo" />.
+        /// </returns>
+        public static T MustBeLessThanOrEqualTo<T>(this T param, T lessThanOrEqualTo, string paramName) where T : IComparable<T>
+        {
+            if (param.CompareTo(lessThanOrEqualTo) <= 0)
+            {
+                return param;
+            }
+
+            var lessThanOrEqualToString = typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime?)
+                ? ((DateTime)(object)lessThanOrEqualTo).ToString("d MMM yyyy")
+                : lessThanOrEqualTo.ToString();
+
+            var exception = new ArgumentOutOfRangeException(paramName, $"Value must be less than or equal to {lessThanOrEqualToString}.")
+                {
+                Data =
+                {
+                    [nameof(param)] = param,
+                    [nameof(lessThanOrEqualTo)] = lessThanOrEqualTo,
+                    [nameof(paramName)] = paramName
+                }
+            };
+
+            throw exception;
+        }
+
+        /// <summary>
+        ///     Throws <see cref="ArgumentOutOfRangeException" /> when the <paramref name="param">value</paramref> is not between <paramref name="minimumValue" /> and <paramref name="maximumValue" />.
+        /// </summary>
+        /// <typeparam name="T">The type of the value.</typeparam>
+        /// <param name="param">The value to test.</param>
+        /// <param name="minimumValue">The minimum value.</param>
+        /// <param name="maximumValue">The maximum value.</param>
+        /// <param name="paramName">The name of the parameter being tested.</param>
+        /// <returns>
+        ///     Returns <paramref name="param" /> when the value is between <paramref name="minimumValue" /> and <paramref name="maximumValue" />.
+        /// </returns>
         public static T MustBeBetween<T>(this T param, T minimumValue, T maximumValue, string paramName) where T : IComparable<T>
         {
             if (param.CompareTo(minimumValue) >= 0 && param.CompareTo(maximumValue) <= 0)
@@ -131,14 +218,16 @@ namespace OpenMagic
                 return param;
             }
 
-            var exception = new ArgumentOutOfRangeException(paramName, $"Value must be between {minimumValue} and {maximumValue}.");
-
-            exception.Data.Add("param", param);
-            exception.Data.Add("minimumValue", minimumValue);
-            exception.Data.Add("maximumValue", maximumValue);
-            exception.Data.Add("paramName", paramName);
-
-            throw exception;
+            throw new ArgumentOutOfRangeException(paramName, $"Value must be between {minimumValue} and {maximumValue}.")
+            {
+                Data =
+                {
+                    [nameof(param)] = param,
+                    [nameof(minimumValue)] = minimumValue,
+                    [nameof(maximumValue)] = maximumValue,
+                    [nameof(paramName)] = paramName
+                }
+            };
         }
 
         /// <summary>

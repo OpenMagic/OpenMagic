@@ -3,7 +3,7 @@ using FluentAssertions;
 using OpenMagic.Exceptions;
 using Reqnroll;
 
-namespace OpenMagic.Specifications.Steps.ArgumentSteps
+namespace OpenMagic.Specifications.Steps.Argument
 {
     [Binding]
     public class MustNotBeNullOrWhiteSpaceSteps

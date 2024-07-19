@@ -5,7 +5,7 @@ using FluentAssertions;
 using OpenMagic.Specifications.Helpers;
 using Reqnroll;
 
-namespace OpenMagic.Specifications.Steps.ArgumentSteps
+namespace OpenMagic.Specifications.Steps.Argument
 {
     [Binding]
     public class FileMustExistSteps
@@ -34,7 +34,7 @@ namespace OpenMagic.Specifications.Steps.ArgumentSteps
         [When(@"I call Argument\.FileExists\(<param>, <paramName>\)")]
         public void WhenICallArgument_FileExists_param_paramName()
         {
-            _actual.GetResult(() => Argument.FileMustExist(_given.File, "dummy"));
+            _actual.GetResult(() => OpenMagic.Argument.FileMustExist(_given.File, "dummy"));
         }
 
         [Scope(Feature = "FileMustExist")]
