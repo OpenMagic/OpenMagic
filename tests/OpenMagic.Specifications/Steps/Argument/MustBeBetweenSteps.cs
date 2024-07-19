@@ -3,36 +3,29 @@ using FluentAssertions;
 using OpenMagic.Specifications.Helpers;
 using Reqnroll;
 
-namespace OpenMagic.Specifications.Steps.ArgumentSteps
+namespace OpenMagic.Specifications.Steps.Argument
 {
     [Binding]
-    public class MustBeBetweenSteps
+    public class MustBeBetweenSteps(GivenData given, ActualData actual)
     {
-        private readonly ActualData _actual;
-        private readonly GivenData _given;
-
-        public MustBeBetweenSteps(GivenData given, ActualData actual)
-        {
-            _given = given;
-            _actual = actual;
-        }
-
         [Given(@"value is (.*)")]
-        public void GivenValueIs(int value)
+        public void GivenValueIs(string value)
         {
-            _given.ParameterValue = value;
+            given.ParameterValue = value.Equals("today", StringComparison.OrdinalIgnoreCase)
+                ? DateTime.UtcNow
+                : int.Parse(value);
         }
 
         [Given(@"minimumValue is (.*)")]
         public void GivenMinimumValueIs(int minimumValue)
         {
-            _given.MinimumInt = minimumValue;
+            given.MinimumInt = minimumValue;
         }
 
         [Given(@"maximumValue is (.*)")]
         public void GivenMaximumValueIs(int maximumValue)
         {
-            _given.MaximumInt = maximumValue;
+            given.MaximumInt = maximumValue;
         }
 
         [When(@"I call Argument.MustBetween\(value, minimumValue, maximumValue\)")]
@@ -41,25 +34,25 @@ namespace OpenMagic.Specifications.Steps.ArgumentSteps
             try
             {
                 // ReSharper disable once InvokeAsExtensionMethod
-                _actual.Result = Argument.MustBeBetween((int)_given.ParameterValue, _given.MinimumInt, _given.MaximumInt, "value");
+                actual.Result = OpenMagic.Argument.MustBeBetween((int)given.ParameterValue, given.MinimumInt, given.MaximumInt, "value");
             }
             catch (Exception exception)
             {
-                _actual.Exception = exception;
+                actual.Exception = exception;
             }
         }
 
         [Then(@"number (.*) should be returned")]
         public void ThenShouldBeReturned(int expectedValue)
         {
-            _actual.Exception.Should().BeNull();
-            _actual.Result.Should().Be(expectedValue);
+            actual.Exception.Should().BeNull();
+            actual.Result.Should().Be(expectedValue);
         }
 
         [Then(@"ArgumentOutOfRangeException should be thrown")]
         public void ThenArgumentOutOfRangeExceptionShouldBeThrown()
         {
-            _actual.Exception.Should().BeOfType<ArgumentOutOfRangeException>();
+            actual.Exception.Should().BeOfType<ArgumentOutOfRangeException>();
         }
     }
 }

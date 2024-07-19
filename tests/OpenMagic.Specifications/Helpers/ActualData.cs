@@ -1,7 +1,9 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace OpenMagic.Specifications.Helpers
 {
+    [UsedImplicitly]
     public class ActualData
     {
         public Exception Exception { get; set; }

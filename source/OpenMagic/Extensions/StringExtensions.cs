@@ -7,30 +7,111 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
-using OpenMagic.Extensions.Collections.Generic;
+
+#pragma warning disable IDE0057
 
 namespace OpenMagic.Extensions
 {
+    /// <summary>
+    ///     Provides extension methods for string manipulation.
+    /// </summary>
     public static class StringExtensions
     {
         /// <summary>
-        ///     Determines whether <paramref name="value" /> contains <paramref name="find" />.
+        ///     Converts a string representation of a relative date into a <see cref="DateTime" /> object.
         /// </summary>
-        /// <param name="value">The value to search.</param>
-        /// <param name="find">The value to find.</param>
-        /// <param name="stringComparison"><see cref="StringComparison" />.</param>
-        public static bool Contains(this string value, string find, StringComparison stringComparison)
+        /// <param name="value">The string representation of the relative date.</param>
+        /// <returns>The <see cref="DateTime" /> object representing the relative date.</returns>
+        public static DateTime AsRelativeDate(this string value)
         {
-            value.MustNotBeNull(nameof(value));
-
-            if (stringComparison is StringComparison.CurrentCultureIgnoreCase or StringComparison.OrdinalIgnoreCase)
+            switch (value)
             {
-#pragma warning disable CA1862
-                return value.ToLower().Contains(find.ToLower());
-#pragma warning restore CA1862
+                case "DateTime.MaxValue":
+                    return DateTime.MaxValue.Date;
+                case "DateTime.MinValue":
+                    return DateTime.MinValue.Date;
+                case "DateTime.UtcNow":
+                    return DateTime.UtcNow.Date;
             }
 
-            throw new ArgumentOutOfRangeException(nameof(stringComparison), $"Value cannot be {stringComparison}.");
+            var date = DateTime.UtcNow.Date;
+
+            if (value.Equals("today", StringComparison.OrdinalIgnoreCase))
+            {
+                return DateTime.UtcNow.Date;
+            }
+
+
+            if (!value.StartsWith("today", StringComparison.OrdinalIgnoreCase))
+            {
+                if (DateTime.TryParse(value, out date))
+                {
+                    return date;
+                }
+
+                throw CannotHandleRelativeDateException(value);
+            }
+
+            var originalValue = value;
+
+            value = value.Substring("today".Length).Trim();
+
+            var operation = GetOperation(value);
+            value = value.Substring(1).TrimStart();
+
+            value = HandleMonths(value, operation, ref date, " months and ");
+            value = HandleMonths(value, operation, ref date, " month and ");
+
+            if (value.EndsWith("months", StringComparison.OrdinalIgnoreCase) || value.EndsWith("month", StringComparison.OrdinalIgnoreCase))
+            {
+                value = value.TrimEnd("months").TrimEnd("month");
+
+                if (int.TryParse(value, out var addMonths))
+                {
+                    return date.AddMonths(addMonths * operation);
+                }
+            }
+
+            if (value!.EndsWith("days", StringComparison.OrdinalIgnoreCase) || value.EndsWith("day", StringComparison.OrdinalIgnoreCase))
+            {
+                value = value.TrimEnd("days").TrimEnd("day");
+
+                if (int.TryParse(value, out var addDays))
+                {
+                    return date.AddDays(addDays * operation);
+                }
+            }
+
+            throw CannotHandleRelativeDateException(originalValue);
+        }
+
+        private static ArgumentException CannotHandleRelativeDateException(string value)
+        {
+            return new ArgumentException($"Cannot handle relative date '{value}'.", nameof(value));
+        }
+
+        private static string HandleMonths(string value, int operation, ref DateTime date, string monthsAnd)
+        {
+            if (value.Contains(monthsAnd))
+            {
+                var values = value.Split(monthsAnd, StringSplitOptions.RemoveEmptyEntries);
+                var addMonths = int.Parse(values[0]);
+
+                date = date.AddMonths(addMonths * operation);
+                value = values[1];
+            }
+
+            return value;
+        }
+
+        private static int GetOperation(string value)
+        {
+            return value.Substring(0, 1) switch
+            {
+                "+" => 1,
+                "-" => -1,
+                _ => throw new ArgumentException($@"Cannot handle relative date '{value}'.", nameof(value))
+            };
         }
 
         /// <summary>
@@ -81,7 +162,9 @@ namespace OpenMagic.Extensions
         /// </example>
         public static string InsertStringBeforeEachUpperCaseCharacter(this string value, string insert)
         {
-            var sb = new StringBuilder(value[..1]);
+            var sb = new StringBuilder(value.Length + insert.Length * (value.Length - 1));
+
+            sb.Append(value[0]);
 
             for (var i = 1; i < value.Length; i++)
             {
@@ -105,7 +188,7 @@ namespace OpenMagic.Extensions
         /// </remarks>
         public static bool IsNullOrWhiteSpace([AllowNull] this string value)
         {
-            return string.IsNullOrEmpty(value) || string.IsNullOrEmpty(value.Trim());
+            return string.IsNullOrWhiteSpace(value);
         }
 
         /// <summary>
@@ -149,7 +232,7 @@ namespace OpenMagic.Extensions
         /// </summary>
         public static string NormalizeLineEndings(this string value)
         {
-            return value.Replace(Environment.NewLine, "\n").Replace("\n", Environment.NewLine);
+            return value.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", Environment.NewLine);
         }
 
         /// <summary>
@@ -398,24 +481,12 @@ namespace OpenMagic.Extensions
                 yield break;
             }
 
-            var reader = new StringReader(value);
-
-            while (true)
+            using (var reader = new StringReader(value))
             {
-                var line = reader.ReadLine();
-
-                if (line == null)
+                string line;
+                while ((line = reader.ReadLine()) != null)
                 {
-                    yield break;
-                }
-
-                if (trimLines)
-                {
-                    yield return line.Trim();
-                }
-                else
-                {
-                    yield return line;
+                    yield return trimLines ? line.Trim() : line;
                 }
             }
         }
@@ -427,9 +498,10 @@ namespace OpenMagic.Extensions
         public static NameValueCollection ToNameValueCollection(this string value)
         {
             var collection = new NameValueCollection();
-            var keyValuePairs = value.Split(';').Select(keyValue => keyValue.Split('='));
-
-            keyValuePairs.ForEach(keyValuePair => collection.Add(keyValuePair[0], keyValuePair[1]));
+            value.Split(';')
+                .Select(part => part.Split('='))
+                .ToList()
+                .ForEach(pair => collection.Add(pair[0], pair.Length > 1 ? pair[1] : null));
 
             return collection;
         }
@@ -448,14 +520,12 @@ namespace OpenMagic.Extensions
         /// </example>
         public static string TrimEnd(this string value, string trimString)
         {
-            var newValue = value;
-
-            while (newValue.EndsWith(trimString))
+            while (value.EndsWith(trimString))
             {
-                newValue = newValue.Substring(0, newValue.Length - trimString.Length);
+                value = value.Substring(0, value.Length - trimString.Length);
             }
 
-            return newValue;
+            return value;
         }
 
         /// <summary>
@@ -472,14 +542,12 @@ namespace OpenMagic.Extensions
         /// </example>
         public static string TrimStart(this string value, string trimString)
         {
-            var newValue = value;
-
-            while (newValue.StartsWith(trimString))
+            while (value.StartsWith(trimString))
             {
-                newValue = newValue.Substring(trimString.Length);
+                value = value.Substring(trimString.Length);
             }
 
-            return newValue;
+            return value;
         }
 
         /// <summary>

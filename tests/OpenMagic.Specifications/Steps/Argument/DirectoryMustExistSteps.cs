@@ -4,7 +4,7 @@ using FluentAssertions;
 using OpenMagic.Specifications.Helpers;
 using Reqnroll;
 
-namespace OpenMagic.Specifications.Steps.ArgumentSteps
+namespace OpenMagic.Specifications.Steps.Argument
 {
     [Binding]
     public class DirectoryMustExistSteps
@@ -33,7 +33,7 @@ namespace OpenMagic.Specifications.Steps.ArgumentSteps
         [When(@"I call Argument\.DirectoryExists\(<param>, <paramName>\)")]
         public void WhenICallArgument_DirectoryExists_param_paramName()
         {
-            _actual.GetResult(() => Argument.DirectoryMustExist(_given.Directory, "dummy"));
+            _actual.GetResult(() => OpenMagic.Argument.DirectoryMustExist(_given.Directory, "dummy"));
         }
 
         [Scope(Feature = "DirectoryMustExist")]

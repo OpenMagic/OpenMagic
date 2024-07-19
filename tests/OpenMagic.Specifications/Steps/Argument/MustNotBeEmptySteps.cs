@@ -3,7 +3,7 @@ using FluentAssertions;
 using OpenMagic.Specifications.Helpers;
 using Reqnroll;
 
-namespace OpenMagic.Specifications.Steps.ArgumentSteps
+namespace OpenMagic.Specifications.Steps.Argument
 {
     [Binding]
     [Scope(Feature = "MustNotBeEmpty")]
