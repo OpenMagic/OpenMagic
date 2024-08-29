@@ -6,5 +6,5 @@ using System.Reflection;
 [assembly: AssemblyCopyright("Copyright © Tim Murphy 2013-2024")]
 [assembly: CLSCompliant(false)]
 
-[assembly: AssemblyVersion("5.3.0.0")]
-[assembly: AssemblyFileVersion("5.3.0.0")]
+[assembly: AssemblyVersion("5.4.0.0")]
+[assembly: AssemblyFileVersion("5.4.0.0")]
