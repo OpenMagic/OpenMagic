@@ -12,9 +12,9 @@
         <Authors>Tim Murphy</Authors>
         <Company>Tim Murphy</Company>
         <Copyright>Copyright © Tim Murphy 2013-2024</Copyright>
-        <AssemblyVersion>5.4.0.0</AssemblyVersion>
-        <FileVersion>5.4.0.0</FileVersion>
-        <PackageVersion>5.4.0</PackageVersion>
+        <AssemblyVersion>5.5.0.0</AssemblyVersion>
+        <FileVersion>5.5.0.0</FileVersion>
+        <PackageVersion>5.5.0</PackageVersion>
         <PackageReadmeFile>docs\README.md</PackageReadmeFile>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/OpenMagic/OpenMagic</PackageProjectUrl>
