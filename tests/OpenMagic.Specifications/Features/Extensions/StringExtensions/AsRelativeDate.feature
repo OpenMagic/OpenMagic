@@ -26,6 +26,9 @@ Examples:
 	| today - 1 month and 2 days  | last month and 2 days     |
 	| today + 2 months and 2 days | plus 2 months and 2 days  |
 	| today - 2 months and 2 days | minus 2 months and 2 days |
+	| today - 1 month             | last month                |
+	| today + 1 year              | next year                 |
+	| today - 1 year              | last year                 |
 
 Scenario Outline: Call AsRelativeDate with an invalid
 	Given date string is '<date string>'
