@@ -8,7 +8,7 @@ namespace OpenMagic.Specifications.Steps.Extensions.StringExtensions
 {
     [Binding]
     [Scope(Feature = "AsRelativeDate")]
-    public class AsRelativeDateSteps(GivenData given, ActualData actual)
+    public class AsRelativeDateSteps(ActualData actual)
     {
         private string _input;
 
@@ -100,6 +100,14 @@ namespace OpenMagic.Specifications.Steps.Extensions.StringExtensions
 
                 case "minus 2 months and 2 days":
                     actualResult.Should().Be(DateTime.UtcNow.Date.AddMonths(-2).AddDays(-2));
+                    break;
+
+                case "last year":
+                    actualResult.Should().Be(DateTime.UtcNow.Date.AddYears(-1));
+                    break;
+
+                case "next year":
+                    actualResult.Should().Be(DateTime.UtcNow.Date.AddYears(+1));
                     break;
 
                 default:
