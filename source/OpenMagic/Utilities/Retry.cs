@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading;
+using System.Threading.Tasks;
+
+// ReSharper disable MemberCanBePrivate.Global because it is a library method.
 
 namespace OpenMagic.Utilities
 {
@@ -53,7 +55,7 @@ namespace OpenMagic.Utilities
                 catch (Exception)
                 {
                     // Swallow the exception and try again.
-                    Thread.Sleep(retrySleepPeriod);
+                    Task.Delay(retrySleepPeriod);
                 }
             }
 
