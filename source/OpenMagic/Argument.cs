@@ -184,7 +184,7 @@ namespace OpenMagic
             }
 
             var lessThanOrEqualToString = typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateTime?)
-                ? ((DateTime)(object)lessThanOrEqualTo).ToString("d MMM yyyy")
+                ? ((DateTime)(object)lessThanOrEqualTo).ToString("dd MMM yyyy")
                 : lessThanOrEqualTo.ToString();
 
             var exception = new ArgumentOutOfRangeException(paramName, $"Value must be less than or equal to {lessThanOrEqualToString}.")
