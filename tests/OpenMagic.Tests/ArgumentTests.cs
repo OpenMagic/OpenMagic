@@ -180,6 +180,22 @@ namespace OpenMagic.Tests
                     .Should().Throw<ArgumentException>()
                     .WithMessage("Value cannot be empty.\r\nParameter name: fakeParamName");
             }
+
+            [Fact]
+            public void ShouldThrowArgumentExceptionWhen_param_IsNull()
+            {
+                // Given
+                List<int> parameterValue = null;
+
+                // When
+                // ReSharper disable once ExpressionIsAlwaysNull
+                Action action = () => parameterValue.MustNotBeNullOrEmpty("fakeParamName");
+
+                // Then
+                action
+                    .Should().Throw<ArgumentException>()
+                    .WithMessage("[NullGuard] param is null.\r\nParameter name: param");
+            }
         }
 
         // ReSharper disable once InconsistentNaming

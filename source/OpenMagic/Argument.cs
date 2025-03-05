@@ -192,7 +192,7 @@ namespace OpenMagic
         /// <param name="param">The value to test for null or empty.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
-        public static IEnumerable<T> MustNotBeNullOrEmpty<T>([AllowNull] this IEnumerable<T> param, string paramName)
+        public static IEnumerable<T> MustNotBeNullOrEmpty<T>(this IEnumerable<T> param, string paramName)
         {
             // ReSharper disable once PossibleMultipleEnumeration
             if (!param.Any())
