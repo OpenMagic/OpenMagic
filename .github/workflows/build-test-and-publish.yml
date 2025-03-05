@@ -56,5 +56,5 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       env:
         MYGET_API_KEY: ${{secrets.MYGET_API_KEY}}
-      if: github.ref == 'refs/heads/master'
+      # if: github.ref == 'refs/heads/master'
       run: nuget push .\artifacts\${{env.PROJECT_NAME}}.${{env.VERSION}}.nupkg -ApiKey ${{env.MYGET_API_KEY}} -Source ${{env.NUGET_SERVER}}
