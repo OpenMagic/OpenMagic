@@ -5,6 +5,7 @@ using FluentAssertions;
 using OpenMagic.Exceptions;
 using OpenMagic.Tests.TestHelpers;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace OpenMagic.Tests
 {
