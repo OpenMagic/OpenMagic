@@ -8,17 +8,11 @@ namespace OpenMagic
         ///     Get an enumerable of random booleans.
         /// </summary>
         /// <param name="count">The number of random booleans to return.</param>
-        public static IEnumerable<bool> Enumerable(int count)
-        {
-            return RandomNumber.Enumerable(count, Next);
-        }
+        public static IEnumerable<bool> Enumerable(int count) => RandomNumber.Enumerable(count, Next);
 
         /// <summary>
         ///     Returns a random <see cref="bool" />.
         /// </summary>
-        public static bool Next()
-        {
-            return RandomNumber.NextInt(0, 2) == 1;
-        }
+        public static bool Next() => RandomNumber.NextInt(0, 2) == 1;
     }
 }

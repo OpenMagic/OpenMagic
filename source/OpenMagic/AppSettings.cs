@@ -62,10 +62,7 @@ namespace OpenMagic
             return null;
         }
 
-        private string GetFullKey(string key)
-        {
-            return string.Format("{0}{1}{2}", _appSettingsPrefix, _appSettingsPrefixDelimiter, key);
-        }
+        private string GetFullKey(string key) => string.Format("{0}{1}{2}", _appSettingsPrefix, _appSettingsPrefixDelimiter, key);
 
         private static IConfigurationSection GetAppSettings()
         {

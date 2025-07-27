@@ -11,10 +11,7 @@ namespace OpenMagic
         /// <param name="count">
         ///     The number of random <see cref="DateTime" /> values to return.
         /// </param>
-        public static IEnumerable<DateTime> Enumerable(int count)
-        {
-            return RandomNumber.Enumerable(count, Next);
-        }
+        public static IEnumerable<DateTime> Enumerable(int count) => RandomNumber.Enumerable(count, Next);
 
         /// <summary>
         ///     Get an enumerable of random <see cref="DateTime" /> values.
@@ -37,10 +34,7 @@ namespace OpenMagic
         /// <summary>
         ///     Returns a random <see cref="DateTime" />.
         /// </summary>
-        public static DateTime Next()
-        {
-            return Next(DateTime.MinValue, DateTime.MaxValue);
-        }
+        public static DateTime Next() => Next(DateTime.MinValue, DateTime.MaxValue);
 
         /// <summary>
         ///     Returns a random <see cref="int" /> within a specified range.

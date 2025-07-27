@@ -7,9 +7,9 @@ namespace OpenMagic
 {
     public class Dummy : IDummy
     {
-        private readonly Dictionary<Type, Func<object>> _instanceFactories = new Dictionary<Type, Func<object>>();
+        private readonly Dictionary<Type, Func<object>> _instanceFactories = new();
 
-        private readonly Dictionary<Type, Func<object>> _valueFactories = new Dictionary<Type, Func<object>>
+        private readonly Dictionary<Type, Func<object>> _valueFactories = new()
         {
             { typeof(bool), () => RandomBoolean.Next() },
             { typeof(DateTime), () => RandomDateTime.Next() },
@@ -45,10 +45,7 @@ namespace OpenMagic
         };
 
 
-        public T Value<T>()
-        {
-            return (T)Value(typeof(T));
-        }
+        public T Value<T>() => (T)Value(typeof(T));
 
 
         public virtual object Value(Type type)
@@ -107,6 +104,7 @@ namespace OpenMagic
 
             return dict;
         }
+
         protected virtual object Object(Type type)
         {
             var obj = CreateObjectInstance(type);
@@ -137,20 +135,18 @@ namespace OpenMagic
                 {
                     return instanceFactory();
                 }
-                else
+
+                // Avoid repeated dictionary lookup and delegate allocation
+                var createdInstance = Activator.CreateInstance(type);
+
+                if (createdInstance is null)
                 {
-                    // Avoid repeated dictionary lookup and delegate allocation
-                    var createdInstance = Activator.CreateInstance(type);
-
-                    if (createdInstance is null)
-                    {
-                        throw new InvalidOperationException($"Activator.CreateInstance returned null for type '{type}'.");
-                    }
-
-                    _instanceFactories[type] = () => createdInstance;
-
-                    return createdInstance;
+                    throw new InvalidOperationException($"Activator.CreateInstance returned null for type '{type}'.");
                 }
+
+                _instanceFactories[type] = () => createdInstance;
+
+                return createdInstance;
             }
             catch (Exception exception)
             {
@@ -159,10 +155,7 @@ namespace OpenMagic
             }
         }
 
-        protected virtual IEnumerable CreateValues(Type itemType)
-        {
-            return CreateValues(itemType, RandomNumber.NextInt(0, 1000));
-        }
+        protected virtual IEnumerable CreateValues(Type itemType) => CreateValues(itemType, RandomNumber.NextInt(0, 1000));
 
         protected virtual IEnumerable CreateValues(Type itemType, int count)
         {
@@ -181,6 +174,7 @@ namespace OpenMagic
                 {
                     throw new ArgumentException($"Array type '{arrayType}' does not have a valid element type.", nameof(arrayType));
                 }
+
                 var values = CreateValues(itemType);
 
                 var method = typeof(Enumerable).GetMethod("Cast");
@@ -204,6 +198,7 @@ namespace OpenMagic
                 throw new Exception(message, exception);
             }
         }
+
         protected virtual IList CreateListOfT(Type type)
         {
             try
@@ -232,9 +227,6 @@ namespace OpenMagic
             }
         }
 
-        private static T? RandomNullable<T>(Func<T> randomFactory)
-        {
-            return RandomNumber.NextInt(1, 5) == 1 ? default : randomFactory();
-        }
+        private static T? RandomNullable<T>(Func<T> randomFactory) => RandomNumber.NextInt(1, 5) == 1 ? default : randomFactory();
     }
 }

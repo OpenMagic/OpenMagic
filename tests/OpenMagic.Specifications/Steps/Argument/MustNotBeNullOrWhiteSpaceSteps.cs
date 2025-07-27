@@ -8,9 +8,9 @@ namespace OpenMagic.Specifications.Steps.Argument
     [Binding]
     public class MustNotBeNullOrWhiteSpaceSteps
     {
-        private string _stringArgument;
         private Exception _exception;
         private string _returned;
+        private string _stringArgument;
 
         [Given("a string argument {string}")]
         public void GivenAStringArgument(string value)

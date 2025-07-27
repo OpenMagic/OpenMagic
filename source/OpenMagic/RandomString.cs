@@ -11,27 +11,18 @@ namespace OpenMagic
         /// <summary>
         ///     Get a random string between 1 and 25 characters long.
         /// </summary>
-        public static string Next()
-        {
-            return Next(CharacterSets.Keyboard);
-        }
+        public static string Next() => Next(CharacterSets.Keyboard);
 
         /// <summary>
         ///     Get a random string between 1 and 25 characters long using <paramref name="characterSet" /> as the list of possible
         ///     characters.
         /// </summary>
-        public static string Next(string characterSet)
-        {
-            return Next(1, 25, characterSet);
-        }
+        public static string Next(string characterSet) => Next(1, 25, characterSet);
 
         /// <summary>
         ///     Get a random string between <paramref name="minLength" /> and <paramref name="maxLength" /> characters long.
         /// </summary>
-        public static string Next(int minLength, int maxLength)
-        {
-            return Next(minLength, maxLength, CharacterSets.Keyboard);
-        }
+        public static string Next(int minLength, int maxLength) => Next(minLength, maxLength, CharacterSets.Keyboard);
 
         /// <summary>
         ///     Get a random string between <paramref name="minLength" /> and <paramref name="maxLength" /> characters long.

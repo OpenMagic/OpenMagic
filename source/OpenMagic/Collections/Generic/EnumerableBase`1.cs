@@ -19,17 +19,11 @@ namespace OpenMagic.Collections.Generic
         /// <summary>
         ///     Returns an enumerator that iterates through the collection.
         /// </summary>
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Items.GetEnumerator();
-        }
+        public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
 
         /// <summary>
         ///     Returns a non-generic enumerator that iterates through the collection.
         /// </summary>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

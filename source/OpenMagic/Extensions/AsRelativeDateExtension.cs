@@ -71,10 +71,7 @@ namespace OpenMagic.Extensions
             }
         }
 
-        private static ArgumentException CannotHandleRelativeDateException(string? value, FormatException innerException)
-        {
-            return new ArgumentException($"Cannot handle relative date '{value}'.", nameof(value), innerException);
-        }
+        private static ArgumentException CannotHandleRelativeDateException(string? value, FormatException innerException) => new($"Cannot handle relative date '{value}'.", nameof(value), innerException);
 
         private static string? HandleYears(string? value, int operation, ref DateTime date)
         {

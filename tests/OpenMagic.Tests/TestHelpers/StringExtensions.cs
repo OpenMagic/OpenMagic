@@ -2,9 +2,6 @@
 {
     public static class StringExtensions
     {
-        public static string ArgumentExceptionMessage(this string argumentName, string message)
-        {
-            return $"{message} (Parameter '{argumentName}')";
-        }
+        public static string ArgumentExceptionMessage(this string argumentName, string message) => $"{message} (Parameter '{argumentName}')";
     }
 }
