@@ -71,9 +71,9 @@ namespace OpenMagic.Reflection
         /// <typeparam name="T">The type of the object.</typeparam>
         /// <param name="xml">The XML string to deserialize.</param>
         /// <returns>The deserialized object.</returns>
-        public static T FromXml<T>(this string xml) where T : class
+        public static T? FromXml<T>(this string xml) where T : class
         {
-            return (T)xml.FromXml(typeof(T));
+            return (T?)xml.FromXml(typeof(T));
         }
 
         /// <summary>
@@ -82,6 +82,7 @@ namespace OpenMagic.Reflection
         /// <param name="xml">The XML string to deserialize.</param>
         /// <param name="type">The type of the object.</param>
         /// <returns>The deserialized object.</returns>
+        // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
         public static object FromXml(this string xml, Type type)
         {
             var serializer = new XmlSerializer(type);
