@@ -7,7 +7,7 @@ namespace OpenMagic
 {
     public class Dummy : IDummy
     {
-        protected readonly Dictionary<Type, Func<object>> InstanceFactories = new();
+        protected readonly Dictionary<Type, Func<object>> InstanceFactories = [];
 
         protected readonly Dictionary<Type, Func<object>> ValueFactories = new()
         {
@@ -98,9 +98,8 @@ namespace OpenMagic
         {
             var values = CreateValues(typeof(string)).Cast<string>().Where(s => !string.IsNullOrWhiteSpace(s));
 
-            return values.ToDictionary(_ => Guid.NewGuid().ToString());
+            return values.ToDictionary(value => Guid.NewGuid().ToString());
         }
-
         protected virtual object Object(Type type)
         {
             var obj = CreateObjectInstance(type);
@@ -199,7 +198,7 @@ namespace OpenMagic
             }
         }
 
-        private static T RandomNullable<T>(Func<T> randomFactory)
+        private static T? RandomNullable<T>(Func<T> randomFactory)
         {
             return RandomNumber.NextInt(1, 5) == 1 ? default : randomFactory();
         }

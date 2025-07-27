@@ -38,22 +38,21 @@ namespace OpenMagic.Tests
                 // Given
                 var minValue = new DateTime(2015, 1, 1);
                 var maxValue = new DateTime(2015, 6, 30);
+                const int requestNumberOfRandomDates = 1000;
 
                 // When
-                var randomNumbers = RandomDateTime.Enumerable(1000, minValue, maxValue);
+                var randomNumbers = RandomDateTime.Enumerable(requestNumberOfRandomDates, minValue, maxValue);
 
                 // Then
-                var expectedUniqueValues = (int)((maxValue - minValue).TotalMilliseconds * 0.9);
-                var uniqueValues =
-                    from i in randomNumbers
-                    group i by i
-                    into g
-                    select new { Number = g };
+                const int expectedUniqueValues = (int)(requestNumberOfRandomDates * 0.9);
+                var uniqueValues = randomNumbers.GroupBy(i => i).Select(g => new { Number = g });
 
-                uniqueValues.Count()
-                    .Should()
-                    .BeGreaterThan(expectedUniqueValues,
-                        "because there should be more than {0} random numbers", expectedUniqueValues);
+                var actualCount = uniqueValues.Distinct().Count();
+
+                actualCount.Should().BeGreaterThan(
+                    expectedUniqueValues, 
+                    "because there should be more than {0} random numbers", expectedUniqueValues
+                );
             }
 
             [Fact]

@@ -8,18 +8,16 @@ namespace OpenMagic.Extensions
     {
         private static HttpResponseMessage GetResponse(this Uri uri)
         {
-            using (var httpClient = new HttpClient())
-            {
-                return httpClient.GetAsync(uri).Result;
-            }
+            using var httpClient = new HttpClient();
+
+            return httpClient.GetAsync(uri).Result;
         }
 
         public static HttpStatusCode GetResponseStatusCode(this Uri uri)
         {
-            using (var response = uri.GetResponse())
-            {
-                return response.StatusCode;
-            }
+            using var response = uri.GetResponse();
+
+            return response.StatusCode;
         }
 
         public static bool IsResponding(this Uri uri)
@@ -50,10 +48,9 @@ namespace OpenMagic.Extensions
         {
             try
             {
-                using (var httpResponseMessage = uri.GetResponse())
-                {
-                    return httpResponseMessage.IsSuccessStatusCode;
-                }
+                using var httpResponseMessage = uri.GetResponse();
+
+                return httpResponseMessage.IsSuccessStatusCode;
             }
             catch (AggregateException aggregateException)
             {

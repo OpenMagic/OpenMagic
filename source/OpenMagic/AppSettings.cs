@@ -7,8 +7,8 @@ namespace OpenMagic
 {
     public class AppSettings(Func<IConfigurationSection> appSettingsFactory)
     {
-        private readonly string _appSettingsPrefix;
-        private readonly string _appSettingsPrefixDelimiter;
+        private readonly string _appSettingsPrefix = "";
+        private readonly string _appSettingsPrefixDelimiter = "_";
 
         public AppSettings() : this(GetAppSettings)
         {
@@ -28,13 +28,13 @@ namespace OpenMagic
             _appSettingsPrefixDelimiter = appSettingsPrefixDelimiter;
         }
 
-        public bool GetBoolean(string key, bool throwExceptionIsKeyNotFound = true, bool throwExceptionIsValueIsNullOrWhitespace = true)
+        public bool GetBoolean(string key, bool throwExceptionIsKeyNotFound = true)
         {
-            var value = GetString(key, throwExceptionIsKeyNotFound, throwExceptionIsValueIsNullOrWhitespace);
+            var value = GetString(key, throwExceptionIsKeyNotFound);
 
             try
             {
-                return bool.Parse(value);
+                return bool.Parse(value!);
             }
             catch (Exception exception)
             {
@@ -43,7 +43,7 @@ namespace OpenMagic
         }
 
 
-        public string GetString(string key, bool throwExceptionIfKeyNotFound = true, bool throwExceptionIsValueIsNullOrWhitespace = true)
+        public string? GetString(string key, bool throwExceptionIfKeyNotFound = true)
         {
             var fullKey = GetFullKey(key);
             var appSettings = appSettingsFactory();
@@ -70,7 +70,7 @@ namespace OpenMagic
         private static IConfigurationSection GetAppSettings()
         {
             var configurationRoot = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("AppSettings.json")
                 .Build();
 
             var appSettings = configurationRoot.GetSection("AppSettings");
