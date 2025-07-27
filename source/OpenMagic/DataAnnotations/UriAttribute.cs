@@ -18,7 +18,7 @@ namespace OpenMagic.DataAnnotations
             try
             {
                 // ReSharper disable once UnusedVariable
-                var uri = new Uri(value.ToString()!);
+                var uri = new Uri(value.ToString());
                 return ValidationResult.Success;
             }
             catch (Exception)
