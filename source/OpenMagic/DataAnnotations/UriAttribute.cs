@@ -8,7 +8,7 @@ namespace OpenMagic.DataAnnotations
     /// </summary>
     public class UriAttribute : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (value == null || (value is string && string.IsNullOrWhiteSpace(value.ToString())))
             {
