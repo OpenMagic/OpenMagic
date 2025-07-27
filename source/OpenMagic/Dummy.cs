@@ -7,9 +7,9 @@ namespace OpenMagic
 {
     public class Dummy : IDummy
     {
-        private readonly Dictionary<Type, Func<object>> InstanceFactories = new();
+        private readonly Dictionary<Type, Func<object>> _instanceFactories = new Dictionary<Type, Func<object>>();
 
-        private readonly Dictionary<Type, Func<object>> ValueFactories = new()
+        private readonly Dictionary<Type, Func<object>> _valueFactories = new Dictionary<Type, Func<object>>
         {
             { typeof(bool), () => RandomBoolean.Next() },
             { typeof(DateTime), () => RandomDateTime.Next() },
@@ -55,7 +55,7 @@ namespace OpenMagic
         {
             try
             {
-                if (ValueFactories.TryGetValue(type, out var valueFactory))
+                if (_valueFactories.TryGetValue(type, out var valueFactory))
                 {
                     return valueFactory();
                 }
@@ -126,7 +126,7 @@ namespace OpenMagic
         {
             try
             {
-                if (InstanceFactories.TryGetValue(type, out var instanceFactory) && instanceFactory != null)
+                if (_instanceFactories.TryGetValue(type, out var instanceFactory) && instanceFactory != null)
                 {
                     return instanceFactory();
                 }
@@ -140,7 +140,7 @@ namespace OpenMagic
                         throw new InvalidOperationException($"Activator.CreateInstance returned null for type '{type}'.");
                     }
 
-                    InstanceFactories[type] = () => createdInstance;
+                    _instanceFactories[type] = () => createdInstance;
 
                     return createdInstance;
                 }
