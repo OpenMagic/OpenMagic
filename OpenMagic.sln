@@ -1,0 +1,53 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36310.24 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{089100B1-113F-4E66-888A-E83F3999EAFD}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build-test-and-publish.yml = .github\workflows\build-test-and-publish.yml
+		source\OpenMagic\Properties\CommonAssemblyInfo.cs = source\OpenMagic\Properties\CommonAssemblyInfo.cs
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{B8EFCA5F-814F-285C-A8CB-F00F14650265}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic", "source\OpenMagic\OpenMagic.csproj", "{04D3F528-4A08-D037-9F40-B2373087C3B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Specifications", "tests\OpenMagic.Specifications\OpenMagic.Specifications.csproj", "{2335FAC0-BD0F-BA1C-005D-A486EB96267A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMagic.Tests", "tests\OpenMagic.Tests\OpenMagic.Tests.csproj", "{2C1DED7F-8DA9-AE2A-322C-95EC06A1029F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04D3F528-4A08-D037-9F40-B2373087C3B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D3F528-4A08-D037-9F40-B2373087C3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D3F528-4A08-D037-9F40-B2373087C3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D3F528-4A08-D037-9F40-B2373087C3B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2335FAC0-BD0F-BA1C-005D-A486EB96267A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2335FAC0-BD0F-BA1C-005D-A486EB96267A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2335FAC0-BD0F-BA1C-005D-A486EB96267A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2335FAC0-BD0F-BA1C-005D-A486EB96267A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C1DED7F-8DA9-AE2A-322C-95EC06A1029F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C1DED7F-8DA9-AE2A-322C-95EC06A1029F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C1DED7F-8DA9-AE2A-322C-95EC06A1029F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C1DED7F-8DA9-AE2A-322C-95EC06A1029F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{04D3F528-4A08-D037-9F40-B2373087C3B0} = {B8EFCA5F-814F-285C-A8CB-F00F14650265}
+		{2335FAC0-BD0F-BA1C-005D-A486EB96267A} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{2C1DED7F-8DA9-AE2A-322C-95EC06A1029F} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = OpenMagic.vsmdi
+	EndGlobalSection
+EndGlobal
