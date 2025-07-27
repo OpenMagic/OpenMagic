@@ -8,7 +8,7 @@ namespace OpenMagic.Collections.Generic
     /// </summary>
     /// <typeparam name="TKey">The type of the keys in the cache.</typeparam>
     /// <typeparam name="TValue">The type of the values in the cache.</typeparam>
-    public class Cache<TKey, TValue> : Dictionary<TKey, TValue>
+    public class Cache<TKey, TValue> : Dictionary<TKey, TValue> where TKey : notnull
     {
         /// <summary>
         ///     Gets the value for <typeparamref name="TKey" /> from the cache. If <typeparamref name="TKey" /> is not in cache
