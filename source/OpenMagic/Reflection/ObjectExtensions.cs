@@ -103,12 +103,12 @@ namespace OpenMagic.Reflection
         /// <param name="obj">The object.</param>
         /// <param name="privateFieldName">The name of the private field.</param>
         /// <returns>The value of the private field.</returns>
-        public static T GetPrivateFieldValue<T>(this object obj, string privateFieldName)
+        public static T? GetPrivateFieldValue<T>(this object obj, string privateFieldName)
         {
             var field = obj.GetType().GetPrivateField(privateFieldName);
             var value = field.GetValue(obj);
 
-            return (T)value;
+            return (T?)value;
         }
 
         /// <summary>
