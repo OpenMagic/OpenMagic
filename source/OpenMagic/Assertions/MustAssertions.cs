@@ -4,12 +4,12 @@
     {
         public static void MustBe<T>(this T actualValue, T expectedValue, string exMessage)
         {
-            actualValue.Equals(expectedValue).MustBeTrue(exMessage);
+            actualValue?.Equals(expectedValue).MustBeTrue(exMessage);
         }
 
         public static void MustBe<T>(this T actualValue, T expectedValue, string exMessage, params object[] exMessageArgs)
         {
-            actualValue.Equals(expectedValue).MustBeTrue(exMessage, exMessageArgs);
+            actualValue?.Equals(expectedValue).MustBeTrue(exMessage, exMessageArgs);
         }
 
         public static void MustBeFalse(this bool assertion, string exMessage)

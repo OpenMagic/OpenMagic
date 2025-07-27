@@ -188,7 +188,7 @@ namespace OpenMagic
                 : lessThanOrEqualTo.ToString();
 
             var exception = new ArgumentOutOfRangeException(paramName, $"Value must be less than or equal to {lessThanOrEqualToString}.")
-                {
+            {
                 Data =
                 {
                     [nameof(param)] = param,
@@ -237,14 +237,15 @@ namespace OpenMagic
         /// <param name="param">The enumerable to test for emptiness.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when it is not empty.</returns>
-        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
         public static IEnumerable<T> MustNotBeEmpty<T>(this IEnumerable<T> param, string paramName)
         {
+            // ReSharper disable once PossibleMultipleEnumeration
             if (!param.Any())
             {
                 throw new ArgumentEmptyException(paramName);
             }
 
+            // ReSharper disable once PossibleMultipleEnumeration
             return param;
         }
 
@@ -305,7 +306,7 @@ namespace OpenMagic
         /// <param name="param">The value to test for null.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
-        public static T MustNotBeNull<T>([AllowNull] this T param, string paramName)
+        public static T MustNotBeNull<T>(this T? param, string paramName)
         {
             // ReSharper disable once CompareNonConstrainedGenericWithNull
             if (param == null)
@@ -325,12 +326,12 @@ namespace OpenMagic
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null.</returns>
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-        public static IEnumerable<T> MustNotBeNullOrEmpty<T>([AllowNull] this IEnumerable<T> param, string paramName)
+        public static IEnumerable<T> MustNotBeNullOrEmpty<T>(this IEnumerable<T>? param, string paramName)
         {
             param.MustNotBeNull(paramName);
-            param.MustNotBeEmpty(paramName);
+            param!.MustNotBeEmpty(paramName);
 
-            return param;
+            return param!;
         }
 
         /// <summary>
@@ -340,14 +341,14 @@ namespace OpenMagic
         /// <param name="param">The value to test for null or whitespace.</param>
         /// <param name="paramName">The name of the parameter being tested.</param>
         /// <returns>Returns <paramref name="param" /> when the value is not null or whitespace.</returns>
-        public static string MustNotBeNullOrWhiteSpace([AllowNull] this string param, string paramName)
+        public static string MustNotBeNullOrWhiteSpace(this string? param, string paramName)
         {
             if (param.IsNullOrWhiteSpace())
             {
                 throw new ArgumentNullOrWhiteSpaceException(paramName);
             }
 
-            return param;
+            return param!;
         }
     }
 }

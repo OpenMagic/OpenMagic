@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
-
-#pragma warning disable IDE0057
 
 namespace OpenMagic.Extensions
 {
@@ -25,7 +22,7 @@ namespace OpenMagic.Extensions
         /// <example>
         ///     GetValuesBetween("a 'quick' brown 'fox'") => { "quick", "fox }.
         /// </example>
-        public static IEnumerable<string> GetValuesBetween([AllowNull] this string value, string delimiter)
+        public static IEnumerable<string> GetValuesBetween(this string? value, string delimiter)
         {
             // todo: replace with Argument.MustNotBeNull() or similar.
             if (delimiter.IsNullOrWhiteSpace())
@@ -40,7 +37,7 @@ namespace OpenMagic.Extensions
 
             if (value == null)
             {
-                return Enumerable.Empty<string>();
+                return [];
             }
 
             var split = value.Split(Convert.ToChar(delimiter));
@@ -89,10 +86,7 @@ namespace OpenMagic.Extensions
         /// <remarks>
         ///     Syntactic sugar.
         /// </remarks>
-        public static bool IsNullOrWhiteSpace([AllowNull] this string value)
-        {
-            return string.IsNullOrWhiteSpace(value);
-        }
+        public static bool IsNullOrWhiteSpace(this string? value) => string.IsNullOrWhiteSpace(value);
 
         /// <summary>
         ///     Tests if
@@ -133,16 +127,13 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Normalizes the line endings within a string.
         /// </summary>
-        public static string NormalizeLineEndings(this string value)
-        {
-            return value.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", Environment.NewLine);
-        }
+        public static string NormalizeLineEndings(this string value) => value.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", Environment.NewLine);
 
         /// <summary>
         ///     Returns the number of times <paramref name="find" /> occurs in <paramref name="value" />.
         /// </summary>
         /// <exception cref="ArgumentNullException"> when find is null or empty.</exception>
-        public static int Occurs(this string value, string find)
+        public static int Occurs(this string? value, string find)
         {
             find.MustNotBeNullOrWhiteSpace(nameof(find));
 
@@ -161,10 +152,7 @@ namespace OpenMagic.Extensions
         ///     Nothing. An alternative
         ///     for this example is "abc".TextAfter("d").
         /// </remarks>
-        public static string TextAfter(this string text, int value)
-        {
-            return text.TextAfter(value, null);
-        }
+        public static string? TextAfter(this string text, int value) => text.TextAfter(value, null);
 
         /// <summary>
         ///     Get the text after <paramref name="value" />.
@@ -182,10 +170,7 @@ namespace OpenMagic.Extensions
         ///     Nothing. An alternative
         ///     for this example is "abc".TextAfter("d").
         /// </remarks>
-        public static string TextAfter(this string text, int value, [AllowNull] string defaultValue)
-        {
-            return text.TextAfter(value, defaultValue, 1);
-        }
+        public static string? TextAfter(this string text, int value, string? defaultValue) => text.TextAfter(value, defaultValue, 1);
 
         /// <summary>
         ///     Get the text after <paramref name="value" />.
@@ -204,10 +189,7 @@ namespace OpenMagic.Extensions
         ///     Nothing. An alternative
         ///     for this example is "abc".TextAfter("d").
         /// </remarks>
-        public static string TextAfter(this string text, int value, [AllowNull] string defaultValue, int offset)
-        {
-            return value == -1 ? defaultValue : text[(value + offset)..];
-        }
+        public static string? TextAfter(this string text, int value, string? defaultValue, int offset) => value == -1 ? defaultValue : text.Substring(value + offset);
 
         /// <summary>
         ///     Get the text after <paramref name="value" />.
@@ -218,11 +200,9 @@ namespace OpenMagic.Extensions
         ///     The text after <paramref name="value" />. If <paramref name="value" /> does not exist then Nothing is
         ///     returned.
         /// </returns>
-        public static string TextAfter(this string text, string value)
-        {
+        public static string? TextAfter(this string text, string value) =>
             // todo: unit tests
-            return text.TextAfter(value, null);
-        }
+            text.TextAfter(value, null);
 
         /// <summary>
         ///     Get the text after <paramref name="value" />.
@@ -234,7 +214,7 @@ namespace OpenMagic.Extensions
         ///     The text after <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     <paramref name="defaultValue" /> is returned.
         /// </returns>
-        public static string TextAfter(this string text, string value, [AllowNull] string defaultValue)
+        public static string? TextAfter(this string text, string value, string? defaultValue)
         {
             value.MustNotBeNullOrWhiteSpace("value");
 
@@ -262,11 +242,9 @@ namespace OpenMagic.Extensions
         ///     The text after last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     Nothing is returned.
         /// </returns>
-        public static string TextAfterLast(this string text, string value)
-        {
+        public static string? TextAfterLast(this string text, string value) =>
             // todo: unit tests
-            return text.TextAfterLast(value, null);
-        }
+            text.TextAfterLast(value, null);
 
         /// <summary>
         ///     Get the text after last occurrence of <paramref name="value" />.
@@ -280,10 +258,7 @@ namespace OpenMagic.Extensions
         ///     The text after last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     <paramref name="text" /> is returned.
         /// </returns>
-        public static string TextAfterLast(this string text, string value, [AllowNull] string defaultValue)
-        {
-            return text.IsNullOrWhiteSpace() ? defaultValue : text.TextAfter(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue, value.Length);
-        }
+        public static string? TextAfterLast(this string text, string value, string? defaultValue) => text.IsNullOrWhiteSpace() ? defaultValue : text.TextAfter(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue, value.Length);
 
         /// <summary>
         ///     Get the text before <paramref name="value" />.
@@ -294,11 +269,9 @@ namespace OpenMagic.Extensions
         ///     The text before <paramref name="value" />. If <paramref name="value" /> does not exist then Nothing is
         ///     returned.
         /// </returns>
-        public static string TextBefore(this string text, string value)
-        {
+        public static string? TextBefore(this string text, string value) =>
             // todo: unit tests
-            return text.TextBefore(value, null);
-        }
+            text.TextBefore(value, null);
 
         /// <summary>
         ///     Get the text before <paramref name="value" />.
@@ -312,10 +285,7 @@ namespace OpenMagic.Extensions
         ///     The text before <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     <paramref name="defaultValue" /> is returned.
         /// </returns>
-        public static string TextBefore(this string text, string value, [AllowNull] string defaultValue)
-        {
-            return text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.IndexOf(value, StringComparison.Ordinal), defaultValue);
-        }
+        public static string? TextBefore(this string text, string value, string? defaultValue) => text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.IndexOf(value, StringComparison.Ordinal), defaultValue);
 
         /// <summary>
         ///     Get the text before <paramref name="value" />.
@@ -335,11 +305,7 @@ namespace OpenMagic.Extensions
         ///     Nothing. An alternative
         ///     for this example is "abc".TextBefore("d").
         /// </remarks>
-        public static string TextBefore(this string text, int value, [AllowNull] string defaultValue)
-        {
-            // todo: unit tests
-            return value == -1 ? defaultValue : text[..value];
-        }
+        public static string? TextBefore(this string text, int value, string? defaultValue) => value == -1 ? defaultValue : text.Substring(0, value);
 
         /// <summary>
         ///     Get the text before last occurrence of <paramref name="value" />.
@@ -350,10 +316,7 @@ namespace OpenMagic.Extensions
         ///     The text before last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     Nothing is returned.
         /// </returns>
-        public static string TextBeforeLast(this string text, string value)
-        {
-            return text.TextBeforeLast(value, null);
-        }
+        public static string? TextBeforeLast(this string text, string value) => text.TextBeforeLast(value, null);
 
         /// <summary>
         ///     Get the text before last occurrence of <paramref name="value" />.
@@ -367,30 +330,25 @@ namespace OpenMagic.Extensions
         ///     The text before last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     <paramref name="defaultValue" /> is returned.
         /// </returns>
-        public static string TextBeforeLast(this string text, string value, [AllowNull] string defaultValue)
-        {
-            return text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue);
-        }
+        public static string? TextBeforeLast(this string text, string value, string? defaultValue) => text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue);
 
         /// <summary>
         ///     Splits a string value into lines.
         /// </summary>
         /// <param name="value">The string to split into lines.</param>
         /// <param name="trimLines">If true the lines are trimmed.</param>
-        public static IEnumerable<string> ToLines([AllowNull] this string value, bool trimLines = false)
+        public static IEnumerable<string?> ToLines(this string? value, bool trimLines = false)
         {
             if (value == null)
             {
                 yield break;
             }
 
-            using (var reader = new StringReader(value))
+            using var reader = new StringReader(value);
+
+            while (reader.ReadLine() is { } line)
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    yield return trimLines ? line.Trim() : line;
-                }
+                yield return trimLines ? line.Trim() : line;
             }
         }
 
@@ -459,7 +417,7 @@ namespace OpenMagic.Extensions
         /// <param name="value">The string value to split into lines.</param>
         /// <param name="textWriter">The <see cref="TextWriter" /> to write to.</param>
         /// <param name="trimLines">When true the lines are trimmed before writing to <see cref="TextWriter" />.</param>
-        public static void WriteLines([AllowNull] this string value, TextWriter textWriter, bool trimLines = false)
+        public static void WriteLines(this string? value, TextWriter textWriter, bool trimLines = false)
         {
             if (value == null)
             {
