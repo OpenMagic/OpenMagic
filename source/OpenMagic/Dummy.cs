@@ -126,9 +126,9 @@ namespace OpenMagic
         {
             try
             {
-                return InstanceFactories.TryGetValue(type, out var instanceFactory)
+                return InstanceFactories.TryGetValue(type, out var instanceFactory) && instanceFactory != null
                     ? instanceFactory()
-                    : Activator.CreateInstance(type);
+                    : Activator.CreateInstance(type)!;
             }
             catch (Exception exception)
             {
