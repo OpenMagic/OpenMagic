@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".github/workflows/build-test-and-publish.yml" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="source/OpenMagic/Properties/CommonAssemblyInfo.cs" />
+  </Folder>
+  <Folder Name="/source/">
+    <Project Path="source/OpenMagic/OpenMagic.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OpenMagic.Specifications/OpenMagic.Specifications.csproj" />
+    <Project Path="tests/OpenMagic.Tests/OpenMagic.Tests.csproj" />
+  </Folder>
+  <Properties Name="TestCaseManagementSettings" Scope="PostLoad">
+    <Property Name="CategoryFile" Value="OpenMagic.vsmdi" />
+  </Properties>
+</Solution>
