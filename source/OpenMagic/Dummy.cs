@@ -155,10 +155,14 @@ namespace OpenMagic
             try
             {
                 var itemType = arrayType.GetElementType();
+                if (itemType == null)
+                {
+                    throw new ArgumentException($"Array type '{arrayType}' does not have a valid element type.", nameof(arrayType));
+                }
                 var values = CreateValues(itemType);
 
                 var method = typeof(Enumerable).GetMethod("Cast");
-                var genericMethod = method!.MakeGenericMethod(itemType!);
+                var genericMethod = method!.MakeGenericMethod(itemType);
                 var enumerable = genericMethod.Invoke(this, [values]);
 
                 method = typeof(Enumerable).GetMethod("ToArray");
