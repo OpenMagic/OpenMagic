@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net481;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net481;netstandard2.0;net9.0</TargetFrameworks>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>12.0</LangVersion>
