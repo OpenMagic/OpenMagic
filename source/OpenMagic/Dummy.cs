@@ -7,9 +7,9 @@ namespace OpenMagic
 {
     public class Dummy : IDummy
     {
-        protected readonly Dictionary<Type, Func<object>> InstanceFactories = [];
+        private readonly Dictionary<Type, Func<object>> InstanceFactories = new();
 
-        protected readonly Dictionary<Type, Func<object>> ValueFactories = new()
+        private readonly Dictionary<Type, Func<object>> ValueFactories = new()
         {
             { typeof(bool), () => RandomBoolean.Next() },
             { typeof(DateTime), () => RandomDateTime.Next() },
@@ -126,9 +126,17 @@ namespace OpenMagic
         {
             try
             {
-                return InstanceFactories.TryGetValue(type, out var instanceFactory) && instanceFactory != null
-                    ? instanceFactory()
-                    : Activator.CreateInstance(type)!;
+                if (InstanceFactories.TryGetValue(type, out var instanceFactory) && instanceFactory != null)
+                {
+                    return instanceFactory();
+                }
+                else
+                {
+                    // Avoid repeated dictionary lookup and delegate allocation
+                    var createdInstance = Activator.CreateInstance(type);
+                    InstanceFactories[type] = () => createdInstance;
+                    return createdInstance;
+                }
             }
             catch (Exception exception)
             {
@@ -163,11 +171,16 @@ namespace OpenMagic
 
                 var method = typeof(Enumerable).GetMethod("Cast");
                 var genericMethod = method!.MakeGenericMethod(itemType);
-                var enumerable = genericMethod.Invoke(this, [values]);
+                var enumerable = genericMethod.Invoke(null, [values]);
 
                 method = typeof(Enumerable).GetMethod("ToArray");
                 genericMethod = method!.MakeGenericMethod(itemType);
-                var array = genericMethod.Invoke(this, [enumerable]);
+                var array = genericMethod.Invoke(null, [enumerable]);
+
+                if (array is null)
+                {
+                    throw new InvalidOperationException($"Failed to create array of type '{arrayType}'.");
+                }
 
                 return (object[])array;
             }
@@ -177,7 +190,6 @@ namespace OpenMagic
                 throw new Exception(message, exception);
             }
         }
-
         protected virtual IList CreateListOfT(Type type)
         {
             try
@@ -190,7 +202,7 @@ namespace OpenMagic
 
                 foreach (var value in values)
                 {
-                    list!.Add(value);
+                    list.Add(value);
                 }
 
                 return list;
