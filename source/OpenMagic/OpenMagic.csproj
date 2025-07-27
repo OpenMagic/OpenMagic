@@ -13,7 +13,7 @@
 		<Description>Collection of utility extensions and classes by Tim Murphy.</Description>
 		<SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<AssemblyTitle>OpenMagic</AssemblyTitle>
 		<Description>Collection of utility extensions and classes by Tim Murphy.</Description>
 		<Product>OpenMagic</Product>

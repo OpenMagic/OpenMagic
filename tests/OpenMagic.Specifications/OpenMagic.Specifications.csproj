@@ -9,6 +9,7 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<AssemblyTitle>OpenMagic.Specifications</AssemblyTitle>
 		<Description>Specifications for OpenMagic project.</Description>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<ItemGroup>
