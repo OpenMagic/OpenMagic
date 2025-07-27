@@ -134,7 +134,14 @@ namespace OpenMagic
                 {
                     // Avoid repeated dictionary lookup and delegate allocation
                     var createdInstance = Activator.CreateInstance(type);
+
+                    if (createdInstance is null)
+                    {
+                        throw new InvalidOperationException($"Activator.CreateInstance returned null for type '{type}'.");
+                    }
+
                     InstanceFactories[type] = () => createdInstance;
+
                     return createdInstance;
                 }
             }
