@@ -9,7 +9,7 @@ on:
 
 env:
   PROJECT_NAME: OpenMagic
-  SOLUTION_FILE_PATH: .\OpenMagic.sln
+  SOLUTION_FILE_PATH: .\OpenMagic.slnx
   NUGET_FILE_PATH: .\OpenMagic.nuspec
   MAJOR_PROJECT_FOLDER: .\source\OpenMagic
   VERSION: 6.0.0
