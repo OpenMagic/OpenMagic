@@ -7,7 +7,7 @@ namespace OpenMagic.Reflection
 {
     public static class PropertyInfoExtensions
     {
-        public static T GetCustomAttribute<T>(this PropertyInfo value)
+        public static T? GetCustomAttribute<T>(this PropertyInfo value) where T : class
         {
             return value.GetCustomAttributes<T>().SingleOrDefault();
         }
