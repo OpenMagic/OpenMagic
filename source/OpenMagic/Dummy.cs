@@ -98,7 +98,14 @@ namespace OpenMagic
         {
             var values = CreateValues(typeof(string)).Cast<string>().Where(s => !string.IsNullOrWhiteSpace(s));
 
-            return values.ToDictionary(value => Guid.NewGuid().ToString());
+            var dict = new Dictionary<string, string>();
+
+            foreach (var value in values)
+            {
+                dict[Guid.NewGuid().ToString()] = value;
+            }
+
+            return dict;
         }
         protected virtual object Object(Type type)
         {
