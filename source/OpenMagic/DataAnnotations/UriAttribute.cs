@@ -17,10 +17,7 @@ namespace OpenMagic.DataAnnotations
 
             try
             {
-                var stringValue = value.ToString();
-
-                // Validate the string is a valid Uri
-                _ = new Uri(stringValue);
+                ValidateIsUri(value.ToString());
 
                 return ValidationResult.Success;
             }
@@ -28,6 +25,11 @@ namespace OpenMagic.DataAnnotations
             {
                 return new ValidationResult("Value is not a valid Uri.");
             }
+        }
+
+        private static void ValidateIsUri(string? value)
+        {
+            _ = new Uri(value ?? throw new ArgumentNullException(nameof(value)));
         }
     }
 }
