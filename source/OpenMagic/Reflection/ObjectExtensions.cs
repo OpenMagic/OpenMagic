@@ -174,12 +174,12 @@ namespace OpenMagic.Reflection
         /// <typeparam name="T">The type of the object.</typeparam>
         /// <param name="obj">The object to clone.</param>
         /// <returns>A deep copy of the object.</returns>
-        public static T XmlClone<T>(this T obj) where T : class
+        public static T? XmlClone<T>(this T obj) where T : class
         {
             var xml = obj.ToXml();
             var value = xml.FromXml(obj.GetType());
 
-            return (T)value;
+            return value as T;
         }
     }
 }
