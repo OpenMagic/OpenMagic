@@ -205,7 +205,11 @@ namespace OpenMagic
                 var values = CreateValues(itemType);
                 var listType = typeof(List<>);
                 var genericListType = listType.MakeGenericType(itemType);
-                var list = (IList)Activator.CreateInstance(genericListType);
+
+                if (Activator.CreateInstance(genericListType) is not IList list)
+                {
+                    throw new InvalidOperationException($"Activator.CreateInstance returned null for type '{genericListType}'.");
+                }
 
                 foreach (var value in values)
                 {
