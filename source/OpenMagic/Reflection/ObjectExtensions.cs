@@ -83,7 +83,7 @@ namespace OpenMagic.Reflection
         /// <param name="type">The type of the object.</param>
         /// <returns>The deserialized object.</returns>
         // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
-        public static object FromXml(this string xml, Type type)
+        public static object? FromXml(this string xml, Type type)
         {
             var serializer = new XmlSerializer(type);
 
