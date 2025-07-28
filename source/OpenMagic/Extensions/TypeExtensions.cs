@@ -14,7 +14,10 @@ namespace OpenMagic.Extensions
         /// <remarks>
         ///     Syntactic sugar.
         /// </remarks>
-        public static bool IsEnumerableString(this Type value) => value == typeof(IEnumerable<string>);
+        public static bool IsEnumerableString(this Type value)
+        {
+            return value == typeof(IEnumerable<string>);
+        }
 
         /// <summary>
         ///     Determines whether the specified type is string.
@@ -23,7 +26,10 @@ namespace OpenMagic.Extensions
         /// <remarks>
         ///     Syntactic sugar.
         /// </remarks>
-        public static bool IsString(this Type value) => value == typeof(string);
+        public static bool IsString(this Type value)
+        {
+            return value == typeof(string);
+        }
 
         // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
         public static FieldInfo? FindPrivateField(this Type type, string privateFieldName)

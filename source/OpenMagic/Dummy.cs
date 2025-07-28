@@ -45,7 +45,10 @@ namespace OpenMagic
         };
 
 
-        public T Value<T>() => (T)Value(typeof(T));
+        public T Value<T>()
+        {
+            return (T)Value(typeof(T));
+        }
 
 
         public virtual object Value(Type type)
@@ -155,7 +158,10 @@ namespace OpenMagic
             }
         }
 
-        protected virtual IEnumerable CreateValues(Type itemType) => CreateValues(itemType, RandomNumber.NextInt(0, 1000));
+        protected virtual IEnumerable CreateValues(Type itemType)
+        {
+            return CreateValues(itemType, RandomNumber.NextInt(0, 1000));
+        }
 
         protected virtual IEnumerable CreateValues(Type itemType, int count)
         {
@@ -227,6 +233,9 @@ namespace OpenMagic
             }
         }
 
-        private static T? RandomNullable<T>(Func<T> randomFactory) => RandomNumber.NextInt(1, 5) == 1 ? default : randomFactory();
+        private static T? RandomNullable<T>(Func<T> randomFactory)
+        {
+            return RandomNumber.NextInt(1, 5) == 1 ? default : randomFactory();
+        }
     }
 }

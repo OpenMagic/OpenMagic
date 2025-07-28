@@ -37,7 +37,10 @@ namespace OpenMagic.DataAnnotations
             throw new ArgumentException($"Cannot find {propertyName} property for {Type}.", nameof(propertyName));
         }
 
-        public IPropertyMetadata GetProperty(PropertyInfo property) => GetProperty(property.Name);
+        public IPropertyMetadata GetProperty(PropertyInfo property)
+        {
+            return GetProperty(property.Name);
+        }
 
         public static IClassMetadata Get<TModel>()
         {

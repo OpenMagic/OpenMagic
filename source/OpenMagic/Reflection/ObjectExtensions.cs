@@ -74,7 +74,10 @@ namespace OpenMagic.Reflection
         /// <typeparam name="T">The type of the object.</typeparam>
         /// <param name="xml">The XML string to deserialize.</param>
         /// <returns>The deserialized object.</returns>
-        public static T? FromXml<T>(this string xml) where T : class => (T?)xml.FromXml(typeof(T));
+        public static T? FromXml<T>(this string xml) where T : class
+        {
+            return (T?)xml.FromXml(typeof(T));
+        }
 
         /// <summary>
         ///     Deserializes an XML string into an object of the specified type.

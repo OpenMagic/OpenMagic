@@ -13,6 +13,9 @@ namespace OpenMagic.Collections.Generic
         ///     then the result of <paramref name="valueFactory" /> is added to the cache and returned.
         /// </summary>
         /// <param name="valueFactory">The function to invoke if <typeparamref name="TType" /> is not in the cache.</param>
-        public TValue Get<TType>(Func<TValue> valueFactory) => Get(typeof(TType), valueFactory);
+        public TValue Get<TType>(Func<TValue> valueFactory)
+        {
+            return Get(typeof(TType), valueFactory);
+        }
     }
 }

@@ -86,7 +86,10 @@ namespace OpenMagic.Extensions
         /// <remarks>
         ///     Syntactic sugar.
         /// </remarks>
-        public static bool IsNullOrWhiteSpace(this string? value) => string.IsNullOrWhiteSpace(value);
+        public static bool IsNullOrWhiteSpace(this string? value)
+        {
+            return string.IsNullOrWhiteSpace(value);
+        }
 
         /// <summary>
         ///     Tests if
@@ -127,7 +130,10 @@ namespace OpenMagic.Extensions
         /// <summary>
         ///     Normalizes the line endings within a string.
         /// </summary>
-        public static string NormalizeLineEndings(this string value) => value.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", Environment.NewLine);
+        public static string NormalizeLineEndings(this string value)
+        {
+            return value.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", Environment.NewLine);
+        }
 
         /// <summary>
         ///     Returns the number of times <paramref name="find" /> occurs in <paramref name="value" />.
@@ -152,7 +158,10 @@ namespace OpenMagic.Extensions
         ///     Nothing. An alternative
         ///     for this example is "abc".TextAfter("d").
         /// </remarks>
-        public static string? TextAfter(this string text, int value) => text.TextAfter(value, null);
+        public static string? TextAfter(this string text, int value)
+        {
+            return text.TextAfter(value, null);
+        }
 
         /// <summary>
         ///     Get the text after <paramref name="value" />.
@@ -171,7 +180,10 @@ namespace OpenMagic.Extensions
         ///     for this example is "abc".TextAfter("d").
         /// </remarks>
         // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
-        public static string? TextAfter(this string text, int value, string? defaultValue) => text.TextAfter(value, defaultValue, 1);
+        public static string? TextAfter(this string text, int value, string? defaultValue)
+        {
+            return text.TextAfter(value, defaultValue, 1);
+        }
 
         /// <summary>
         ///     Get the text after <paramref name="value" />.
@@ -191,7 +203,10 @@ namespace OpenMagic.Extensions
         ///     for this example is "abc".TextAfter("d").
         /// </remarks>
         // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
-        public static string? TextAfter(this string text, int value, string? defaultValue, int offset) => value == -1 ? defaultValue : text.Substring(value + offset);
+        public static string? TextAfter(this string text, int value, string? defaultValue, int offset)
+        {
+            return value == -1 ? defaultValue : text.Substring(value + offset);
+        }
 
         /// <summary>
         ///     Get the text after <paramref name="value" />.
@@ -202,9 +217,11 @@ namespace OpenMagic.Extensions
         ///     The text after <paramref name="value" />. If <paramref name="value" /> does not exist then Nothing is
         ///     returned.
         /// </returns>
-        public static string? TextAfter(this string text, string value) =>
+        public static string? TextAfter(this string text, string value)
+        {
             // todo: unit tests
-            text.TextAfter(value, null);
+            return text.TextAfter(value, null);
+        }
 
         /// <summary>
         ///     Get the text after <paramref name="value" />.
@@ -245,9 +262,11 @@ namespace OpenMagic.Extensions
         ///     The text after last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     Nothing is returned.
         /// </returns>
-        public static string? TextAfterLast(this string text, string value) =>
+        public static string? TextAfterLast(this string text, string value)
+        {
             // todo: unit tests
-            text.TextAfterLast(value, null);
+            return text.TextAfterLast(value, null);
+        }
 
         /// <summary>
         ///     Get the text after last occurrence of <paramref name="value" />.
@@ -262,7 +281,10 @@ namespace OpenMagic.Extensions
         ///     <paramref name="text" /> is returned.
         /// </returns>
         // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
-        public static string? TextAfterLast(this string text, string value, string? defaultValue) => text.IsNullOrWhiteSpace() ? defaultValue : text.TextAfter(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue, value.Length);
+        public static string? TextAfterLast(this string text, string value, string? defaultValue)
+        {
+            return text.IsNullOrWhiteSpace() ? defaultValue : text.TextAfter(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue, value.Length);
+        }
 
         /// <summary>
         ///     Get the text before <paramref name="value" />.
@@ -273,9 +295,11 @@ namespace OpenMagic.Extensions
         ///     The text before <paramref name="value" />. If <paramref name="value" /> does not exist then Nothing is
         ///     returned.
         /// </returns>
-        public static string? TextBefore(this string text, string value) =>
+        public static string? TextBefore(this string text, string value)
+        {
             // todo: unit tests
-            text.TextBefore(value, null);
+            return text.TextBefore(value, null);
+        }
 
         /// <summary>
         ///     Get the text before <paramref name="value" />.
@@ -290,7 +314,10 @@ namespace OpenMagic.Extensions
         ///     <paramref name="defaultValue" /> is returned.
         /// </returns>
         // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
-        public static string? TextBefore(this string text, string value, string? defaultValue) => text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.IndexOf(value, StringComparison.Ordinal), defaultValue);
+        public static string? TextBefore(this string text, string value, string? defaultValue)
+        {
+            return text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.IndexOf(value, StringComparison.Ordinal), defaultValue);
+        }
 
         /// <summary>
         ///     Get the text before <paramref name="value" />.
@@ -311,7 +338,10 @@ namespace OpenMagic.Extensions
         ///     for this example is "abc".TextBefore("d").
         /// </remarks>
         // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
-        public static string? TextBefore(this string text, int value, string? defaultValue) => value == -1 ? defaultValue : text.Substring(0, value);
+        public static string? TextBefore(this string text, int value, string? defaultValue)
+        {
+            return value == -1 ? defaultValue : text.Substring(0, value);
+        }
 
         /// <summary>
         ///     Get the text before last occurrence of <paramref name="value" />.
@@ -322,7 +352,10 @@ namespace OpenMagic.Extensions
         ///     The text before last occurrence of <paramref name="value" />. If <paramref name="value" /> does not exist then
         ///     Nothing is returned.
         /// </returns>
-        public static string? TextBeforeLast(this string text, string value) => text.TextBeforeLast(value, null);
+        public static string? TextBeforeLast(this string text, string value)
+        {
+            return text.TextBeforeLast(value, null);
+        }
 
         /// <summary>
         ///     Get the text before last occurrence of <paramref name="value" />.
@@ -337,7 +370,10 @@ namespace OpenMagic.Extensions
         ///     <paramref name="defaultValue" /> is returned.
         /// </returns>
         // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
-        public static string? TextBeforeLast(this string text, string value, string? defaultValue) => text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue);
+        public static string? TextBeforeLast(this string text, string value, string? defaultValue)
+        {
+            return text.IsNullOrWhiteSpace() ? defaultValue : text.TextBefore(text.LastIndexOf(value, StringComparison.Ordinal), defaultValue);
+        }
 
         /// <summary>
         ///     Splits a string value into lines.

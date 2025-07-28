@@ -32,6 +32,9 @@ namespace OpenMagic.Extensions.Collections.Generic
         ///     Indicates whether a specified enumerable is null or empty.
         /// </summary>
         /// <param name="value">The value to test.</param>
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T>? value) => value == null || !value.Any();
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T>? value)
+        {
+            return value == null || !value.Any();
+        }
     }
 }

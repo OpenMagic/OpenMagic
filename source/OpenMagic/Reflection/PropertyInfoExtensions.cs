@@ -7,15 +7,30 @@ namespace OpenMagic.Reflection
 {
     public static class PropertyInfoExtensions
     {
-        public static T? GetCustomAttribute<T>(this PropertyInfo value) where T : class => value.GetCustomAttributes<T>().SingleOrDefault();
+        public static T? GetCustomAttribute<T>(this PropertyInfo value) where T : class
+        {
+            return value.GetCustomAttributes<T>().SingleOrDefault();
+        }
 
         // ReSharper disable once MemberCanBePrivate.Global because its a library method
-        public static IEnumerable<T> GetCustomAttributes<T>(this PropertyInfo value) => value.GetCustomAttributes(typeof(T), true).Cast<T>();
+        public static IEnumerable<T> GetCustomAttributes<T>(this PropertyInfo value)
+        {
+            return value.GetCustomAttributes(typeof(T), true).Cast<T>();
+        }
 
-        public static bool HasPrivateSetter(this PropertyInfo property) => property.GetSetMethod(true) != null;
+        public static bool HasPrivateSetter(this PropertyInfo property)
+        {
+            return property.GetSetMethod(true) != null;
+        }
 
-        public static bool IsDecoratedWith<T>(this PropertyInfo value) => value.GetCustomAttributes<T>().Any();
+        public static bool IsDecoratedWith<T>(this PropertyInfo value)
+        {
+            return value.GetCustomAttributes<T>().Any();
+        }
 
-        public static bool IsRequired(this PropertyInfo value) => value.IsDecoratedWith<RequiredAttribute>();
+        public static bool IsRequired(this PropertyInfo value)
+        {
+            return value.IsDecoratedWith<RequiredAttribute>();
+        }
     }
 }
