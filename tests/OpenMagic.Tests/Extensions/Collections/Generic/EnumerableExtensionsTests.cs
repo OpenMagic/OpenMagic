@@ -42,8 +42,10 @@ namespace OpenMagic.Tests.Extensions.Collections.Generic
             [Fact]
             public void ReturnsTrueWhenValueIsHasZeroElements()
             {
+                // ReSharper disable CollectionNeverUpdated.Local because we want to test the empty collection
                 var emptyString = new List<string>();
                 var emptyInt = new List<int>();
+                // ReSharper restore CollectionNeverUpdated.Local
 
                 emptyString.IsNullOrEmpty().Should().BeTrue();
                 emptyInt.IsNullOrEmpty().Should().BeTrue();

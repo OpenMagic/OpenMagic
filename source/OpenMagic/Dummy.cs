@@ -7,9 +7,9 @@ namespace OpenMagic
 {
     public class Dummy : IDummy
     {
-        protected readonly Dictionary<Type, Func<object>> InstanceFactories = [];
+        private readonly Dictionary<Type, Func<object>> _instanceFactories = new();
 
-        protected readonly Dictionary<Type, Func<object>> ValueFactories = new()
+        private readonly Dictionary<Type, Func<object>> _valueFactories = new()
         {
             { typeof(bool), () => RandomBoolean.Next() },
             { typeof(DateTime), () => RandomDateTime.Next() },
@@ -55,7 +55,7 @@ namespace OpenMagic
         {
             try
             {
-                if (ValueFactories.TryGetValue(type, out var valueFactory))
+                if (_valueFactories.TryGetValue(type, out var valueFactory))
                 {
                     return valueFactory();
                 }
@@ -98,8 +98,16 @@ namespace OpenMagic
         {
             var values = CreateValues(typeof(string)).Cast<string>().Where(s => !string.IsNullOrWhiteSpace(s));
 
-            return values.ToDictionary(value => Guid.NewGuid().ToString());
+            var dict = new Dictionary<string, string>();
+
+            foreach (var value in values)
+            {
+                dict[Guid.NewGuid().ToString()] = value;
+            }
+
+            return dict;
         }
+
         protected virtual object Object(Type type)
         {
             var obj = CreateObjectInstance(type);
@@ -126,9 +134,22 @@ namespace OpenMagic
         {
             try
             {
-                return InstanceFactories.TryGetValue(type, out var instanceFactory)
-                    ? instanceFactory()
-                    : Activator.CreateInstance(type);
+                if (_instanceFactories.TryGetValue(type, out var instanceFactory))
+                {
+                    return instanceFactory();
+                }
+
+                // Avoid repeated dictionary lookup and delegate allocation
+                var createdInstance = Activator.CreateInstance(type);
+
+                if (createdInstance is null)
+                {
+                    throw new InvalidOperationException($"Activator.CreateInstance returned null for type '{type}'.");
+                }
+
+                _instanceFactories[type] = () => createdInstance;
+
+                return createdInstance;
             }
             catch (Exception exception)
             {
@@ -155,15 +176,25 @@ namespace OpenMagic
             try
             {
                 var itemType = arrayType.GetElementType();
+                if (itemType == null)
+                {
+                    throw new ArgumentException($"Array type '{arrayType}' does not have a valid element type.", nameof(arrayType));
+                }
+
                 var values = CreateValues(itemType);
 
                 var method = typeof(Enumerable).GetMethod("Cast");
-                var genericMethod = method!.MakeGenericMethod(itemType!);
-                var enumerable = genericMethod.Invoke(this, [values]);
+                var genericMethod = method!.MakeGenericMethod(itemType);
+                var enumerable = genericMethod.Invoke(null, [values]);
 
                 method = typeof(Enumerable).GetMethod("ToArray");
                 genericMethod = method!.MakeGenericMethod(itemType);
-                var array = genericMethod.Invoke(this, [enumerable]);
+                var array = genericMethod.Invoke(null, [enumerable]);
+
+                if (array is null)
+                {
+                    throw new InvalidOperationException($"Failed to create array of type '{arrayType}'.");
+                }
 
                 return (object[])array;
             }
@@ -182,11 +213,15 @@ namespace OpenMagic
                 var values = CreateValues(itemType);
                 var listType = typeof(List<>);
                 var genericListType = listType.MakeGenericType(itemType);
-                var list = (IList)Activator.CreateInstance(genericListType);
+
+                if (Activator.CreateInstance(genericListType) is not IList list)
+                {
+                    throw new InvalidOperationException($"Activator.CreateInstance returned null for type '{genericListType}'.");
+                }
 
                 foreach (var value in values)
                 {
-                    list!.Add(value);
+                    list.Add(value);
                 }
 
                 return list;

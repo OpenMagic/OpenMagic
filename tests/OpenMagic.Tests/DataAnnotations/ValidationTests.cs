@@ -1,16 +1,18 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using FluentAssertions;
+using JetBrains.Annotations;
 using OpenMagic.DataAnnotations;
 using Xunit;
 
 namespace OpenMagic.Tests.DataAnnotations
 {
+    [UsedImplicitly]
     public class ValidationTests
     {
-        public class TestClass
+        private class TestClass
         {
-            [Required] public string Required { get; set; }
+            [Required] public string Required { [UsedImplicitly] get; set; }
         }
 
         public class Validate

@@ -1,8 +1,8 @@
-using Reqnroll;
 using System;
 using FluentAssertions;
 using OpenMagic.Extensions;
 using OpenMagic.Specifications.Helpers;
+using Reqnroll;
 
 namespace OpenMagic.Specifications.Steps.Argument
 {

@@ -7,13 +7,13 @@
 		<LangVersion>12.0</LangVersion>
 		<OutputType>Library</OutputType>
 		<Title>OpenMagic</Title>
-		<Version>6.0.0</Version>
+		<Version>6.0.1</Version>
 		<Authors>Tim Murphy</Authors>
 		<Company>Tim Murphy</Company>
 		<Description>Collection of utility extensions and classes by Tim Murphy.</Description>
 		<SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<AssemblyTitle>OpenMagic</AssemblyTitle>
 		<Description>Collection of utility extensions and classes by Tim Murphy.</Description>
 		<Product>OpenMagic</Product>
@@ -21,9 +21,9 @@
 		<Authors>Tim Murphy</Authors>
 		<Company>Tim Murphy</Company>
 		<Copyright>Copyright © Tim Murphy 2013-2025</Copyright>
-		<AssemblyVersion>6.0.0.0</AssemblyVersion>
-		<FileVersion>6.0.0.0</FileVersion>
-		<PackageVersion>6.0.0</PackageVersion>
+		<AssemblyVersion>6.0.1.0</AssemblyVersion>
+		<FileVersion>6.0.1.0</FileVersion>
+		<PackageVersion>6.0.1</PackageVersion>
 		<PackageReadmeFile>docs\README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/OpenMagic/OpenMagic</PackageProjectUrl>

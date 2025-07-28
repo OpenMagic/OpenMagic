@@ -50,7 +50,7 @@ namespace OpenMagic.Tests
                 var actualCount = uniqueValues.Distinct().Count();
 
                 actualCount.Should().BeGreaterThan(
-                    expectedUniqueValues, 
+                    expectedUniqueValues,
                     "because there should be more than {0} random numbers", expectedUniqueValues
                 );
             }

@@ -59,7 +59,7 @@ namespace OpenMagic.Specifications.Steps.Extensions.StringExtensions
 
                 case "yesterday":
                     actualResult.Should().Be(DateTime.UtcNow.Date.AddDays(-1));
-                        break;
+                    break;
 
                 case "today + 2 days":
                     actualResult.Should().Be(DateTime.UtcNow.Date.AddDays(2));
@@ -67,7 +67,7 @@ namespace OpenMagic.Specifications.Steps.Extensions.StringExtensions
 
                 case "today - 2 days":
                     actualResult.Should().Be(DateTime.UtcNow.Date.AddDays(-2));
-                        break;
+                    break;
 
                 case "next month":
                     actualResult.Should().Be(DateTime.UtcNow.Date.AddMonths(1));
@@ -112,7 +112,7 @@ namespace OpenMagic.Specifications.Steps.Extensions.StringExtensions
 
                 default:
                     throw new NotSupportedException($"Expected value '{expected}' is not supported.");
-            }   
+            }
         }
     }
 }

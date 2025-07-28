@@ -10,22 +10,19 @@ namespace OpenMagic.Tests.DataAnnotations
 {
     public class ClassMetadataTests
     {
-        public ClassMetadataTests()
+        protected ClassMetadataTests()
         {
             ClearCacheInClassMetadata();
         }
 
-        private void ClearCacheInClassMetadata()
+        private static void ClearCacheInClassMetadata()
         {
             var cache = GetCacheInClassMetadata();
 
-            if (cache != null)
-            {
-                cache.Clear();
-            }
+            cache?.Clear();
         }
 
-        private TypeCache<IClassMetadata> GetCacheInClassMetadata()
+        private static TypeCache<IClassMetadata> GetCacheInClassMetadata()
         {
             var cacheField = typeof(ClassMetadata).GetField("Cache", BindingFlags.NonPublic | BindingFlags.Static);
 
@@ -36,12 +33,6 @@ namespace OpenMagic.Tests.DataAnnotations
 
             var cacheValue = cacheField.GetValue(null);
 
-            if (cacheValue == null)
-            {
-                // cache has not been created yet so nothing to clear.
-                return null;
-            }
-
             return (TypeCache<IClassMetadata>)cacheValue;
         }
 
@@ -51,6 +42,7 @@ namespace OpenMagic.Tests.DataAnnotations
             public void ShouldThrowArgumentNullExceptionWhenTypeIsNull()
             {
                 // ReSharper disable once ObjectCreationAsStatement
+                // ReSharper disable once AssignNullToNotNullAttribute because this is a test for the exception
                 Action action = () => new ClassMetadata(null);
 
                 action.Should().Throw<ArgumentException>().And.ParamName.Should().Be("type");

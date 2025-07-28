@@ -26,7 +26,7 @@ namespace OpenMagic.DataAnnotations
 
         public bool IsNotPublic => !IsPublic;
 
-        private T GetCustomAttribute<T>(Func<T> defaultValueFactory)
+        private T GetCustomAttribute<T>(Func<T> defaultValueFactory) where T : class
         {
             var attribute = PropertyInfo.GetCustomAttribute<T>();
 

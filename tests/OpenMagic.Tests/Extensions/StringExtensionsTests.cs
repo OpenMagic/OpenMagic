@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -34,7 +33,7 @@ namespace OpenMagic.Tests.Extensions
                     .WithMessage("Value cannot be longer than 1 character. (Parameter 'delimiter')");
             }
 
-            private void ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(string delimiter)
+            private static void ShouldThrow_ArgumentException_For_delimiter_IsWhitespace(string delimiter)
             {
                 "fake value".Invoking(x => x.GetValuesBetween(delimiter))
                     .Should().Throw<ArgumentException>()
@@ -101,7 +100,7 @@ namespace OpenMagic.Tests.Extensions
                 ReturnsZeroValuesWhenValueIs(" ");
             }
 
-            private void ReturnsZeroValuesWhenValueIs(string value)
+            private static void ReturnsZeroValuesWhenValueIs(string value)
             {
                 // Given
                 const string delimiter = "'";
@@ -138,6 +137,7 @@ namespace OpenMagic.Tests.Extensions
             [Fact]
             public void ThrowArgumentNullExceptionWhenValueIsNull()
             {
+                // ReSharper disable once AssignNullToNotNullAttribute because this is a test for null value
                 Action action = () => ((string)null).IsValidEmailAddress();
 
                 action.Should().Throw<ArgumentNullOrWhiteSpaceException>().And.ParamName.Should().Be("emailAddress");

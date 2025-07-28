@@ -8,7 +8,7 @@ namespace OpenMagic.DataAnnotations
     /// </summary>
     public class UriAttribute : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (value == null || (value is string && string.IsNullOrWhiteSpace(value.ToString())))
             {
@@ -17,14 +17,19 @@ namespace OpenMagic.DataAnnotations
 
             try
             {
-                // ReSharper disable once UnusedVariable
-                var uri = new Uri(value.ToString()!);
+                ValidateIsUri(value.ToString());
+
                 return ValidationResult.Success;
             }
             catch (Exception)
             {
                 return new ValidationResult("Value is not a valid Uri.");
             }
+        }
+
+        private static void ValidateIsUri(string? value)
+        {
+            _ = new Uri(value ?? throw new ArgumentNullException(nameof(value)));
         }
     }
 }

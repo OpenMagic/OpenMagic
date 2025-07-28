@@ -31,7 +31,8 @@ namespace OpenMagic.Extensions
             return value == typeof(string);
         }
 
-        public static FieldInfo FindPrivateField(this Type type, string privateFieldName)
+        // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
+        public static FieldInfo? FindPrivateField(this Type type, string privateFieldName)
         {
             return type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic).SingleOrDefault(f => f.Name == privateFieldName);
         }

@@ -77,6 +77,7 @@ namespace OpenMagic.Tests.Utilities
 
                 exception.Should().BeOfType<InvalidOperationException>();
                 exception.Should().NotBeNull();
+                // ReSharper disable once PossibleNullReferenceException because exception is not null
                 exception.Message.Should().Be(exceptionMessage);
             }
         }

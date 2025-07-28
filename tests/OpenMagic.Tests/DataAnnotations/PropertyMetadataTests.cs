@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
+using JetBrains.Annotations;
 using OpenMagic.DataAnnotations;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace OpenMagic.Tests.DataAnnotations
             public void ShouldThrowArgumentNullExceptionWhenPropertyInfoIsNull()
             {
                 // ReSharper disable once ObjectCreationAsStatement
-                Action action = () => new PropertyMetadata(null, true);
+                Action action = () => new PropertyMetadata(null!, true);
 
                 action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("property");
             }
@@ -113,11 +114,12 @@ namespace OpenMagic.Tests.DataAnnotations
             }
         }
 
-        public class TestClassWithDisplayAttribute
+        [UsedImplicitly]
+        private class TestClassWithDisplayAttribute
         {
-            [Display] public int HasDisplayAttribute { get; set; }
+            [Display] public int HasDisplayAttribute { get; [UsedImplicitly] set; }
 
-            public int DoesNotHaveDisplayAttribute { get; set; }
+            public int DoesNotHaveDisplayAttribute { get; [UsedImplicitly] set; }
         }
     }
 }

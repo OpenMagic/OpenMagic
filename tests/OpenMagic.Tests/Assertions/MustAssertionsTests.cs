@@ -7,9 +7,9 @@ namespace OpenMagic.Tests.Assertions
 {
     public class MustAssertionsTests
     {
-        protected const string Message = "dummy exception message with param {0}";
-        protected const int ParamValue = 1;
-        protected const string ExpectedMessage = "dummy exception message with param 1";
+        private const string Message = "dummy exception message with param {0}";
+        private const int ParamValue = 1;
+        private const string ExpectedMessage = "dummy exception message with param 1";
 
         public class MustBe : MustAssertionsTests
         {

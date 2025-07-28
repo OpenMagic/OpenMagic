@@ -7,11 +7,12 @@ namespace OpenMagic.Reflection
 {
     public static class PropertyInfoExtensions
     {
-        public static T GetCustomAttribute<T>(this PropertyInfo value)
+        public static T? GetCustomAttribute<T>(this PropertyInfo value) where T : class
         {
             return value.GetCustomAttributes<T>().SingleOrDefault();
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global because its a library method
         public static IEnumerable<T> GetCustomAttributes<T>(this PropertyInfo value)
         {
             return value.GetCustomAttributes(typeof(T), true).Cast<T>();

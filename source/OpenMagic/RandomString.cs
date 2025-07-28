@@ -20,6 +20,7 @@ namespace OpenMagic
         ///     Get a random string between 1 and 25 characters long using <paramref name="characterSet" /> as the list of possible
         ///     characters.
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global because its a library method
         public static string Next(string characterSet)
         {
             return Next(1, 25, characterSet);
@@ -36,11 +37,12 @@ namespace OpenMagic
         /// <summary>
         ///     Get a random string between <paramref name="minLength" /> and <paramref name="maxLength" /> characters long.
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global because its a library method
         public static string Next(int minLength, int maxLength, string characterSet)
         {
-            minLength.MustBeGreaterThan(0, "minLength");
-            maxLength.MustBeGreaterThan(minLength, "maxLength");
-            characterSet.MustNotBeNullOrWhiteSpace("characterSet");
+            minLength.MustBeGreaterThan(0, nameof(minLength));
+            maxLength.MustBeGreaterThan(minLength, nameof(maxLength));
+            characterSet.MustNotBeNullOrWhiteSpace(nameof(characterSet));
 
             var length = RandomNumber.NextInt(minLength, maxLength + 1);
             var value = new StringBuilder(length);
@@ -48,7 +50,9 @@ namespace OpenMagic
 
             for (var character = 1; character <= length; character++)
             {
-                value.Append(characterSet.Substring(RandomNumber.NextInt(0, characters), 1));
+                var substring = characterSet.Substring(RandomNumber.NextInt(0, characters), 1);
+
+                value.Append(substring);
             }
 
             return value.ToString();
