@@ -21,6 +21,7 @@ namespace OpenMagic.Reflection
         /// <param name="method">The LINQ expression representing the method.</param>
         /// <returns>The <see cref="MethodInfo" /> of the specified method.</returns>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="method" /> is not a valid LINQ expression representing a method call.</exception>
+        // ReSharper disable once UnusedParameter.Global because its an extension method
         public static MethodInfo Method<TObject>(this TObject obj, Expression<Action<TObject>> method)
         {
             // unit test for this argument test.
@@ -50,6 +51,8 @@ namespace OpenMagic.Reflection
         /// <param name="property">The LINQ expression representing the property.</param>
         /// <returns>The <see cref="PropertyInfo" /> of the specified property.</returns>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="property" /> is not a valid LINQ expression representing a property access.</exception>
+        // ReSharper disable once MemberCanBePrivate.Global because its an extension method
+        // ReSharper disable once UnusedParameter.Global because its an extension method
         public static PropertyInfo Property<TObject, TProperty>(this TObject obj, Expression<Func<TObject, TProperty>> property)
         {
             if (property.NodeType != ExpressionType.Lambda)
@@ -152,6 +155,7 @@ namespace OpenMagic.Reflection
         /// </summary>
         /// <param name="obj">The object to serialize.</param>
         /// <returns>The XML string representation of the object.</returns>
+        // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
         public static string ToXml(this object obj)
         {
             var serializer = new XmlSerializer(obj.GetType());

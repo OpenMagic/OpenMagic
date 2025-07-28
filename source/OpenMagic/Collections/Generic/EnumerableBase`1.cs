@@ -14,7 +14,7 @@ namespace OpenMagic.Collections.Generic
         /// <summary>
         ///     Gets the items this class can enumerate
         /// </summary>
-        protected IList<T> Items { get; set; } = new List<T>();
+        protected IList<T> Items { get; } = new List<T>();
 
         /// <summary>
         ///     Returns an enumerator that iterates through the collection.

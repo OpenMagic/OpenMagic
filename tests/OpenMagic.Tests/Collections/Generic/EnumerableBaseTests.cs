@@ -20,7 +20,7 @@ namespace OpenMagic.Tests.Collections.Generic
             }
         }
 
-        public class EnumerableBaseImplementation : EnumerableBase<int>
+        private class EnumerableBaseImplementation : EnumerableBase<int>
         {
             public EnumerableBaseImplementation()
             {
@@ -40,7 +40,7 @@ namespace OpenMagic.Tests.Collections.Generic
                 var collection = new EnumerableBaseImplementation();
 
                 // When
-                var enumerator = collection.GetEnumerator();
+                using var enumerator = collection.GetEnumerator();
 
                 // Then
                 var i = -1;
@@ -63,6 +63,7 @@ namespace OpenMagic.Tests.Collections.Generic
                 IEnumerable collection = new EnumerableBaseImplementation();
 
                 // When
+                // ReSharper disable once GenericEnumeratorNotDisposed because enumerator is not disposable.
                 var enumerator = collection.GetEnumerator();
 
                 // Then

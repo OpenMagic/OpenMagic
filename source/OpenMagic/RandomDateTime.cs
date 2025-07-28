@@ -50,6 +50,7 @@ namespace OpenMagic
         ///     A DateTime greater than or equal to minValue and less than maxValue; that is, the range of return values
         ///     includes minValue but not maxValue. If minValue equals maxValue, minValue is returned.
         /// </returns>
+        // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
         public static DateTime Next(DateTime minValue, DateTime maxValue)
         {
             var millisecondsDifference = maxValue.Subtract(minValue).TotalMilliseconds;

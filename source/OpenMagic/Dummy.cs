@@ -131,7 +131,7 @@ namespace OpenMagic
         {
             try
             {
-                if (_instanceFactories.TryGetValue(type, out var instanceFactory) && instanceFactory != null)
+                if (_instanceFactories.TryGetValue(type, out var instanceFactory))
                 {
                     return instanceFactory();
                 }

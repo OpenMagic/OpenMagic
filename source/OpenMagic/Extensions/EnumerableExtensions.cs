@@ -11,6 +11,7 @@ namespace OpenMagic.Extensions
         /// <remarks>
         ///     If <paramref name="list" /> is null then null is returned.
         /// </remarks>
+        // ReSharper disable once MemberCanBePrivate.Global because its a library method
         public static T? RandomItem<T>(this IEnumerable<T>? list)
         {
             if (list == null)

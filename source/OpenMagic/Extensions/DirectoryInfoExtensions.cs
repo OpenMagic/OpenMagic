@@ -18,6 +18,7 @@ namespace OpenMagic.Extensions
         ///     the hidden and/or read-only files in the .git directory where causing the exception. This method sets attribute on
         ///     all files to normal before deleting the directory.
         /// </remarks>
+        // ReSharper disable once MemberCanBePrivate.Global because its a library method
         public static void ForceDelete(this DirectoryInfo directory)
         {
             // Setting all file attributes to normal will ensure directory.Delete(true) works.
@@ -53,6 +54,7 @@ namespace OpenMagic.Extensions
         /// <param name="recursive">
         ///     <c>true</c> to set file attributes to files in <paramref name="directory" /> and its subdirectories.
         /// </param>
+        // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
         public static void SetFileAttributes(this DirectoryInfo directory, FileAttributes attributes, bool recursive)
         {
             directory.EnumerateFiles().ForEach(f => f.Attributes = attributes);

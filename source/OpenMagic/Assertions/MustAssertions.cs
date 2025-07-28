@@ -22,6 +22,7 @@
             assertion.Equals(false).MustBeTrue(exMessage, exMessageArgs);
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global because its a library method
         public static void MustBeTrue(this bool assertion, string exMessage)
         {
             if (!assertion)

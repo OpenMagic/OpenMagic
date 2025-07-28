@@ -33,7 +33,7 @@ namespace OpenMagic.Tests.DataAnnotations
                 IsValid_For("").Should().BeTrue();
             }
 
-            private bool IsValid_For(object uri) => new UriAttribute().IsValid(uri);
+            private static bool IsValid_For(object uri) => new UriAttribute().IsValid(uri);
         }
     }
 }

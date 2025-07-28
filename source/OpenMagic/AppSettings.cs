@@ -43,6 +43,8 @@ namespace OpenMagic
         }
 
 
+
+        // ReSharper disable once MemberCanBePrivate.Global because this is a part of the public API
         public string? GetString(string key, bool throwExceptionIfKeyNotFound = true)
         {
             var fullKey = GetFullKey(key);

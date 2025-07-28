@@ -49,6 +49,7 @@ namespace OpenMagic.Tests
             public void Should_Throw_ArgumentNullOrWhiteSpaceException_When_emailAddress_Is_Null()
             {
                 // When
+                // ReSharper disable once AssignNullToNotNullAttribute because this is a test for the exception
                 Action action = () => ((string)null).MustBeAnEmailAddress("dummy");
 
                 // Then
@@ -136,7 +137,7 @@ namespace OpenMagic.Tests
             public void ShouldReturn_parameterValue_When_parameterValue_IsNotNull()
             {
                 // Given
-                var parameterValue = new List<int>(new[] { 1, 2 });
+                var parameterValue = new List<int>([1, 2]);
 
                 // When
                 var value = parameterValue.MustNotBeNullOrEmpty("fakeParamName");
@@ -149,6 +150,7 @@ namespace OpenMagic.Tests
             public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
             {
                 // Given
+                // ReSharper disable once CollectionNeverUpdated.Local because this is a test for the exception
                 var parameterValue = new List<int>();
 
                 // When
@@ -168,7 +170,7 @@ namespace OpenMagic.Tests
             public void ShouldReturn_param_When_param_IsNotNull()
             {
                 // Given
-                var param = new List<int>(new[] { 1, 2 });
+                var param = new List<int>([1, 2]);
 
                 // When
                 var value = param.MustNotBeNullOrEmpty("fakeParamName");
@@ -181,6 +183,7 @@ namespace OpenMagic.Tests
             public void ShouldThrowArgumentExceptionWhen_param_IsEmpty()
             {
                 // Given
+                // ReSharper disable once CollectionNeverUpdated.Local because this is a test for the exception
                 var param = new List<int>();
 
                 // When

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FluentAssertions;
+using JetBrains.Annotations;
 using OpenMagic.Reflection;
 using Xunit;
 
@@ -94,11 +95,12 @@ namespace OpenMagic.Tests.Reflection
             }
         }
 
-        public class TestClass
+        [UsedImplicitly]
+        private class TestClass
         {
-            public int HasNoAttributes { get; set; }
+            public int HasNoAttributes { get; [UsedImplicitly] set; }
 
-            [Required] public int HasRequiredAttribute { get; set; }
+            [Required] public int HasRequiredAttribute { get; [UsedImplicitly] set; }
         }
     }
 }

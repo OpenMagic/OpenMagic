@@ -9,6 +9,7 @@ namespace OpenMagic.Reflection
     {
         public static T? GetCustomAttribute<T>(this PropertyInfo value) where T : class => value.GetCustomAttributes<T>().SingleOrDefault();
 
+        // ReSharper disable once MemberCanBePrivate.Global because its a library method
         public static IEnumerable<T> GetCustomAttributes<T>(this PropertyInfo value) => value.GetCustomAttributes(typeof(T), true).Cast<T>();
 
         public static bool HasPrivateSetter(this PropertyInfo property) => property.GetSetMethod(true) != null;
